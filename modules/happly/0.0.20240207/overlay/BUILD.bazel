@@ -1,5 +1,0 @@
-cc_library(
-    name = "happly",
-    hdrs = ["happly.h"],
-    visibility = ["//visibility:public"],
-)

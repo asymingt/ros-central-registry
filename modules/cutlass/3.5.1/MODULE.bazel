@@ -1,5 +1,0 @@
-module(
-    name = "cutlass",
-    version = "3.5.1",
-    compatibility_level = 1,
-)

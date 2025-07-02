@@ -1,6 +1,0 @@
-java_library(
-    name = "wasm",
-    srcs = glob(["src/main/**/*.java"]),
-    visibility = ["//visibility:public"],
-    deps = ["//log"],
-)

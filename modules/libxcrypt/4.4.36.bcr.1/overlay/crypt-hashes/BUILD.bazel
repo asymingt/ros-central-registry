@@ -1,5 +1,0 @@
-alias(
-    name = "crypt-hashes",
-    actual = "all.h",
-    visibility = ["//:__pkg__"],
-)

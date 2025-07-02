@@ -1,6 +1,0 @@
-java_library(
-    name = "runtime",
-    srcs = glob(["src/main/**/*.java"]),
-    visibility = ["//visibility:public"],
-    deps = ["//wasm"],
-)

@@ -1,4 +1,0 @@
-module(
-    name = "bazel_worker_api",
-    version = "0.0.1",
-)

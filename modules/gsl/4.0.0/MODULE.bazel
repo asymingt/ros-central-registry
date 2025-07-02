@@ -1,5 +1,0 @@
-module(
-    name = "gsl",
-    version = "4.0.0",
-    compatibility_level = 4,
-)

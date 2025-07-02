@@ -1,8 +1,0 @@
-filegroup(
-    name = "gvdb",
-    srcs = glob([
-        "gvdb/*.c",
-        "gvdb/*.h",
-    ]),
-    visibility = ["//gio:__pkg__"],
-)

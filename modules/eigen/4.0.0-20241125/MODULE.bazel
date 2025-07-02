@@ -1,5 +1,0 @@
-module(
-    name = "eigen",
-    version = "4.0.0-20241125",
-    compatibility_level = 1,
-)

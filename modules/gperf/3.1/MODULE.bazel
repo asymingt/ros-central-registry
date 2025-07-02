@@ -1,5 +1,0 @@
-module(
-    name = "gperf",
-    version = "3.1",
-    compatibility_level = 1,
-)

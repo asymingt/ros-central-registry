@@ -1,5 +1,0 @@
-alias(
-    name = "libgit2",
-    actual = "//src/libgit2",
-    visibility = ["//visibility:public"],
-)

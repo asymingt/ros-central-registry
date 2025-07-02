@@ -1,4 +1,0 @@
-exports_files(
-    ["folly-config.h.cmake"],
-    visibility = ["//visibility:public"],
-)

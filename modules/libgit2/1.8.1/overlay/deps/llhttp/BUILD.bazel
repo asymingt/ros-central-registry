@@ -1,7 +1,0 @@
-cc_library(
-    name = "llhttp",
-    srcs = glob(["*.c"]),
-    hdrs = ["llhttp.h"],
-    strip_include_prefix = "/deps/llhttp",
-    visibility = ["//:__subpackages__"],
-)

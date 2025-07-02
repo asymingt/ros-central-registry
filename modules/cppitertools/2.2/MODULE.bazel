@@ -1,4 +1,0 @@
-module(
-    name = "cppitertools",
-    version = "2.2"
-)

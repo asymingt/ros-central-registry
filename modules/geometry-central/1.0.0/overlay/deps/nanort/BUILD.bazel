@@ -1,7 +1,0 @@
-package(default_visibility = ["//visibility:public"])
-
-cc_library(
-    name = "nanort",
-    hdrs = ["include/nanort/nanort.h"],
-    strip_include_prefix = "include",
-)
