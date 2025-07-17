@@ -19,24 +19,29 @@
 #
 # RUN THIS SCRIPT:
 #
-#   python3 bazel_from_ros.py ~/ros2_ws/build
+#   python3 parse_ros_workspace.py ~/ros2_ws/build
 
 import argparse
 import logging
+import sys
 from catkin_pkg.packages import find_packages
-from parse_cmake_project import parse_cmake_project
-from parse_setup_project import parse_setup_project
+from bazel_ros.parse_cmake_project import parse_cmake_project
+from bazel_ros.parse_setup_project import parse_setup_project
+from bazel_ros.parse_ros_project import parse_ros_project
 from pathlib import Path
 
 
-def parse_workspace(path : Path):
+def parse_workspace(path : Path, package_name : str = None, specific_package : bool = False):
     """Parse the workspace at the given path and analyze its packages."""
+
+    # Workspace paths
+    workspace = {k : Path(path / k) for k in ['src', 'build', 'install']}
 
     # Call catkin_pkg to find all packages in the source directory.
     i_packages = {p.name : p for p in find_packages(path).values()}
 
     # Iterate over build directory to find all packages.
-    o_packages = {p.name : p for p in Path(path / 'build').iterdir() if p.is_dir()}
+    o_packages = {p.name : p for p in workspace['build'].iterdir() if p.is_dir()}
 
     # Log the differences between the source and build packages.
     pkg_i = set(i_packages.keys())
@@ -44,6 +49,19 @@ def parse_workspace(path : Path):
     logging.info("The following packages differences were found:")
     logging.info(f'> in source but not in build: {list(pkg_i.difference(pkg_o))}')
     logging.info(f'> in build but not in source: {list(pkg_o.difference(pkg_i))}')
+
+    # Limit to only the requested packages, if specified.
+    all_packages = []
+    for package in sorted(pkg_i):
+        if package_name is not None:
+            if specific_package:
+                if package_name != package:
+                    continue
+            elif package_name not in package:
+                continue
+        all_packages.append(package)
+    if not all_packages:
+        raise RuntimeError(f'Requested package {package_name} not found in workspace.')
 
     def process_dependencies(deplist):
         """Processes a list of dependencies and separates them into internal and external dependencies."""
@@ -56,31 +74,49 @@ def parse_workspace(path : Path):
                 internal_deps.add(dep.name)
         return internal_deps, external_deps
 
+
     # Process each package in the workspace
     logging.info("Processing packages:")
     external_deps = {}
-    for pkg_name in sorted(pkg_i): #['rclcpp']
-        logging.info(f'+ {pkg_name} [{i_packages[pkg_name].version}]')
+    for pkg_name in all_packages:
         internal_b_deps, external_b_deps = process_dependencies(i_packages[pkg_name].build_depends)
         internal_e_deps, external_e_deps = process_dependencies(i_packages[pkg_name].exec_depends)
         for dep in external_b_deps.union(external_e_deps):
             if dep not in external_deps.keys():
                 external_deps[dep] = set()
             external_deps[dep].add(pkg_name)
-      
+        
+        # Get the source and build path.
+        src_path = Path(i_packages[pkg_name].filename).parent
+        build_path = o_packages[pkg_name]
+
+        # Open up the package.xml to discover pa
+        package_xml_file = Path(i_packages[pkg_name].filename).parent / 'package.xml'
+        if package_xml_file.is_file():
+            messages  = parse_ros_project(workspace, pkg_name, src_path, build_path)
+            if messages:
+                logging.info(f'+ [package] has interfaces')
+                for msg in sorted(messages.keys()):
+                    info = messages[msg]
+                    logging.info(f'   {msg} [{info["src"]}]')
+                    for dep in sorted(info["deps"]):
+                        logging.info(f'      - {dep}')
+            else:
+                logging.info(f'[package] has no interfaces')
+        else:
+            logging.warning(f'Skipping {pkg_name} because it is missing a package.xml file')
+
         # If this is a python package then we should be able to find a setup.py file.
         cmakelists_txt_path = Path(i_packages[pkg_name].filename).parent / 'CMakeLists.txt'
         if cmakelists_txt_path.is_file():
-            logging.info(f'  -> detected cmake package')
-            src_path = Path(i_packages[pkg_name].filename).parent
-            build_path = o_packages[pkg_name]
-            ret = parse_cmake_project(pkg_name, src_path, build_path)
+            logging.info(f'[cmake] {pkg_name} [{i_packages[pkg_name].version}]')
+            ret = parse_cmake_project(workspace, pkg_name, src_path, build_path)
             continue
 
         # If this is a python package then we should be able to find a setup.py file.
         setup_py_path = Path(i_packages[pkg_name].filename).parent / 'setup.py'
         if setup_py_path.is_file():
-            logging.info(f'  -> detected setup.py package')
+            logging.info(f'+ [setup.py] {pkg_name} [{i_packages[pkg_name].version}]')
             ret = parse_setup_project(setup_py_path)
             logging.info(f'     data files:')
             for dst, src in ret.get('data_files', []):
@@ -98,21 +134,24 @@ def parse_workspace(path : Path):
         # If this is a python package then we should be able to find a setup.py file.
         setup_cfg_path = Path(i_packages[pkg_name].filename).parent / 'setup.cfg'
         if setup_cfg_path.is_file():
-            logging.info(f'  -> detected setup.cfg package {setup_cfg_path}')
+            logging.info(f'[setup.cfg] {pkg_name} [{i_packages[pkg_name].version}]')
             continue
 
         # We should never get here, but if we do then we don't know what this package is.
-        logging.error(f'  -> unknown package')
+        logging.error(f'[unknown] {pkg_name} [{i_packages[pkg_name].version}]')
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
     parser = argparse.ArgumentParser(description='A simple program that greets the user.')
     parser.add_argument('workspace', type=str, help='Path to the workspace.')
+    parser.add_argument('-p', '--package', type=str, default=None, help='Specific package to analyze')
+    parser.add_argument('-o', '--output', type=str, default=None, help='Output for example MODULE.bzl file')
+    parser.add_argument('-s', '--specific', action='store_true', help='Package is a specific name, not a substring')
     args = parser.parse_args()
 
-    parse_workspace(Path(args.workspace))
+    parse_workspace(Path(args.workspace), args.package, args.specific)
     
 # Print out external dependencies.
 # logging.info(f'External build dependencies:')

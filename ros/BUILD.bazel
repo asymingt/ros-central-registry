@@ -1,0 +1,24 @@
+load("@pip//:requirements.bzl", "requirement")
+load("@rules_python//python:defs.bzl", "py_binary", "py_library")
+
+py_library(
+    name = "bazel_ros",
+    srcs = glob(["bazel_ros/**/*.py"]),
+    imports = ["."],
+    deps = [
+        requirement("cmake-file-api"),
+        requirement("setuptools"),
+    ],
+)
+
+py_binary(
+    name = "parse_ros_workspace",
+    srcs = [
+        "parse_ros_workspace.py"
+    ],
+    deps = [
+        ":bazel_ros",
+        requirement("catkin-pkg"),
+        requirement("pyyaml"),
+    ],
+)
