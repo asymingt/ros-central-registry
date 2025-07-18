@@ -6,3 +6,6 @@ numpy
 scipy
 bazel-runfiles
 requests
+cmake-file-api
+catkin-pkg
+setuptools

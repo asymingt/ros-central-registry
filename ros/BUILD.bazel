@@ -12,9 +12,9 @@ py_library(
 )
 
 py_binary(
-    name = "parse_ros_workspace",
+    name = "bazel_from_ros",
     srcs = [
-        "parse_ros_workspace.py"
+        "bazel_from_ros.py"
     ],
     deps = [
         ":bazel_ros",

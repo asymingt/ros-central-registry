@@ -4,8 +4,10 @@ from cmake_file_api.errors import CMakeException
 from cmake_file_api.kinds.codemodel.target.v2 import TargetType
 from pathlib import Path
 
-def _dict_from_project(workspace, pkg_name : str, cmake_project : CMakeProject, build_path : Path):
+def _dict_from_project(paths, pkg_name : str, cmake_project : CMakeProject, build_path : Path):
     """Parse the CMake project and return its configuration."""
+    #import pdb; pdb.set_trace()
+
     for target in cmake_project.configurations[0].targets:
 
         ignore_targets = [
@@ -40,7 +42,6 @@ def _dict_from_project(workspace, pkg_name : str, cmake_project : CMakeProject, 
 
         logging.info(f"+ {target.target.type} :: {target.name}")
         #logging.info(f"+ {target.target}")
-        #import pdb; pdb.set_trace()
 
         try:
     
@@ -84,8 +85,8 @@ def _dict_from_project(workspace, pkg_name : str, cmake_project : CMakeProject, 
                         continue
                     if fragment_str in [""]:
                         continue
-                    if fragment_str.startswith(str(workspace['install'])):
-                        ros_lib = fragment_str.replace(str(workspace['install']) + '/', '')
+                    if fragment_str.startswith(str(paths['install'])):
+                        ros_lib = fragment_str.replace(str(paths['install']) + '/', '')
                         parts = ros_lib.split('/')
                         ros_pkg = parts[0]
                         ros_lib = parts[2][3:].rsplit('.')[0]
@@ -114,12 +115,12 @@ def _dict_from_project(workspace, pkg_name : str, cmake_project : CMakeProject, 
             pass
 
 
-def parse_cmake_project(workspace, pkg_name : str, src_path : Path, build_path : Path):
+def parse_cmake_project(workspace, paths, pkg_name : str, src_path : Path, build_path : Path):
     cmake_project = CMakeProject(build_path, src_path, api_version=1)
     cmake_project.cmake_file_api.instrument(ObjectKind.CODEMODEL, 2)
     result = cmake_project.cmake_file_api.inspect(ObjectKind.CODEMODEL, 2)
     if not result:
         cmake_project.configure(quiet=True)
         result = cmake_project.cmake_file_api.inspect(ObjectKind.CODEMODEL, 2)
-    return _dict_from_project(workspace, pkg_name, result, build_path)
+    return _dict_from_project(paths, pkg_name, result, build_path)
         

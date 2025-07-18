@@ -1,0 +1,5 @@
+bazel-*
+modules
+BUILD.bazel
+MODULE.bazel
+MODULE.bazel.lock

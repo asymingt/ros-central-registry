@@ -3,7 +3,7 @@ import setuptools
 import sys
 import os
 
-def parse_setup_project(setup_py_filename):
+def parse_setup_project(workspace, ros_paths, setup_py_filename):
     """
     Parses a setup.py file and returns the arguments passed to the setup() function.
     """
