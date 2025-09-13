@@ -1,1 +1,29 @@
-/home/ros/workspaces/bazel_ros_demo/registry/modules/rosidl_runtime_cpp/5.0.0/overlay/MODULE.bazel
+# Copyright 2025 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Package information
+        
+module(
+    name = "rosidl_runtime_cpp",
+    version = "5.0.0",
+    compatibility_level = 0,
+)
+
+# Dependencies
+
+bazel_dep(name = "googletest", version = "1.17.0")
+bazel_dep(name = "rcutils", version = "7.0.0")
+bazel_dep(name = "rosidl_runtime_c", version = "5.0.0")
+bazel_dep(name = "rosidl_typesupport_interface", version = "5.0.0")
+bazel_dep(name = "rules_cc", version = "0.2.4")
