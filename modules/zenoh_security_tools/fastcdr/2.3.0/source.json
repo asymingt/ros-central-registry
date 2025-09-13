@@ -1,0 +1,10 @@
+{
+    "url": "https://github.com/eProsima/Fast-CDR/archive/refs/tags/v2.3.0.tar.gz",
+    "integrity": "sha256-2F7p4k4QVYG0nePitrJYUzWo3JjEyr0ogjL//EubaiQ=",
+    "strip_prefix": "Fast-CDR-2.3.0",
+    "overlay": {
+        "BUILD.bazel": "sha256-7b/ATxdZ7ULY9+h7C8FBAHx8buyc1p4rkcPKb5SpIyM=",
+        "MODULE.bazel": "sha256-91qsLF76H5TEspP+X0ZAfwI1QI1/w5d39RSFHpVvFPY="
+    },
+    "patch_strip": 0
+}

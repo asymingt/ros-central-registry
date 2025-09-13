@@ -1,0 +1,23 @@
+{
+    "url": "https://github.com/ros2/rosidl/archive/refs/tags/5.0.0.tar.gz",
+    "integrity": "sha256-TSUAVI2+hRv0LVlqNmnsTbzkm74bvMhEEIcmZK+zDW0=",
+    "strip_prefix": "rosidl-5.0.0/rosidl_adapter",
+    "overlay": {
+        "BUILD.bazel": "sha256-ozq8ofDZAMwbEJBaDg9p9IFf87cC3shYx548QRISUjY=",
+        "MODULE.bazel": "sha256-4zOQtUfbK8XiuMIfiZVbzY7nJVFFx/W2zMc4E6boTY0=",
+        "aspects.bzl": "sha256-rT+FuOqhcGK1DqNR2ZOk07EBMxB7BEp+swyIt0GwAns=",
+        "rules.bzl": "sha256-gLzgpTun3qZ8xiRTDqf0InCSVBbbitlEe6G1oTKbErw=",
+        "test/data/action/BUILD.bazel": "sha256-iCSLKmDFgJZi/6LVwC7VZBmh+Cv9fi0y04tPtKf0CX0=",
+        "test/data/msg/BUILD.bazel": "sha256-NhnmF46oqekjTeWGFclssilTZBsyI+c8XAvUSMygdR4=",
+        "test/data/srv/BUILD.bazel": "sha256-HJ25RJ8jhoHmYNZjfajFzSyvwADzJFxuVhkz4Zx3pus=",
+        "tools.bzl": "sha256-vrUpM7E+C0v7cQq43GCo/MwyLk08FHZ5Ff+NooDiWss=",
+        "types.bzl": "sha256-m/C0bzPIpVE5nrSghdj8S1cfeW9tGJW5mycnC5vMlzs="
+    },
+    "patches": {
+        "fix_scripts_action2idl_py.patch": "sha256-GNUAsVF/yv4cDZSa8BmA2Crq7mgDR3TqJENUK7Znlio=",
+        "fix_scripts_msg2idl_py.patch": "sha256-xRhjuSXcIafLPM1E9EcjCIBfunazgpNViXEf4FVjH7g=",
+        "fix_scripts_srv2idl_py.patch": "sha256-q1bDisN/RE35rMASPkBsTjJ7xyqyHPAG+NEljMWIp1o=",
+        "fix_test_test_cli_extensions_py.patch": "sha256-RkzLlwWWPoat464fUCM1UryqsG7qNploj88RDRtCWWc="
+    },
+    "patch_strip": 2
+}

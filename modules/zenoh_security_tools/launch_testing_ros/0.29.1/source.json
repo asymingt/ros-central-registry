@@ -1,0 +1,9 @@
+{
+    "url": "https://github.com/ros2/launch_ros/archive/refs/tags/0.29.1.tar.gz",
+    "integrity": "sha256-x5/8d3f9jLph/lIQ/HujSf3MY4GWyA89J4jXeM8aMNQ=",
+    "strip_prefix": "launch_ros-0.29.1/launch_testing_ros",
+    "overlay": {
+        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "MODULE.bazel": "sha256-4VoajaG54xe7qHQ1iPdvleVpJ9o59Lk1JVR8RVABXtk="
+    }
+}

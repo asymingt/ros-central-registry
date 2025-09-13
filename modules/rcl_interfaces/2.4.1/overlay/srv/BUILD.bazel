@@ -1,0 +1,104 @@
+
+# Copyright 2025 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Imports
+
+load("@rosidl_cmake//:rules.bzl", "ros_interface")
+
+package(default_visibility = ["//visibility:public"])
+
+# Interfaces
+
+ros_interface(
+    name = "DescribeParameters",
+    src = "DescribeParameters.srv",
+    deps = [
+        "//msg:ParameterDescriptor",
+        # Services have implicit deps
+        "@service_msgs//msg:ServiceEventInfo",
+    ],
+)
+
+ros_interface(
+    name = "GetLoggerLevels",
+    src = "GetLoggerLevels.srv",
+    deps = [
+        "//msg:LoggerLevel",
+        # Services have implicit deps
+        "@service_msgs//msg:ServiceEventInfo",
+    ],
+)
+
+ros_interface(
+    name = "GetParameterTypes",
+    src = "GetParameterTypes.srv",
+    deps = [
+        # Services have implicit deps
+        "@service_msgs//msg:ServiceEventInfo",
+    ],
+)
+
+ros_interface(
+    name = "GetParameters",
+    src = "GetParameters.srv",
+    deps = [
+        "//msg:ParameterValue",
+        # Services have implicit deps
+        "@service_msgs//msg:ServiceEventInfo",
+    ],
+)
+
+ros_interface(
+    name = "ListParameters",
+    src = "ListParameters.srv",
+    deps = [
+        "//msg:ListParametersResult",
+        # Services have implicit deps
+        "@service_msgs//msg:ServiceEventInfo",
+    ],
+)
+
+ros_interface(
+    name = "SetLoggerLevels",
+    src = "SetLoggerLevels.srv",
+    deps = [
+        "//msg:LoggerLevel",
+        "//msg:SetLoggerLevelsResult",
+        # Services have implicit deps
+        "@service_msgs//msg:ServiceEventInfo",
+    ],
+)
+
+ros_interface(
+    name = "SetParameters",
+    src = "SetParameters.srv",
+    deps = [
+        "//msg:Parameter",
+        "//msg:SetParametersResult",
+        # Services have implicit deps
+        "@service_msgs//msg:ServiceEventInfo",
+    ],
+)
+
+ros_interface(
+    name = "SetParametersAtomically",
+    src = "SetParametersAtomically.srv",
+    deps = [
+        "//msg:Parameter",
+        "//msg:SetParametersResult",
+        # Services have implicit deps
+        "@service_msgs//msg:ServiceEventInfo",
+    ],
+)

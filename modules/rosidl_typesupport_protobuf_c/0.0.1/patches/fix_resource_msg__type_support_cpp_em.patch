@@ -1,0 +1,37 @@
+diff --git a/rosidl_typesupport_protobuf_c/resource/msg__type_support.cpp.em b/rosidl_typesupport_protobuf_c/resource/msg__type_support.cpp.em
+index 93f6d84..d310dce 100644
+--- a/rosidl_typesupport_protobuf_c/resource/msg__type_support.cpp.em
++++ b/rosidl_typesupport_protobuf_c/resource/msg__type_support.cpp.em
+@@ -20,7 +20,7 @@
+ @# Included from rosidl_typesupport_protobuf_c/resource/idl__type_support.c.em
+ @{
+ import rosidl_parser.parser as rosidl
+-from rosidl_cmake import convert_camel_case_to_lower_case_underscore
++from rosidl_pycommon import convert_camel_case_to_lower_case_underscore
+ from rosidl_parser.definition import *
+ from rosidl_typesupport_protobuf import *
+ 
+@@ -311,17 +311,20 @@ static rosidl_message_type_support_t @(handle_name) = {
+ }  // namespace @(ns)
+ @[  end for]@
+ 
+-namespace rosidl_typesupport_protobuf
++/*
++namespace rosidl_typesupport_protobuf_c
+ {
+ 
+ template<>
+ ROSIDL_TYPESUPPORT_PROTOBUF_C_EXPORT__@(package_name)
+-const rosidl_message_type_support_t *get_message_type_support_handle<@(ros_type)>()
++const rosidl_message_type_support_t *
++get_message_type_support_handle<@(ros_type.replace("__", "::"))>()
+ {
+   return &@(namespaced_handle_name);
+ }
+ 
+-}  // namespace rosidl_typesupport_protobuf
++}  // namespace rosidl_typesupport_protobuf_c
++*/
+ 
+ #ifdef __cplusplus
+ extern "C"

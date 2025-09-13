@@ -1,0 +1,9 @@
+{
+    "url": "https://github.com/ros2/rcl/archive/refs/tags/10.2.2.tar.gz",
+    "integrity": "sha256-HVkkm2udcPcu6vC610S4RE/k9F0bvjTPwAEMgA4C2IY=",
+    "strip_prefix": "rcl-10.2.2/rcl_lifecycle",
+    "overlay": {
+        "BUILD.bazel": "sha256-F8kek6xD5GEv6xoOV8dhW/VqlWUNhjGcZY8kwEIyOIM=",
+        "MODULE.bazel": "sha256-dlnvVjpBpK4F4Oy4KUkcvEjSkxVWLPo0n4wC/IiNYKA="
+    }
+}

@@ -1,0 +1,131 @@
+
+# Copyright 2025 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Imports
+
+load("@ament_index_cpp//:rules.bzl", "ros_data")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_binary")
+
+package(default_visibility = ["//visibility:public"])
+
+# Data
+
+ros_data(
+    name = "config",
+    data = glob(["config/**"]),
+)
+
+# Libraries
+
+ALL_HEADERS = glob(["src/**/*.hpp"])
+
+cc_library(
+    name = "rmw_zenoh_cpp",
+    srcs = ALL_HEADERS + [
+        "src/detail/attachment_helpers.cpp",
+        "src/detail/cdr.cpp",
+        "src/detail/event.cpp",
+        "src/detail/graph_cache.cpp",
+        "src/detail/guard_condition.cpp",
+        "src/detail/identifier.cpp",
+        "src/detail/liveliness_utils.cpp",
+        "src/detail/logging.cpp",
+        "src/detail/message_type_support.cpp",
+        "src/detail/qos.cpp",
+        "src/detail/rmw_client_data.cpp",
+        "src/detail/rmw_context_impl_s.cpp",
+        "src/detail/rmw_node_data.cpp",
+        "src/detail/rmw_publisher_data.cpp",
+        "src/detail/rmw_service_data.cpp",
+        "src/detail/rmw_subscription_data.cpp",
+        "src/detail/service_type_support.cpp",
+        "src/detail/simplified_xxhash3.cpp",
+        "src/detail/type_support.cpp",
+        "src/detail/type_support_common.cpp",
+        "src/detail/zenoh_config.cpp",
+        "src/detail/zenoh_utils.cpp",
+        "src/rmw_event.cpp",
+        "src/rmw_get_network_flow_endpoints.cpp",
+        "src/rmw_get_node_info_and_types.cpp",
+        "src/rmw_get_service_names_and_types.cpp",
+        "src/rmw_get_topic_endpoint_info.cpp",
+        "src/rmw_get_topic_names_and_types.cpp",
+        "src/rmw_init.cpp",
+        "src/rmw_init_options.cpp",
+        "src/rmw_qos.cpp",
+        "src/rmw_zenoh.cpp",
+    ],
+    local_defines = ["ROS_PACKAGE_NAME=\\\"rmw_zenoh_cpp\\\""],
+    copts = ["-fvisibility=hidden"],
+    cxxopts = ["-fvisibility=hidden"],
+    linkopts = ["-fvisibility=hidden"],
+    data = [":config"],
+    deps = [
+        "@ament_index_cpp",
+        "@fastcdr",
+        "@rcpputils",
+        "@rcutils",
+        "@rmw",
+        "@rmw_dds_common",
+        "@rosidl_runtime_c",
+        "@rosidl_typesupport_fastrtps_c",
+        "@rosidl_typesupport_fastrtps_cpp",
+        "@tracetools",
+        "@zenoh-cpp",
+    ],
+)
+
+# ROS C/C++ binaries
+
+cc_binary(
+    name = "rmw_zenohd",
+    srcs = ALL_HEADERS + [
+        "src/detail/liveliness_utils.cpp",
+        "src/detail/logging.cpp",
+        "src/detail/qos.cpp",
+        "src/detail/simplified_xxhash3.cpp",
+        "src/detail/zenoh_config.cpp",
+        "src/zenohd/main.cpp",
+    ],
+    data = [":config"],
+    deps = [
+        "@ament_index_cpp",
+        "@rcpputils",
+        "@rcutils",
+        "@rmw",
+        "@rosidl_runtime_c",
+        "@zenoh-cpp",
+    ],
+)
+
+# Tests
+
+# cc_library(
+#     name = "rmw_zenoh_cpp_test_fixture",
+#     srcs = ALL_HEADERS + [
+#         "src/detail/logging.cpp",
+#         "src/detail/zenoh_config.cpp",
+#         "src/rmw_test_fixture.cpp",
+#     ],
+#     deps = [
+#         "@ament_index_cpp",
+#         "@rcpputils",
+#         "@rcutils",
+#         "@rmw",
+#         "@rmw_test_fixture",
+#         "@rosidl_runtime_c",
+#         "@zenoh-cpp",
+#     ],
+# )

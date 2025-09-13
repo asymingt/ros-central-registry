@@ -1,0 +1,31 @@
+diff --git a/rcl/test/rcl/test_publisher_wait_all_ack.cpp b/rcl/test/rcl/test_publisher_wait_all_ack.cpp
+index b927edb..d9a2df2 100644
+--- a/rcl/test/rcl/test_publisher_wait_all_ack.cpp
++++ b/rcl/test/rcl/test_publisher_wait_all_ack.cpp
+@@ -34,6 +34,10 @@
+ #include "osrf_testing_tools_cpp/scope_exit.hpp"
+ #include "rcl/error_handling.h"
+ 
++#include "rules_cc/cc/runfiles/runfiles.h"
++
++using rules_cc::cc::runfiles::Runfiles;
++
+ /* This class is used for test_wait_for_all_acked
+  */
+ class TestPublisherFixtureSpecial : public ::testing::Test
+@@ -50,8 +54,13 @@ public:
+       // By default, fastdds use intraprocess mode in this scenario. But this leads to high-speed
+       // data transmission. test_wait_for_all_acked need low data transmission. So disable this
+       // mode via fastdds profile file.
+-      std::filesystem::path fastdds_profile(TEST_RESOURCES_DIRECTORY);
+-      fastdds_profile /= "test_profile/disable_intraprocess.xml";
++      std::string error;
++      std::unique_ptr<Runfiles> runfiles = std::unique_ptr<Runfiles>(Runfiles::CreateForTest(&error));
++      if (runfiles) {
++        std::cerr << "ERROR: " <<  error.c_str() << std::endl;
++      }
++      std::filesystem::path fastdds_profile(
++        runfiles->Rlocation("rcl+/test/resources/test_profile/disable_intraprocess.xml"));
+       ASSERT_EQ(
+         rcutils_set_env("FASTDDS_DEFAULT_PROFILES_FILE", fastdds_profile.string().c_str()),
+         true);

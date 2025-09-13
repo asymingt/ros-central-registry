@@ -1,0 +1,276 @@
+# Copyright 2025 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Imports
+
+load("@rosidl_cmake//:rules.bzl", "ros_interface")
+
+package(default_visibility = ["//visibility:public"])
+
+# Interfaces
+
+ros_interface(
+    name = "Accel",
+    src = "Accel.msg",
+    deps = [
+        ":Vector3",
+    ],
+)
+
+ros_interface(
+    name = "AccelStamped",
+    src = "AccelStamped.msg",
+    deps = [
+        ":Accel",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "AccelWithCovariance",
+    src = "AccelWithCovariance.msg",
+    deps = [
+        ":Accel",
+    ],
+)
+
+ros_interface(
+    name = "AccelWithCovarianceStamped",
+    src = "AccelWithCovarianceStamped.msg",
+    deps = [
+        ":AccelWithCovariance",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "Inertia",
+    src = "Inertia.msg",
+    deps = [
+        "@geometry_msgs//msg:Vector3",
+    ],
+)
+
+ros_interface(
+    name = "InertiaStamped",
+    src = "InertiaStamped.msg",
+    deps = [
+        ":Inertia",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "Point",
+    src = "Point.msg",
+)
+
+ros_interface(
+    name = "Point32",
+    src = "Point32.msg",
+)
+
+ros_interface(
+    name = "PointStamped",
+    src = "PointStamped.msg",
+    deps = [
+        ":Point",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "Polygon",
+    src = "Polygon.msg",
+    deps = [
+        ":Point32",
+    ],
+)
+
+ros_interface(
+    name = "PolygonInstance",
+    src = "PolygonInstance.msg",
+    deps = [
+        "@geometry_msgs//msg:Polygon",
+    ],
+)
+
+ros_interface(
+    name = "PolygonInstanceStamped",
+    src = "PolygonInstanceStamped.msg",
+    deps = [
+        "@geometry_msgs//msg:PolygonInstance",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "PolygonStamped",
+    src = "PolygonStamped.msg",
+    deps = [
+        ":Polygon",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "Pose",
+    src = "Pose.msg",
+    deps = [
+        ":Point",
+        ":Quaternion",
+    ],
+)
+
+ros_interface(
+    name = "PoseArray",
+    src = "PoseArray.msg",
+    deps = [
+        ":Pose",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "PoseStamped",
+    src = "PoseStamped.msg",
+    deps = [
+        ":Pose",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "PoseWithCovariance",
+    src = "PoseWithCovariance.msg",
+    deps = [
+        ":Pose",
+    ],
+)
+
+ros_interface(
+    name = "PoseWithCovarianceStamped",
+    src = "PoseWithCovarianceStamped.msg",
+    deps = [
+        ":PoseWithCovariance",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "Quaternion",
+    src = "Quaternion.msg",
+)
+
+ros_interface(
+    name = "QuaternionStamped",
+    src = "QuaternionStamped.msg",
+    deps = [
+        ":Quaternion",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "Transform",
+    src = "Transform.msg",
+    deps = [
+        ":Quaternion",
+        ":Vector3",
+    ],
+)
+
+ros_interface(
+    name = "TransformStamped",
+    src = "TransformStamped.msg",
+    deps = [
+        ":Transform",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "Twist",
+    src = "Twist.msg",
+    deps = [
+        ":Vector3",
+    ],
+)
+
+ros_interface(
+    name = "TwistStamped",
+    src = "TwistStamped.msg",
+    deps = [
+        ":Twist",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "TwistWithCovariance",
+    src = "TwistWithCovariance.msg",
+    deps = [
+        ":Twist",
+    ],
+)
+
+ros_interface(
+    name = "TwistWithCovarianceStamped",
+    src = "TwistWithCovarianceStamped.msg",
+    deps = [
+        ":TwistWithCovariance",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "Vector3",
+    src = "Vector3.msg",
+)
+
+ros_interface(
+    name = "Vector3Stamped",
+    src = "Vector3Stamped.msg",
+    deps = [
+        ":Vector3",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "VelocityStamped",
+    src = "VelocityStamped.msg",
+    deps = [
+        ":Twist",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "Wrench",
+    src = "Wrench.msg",
+    deps = [
+        ":Vector3",
+    ],
+)
+
+ros_interface(
+    name = "WrenchStamped",
+    src = "WrenchStamped.msg",
+    deps = [
+        ":Wrench",
+        "@std_msgs//msg:Header",
+    ],
+)
+

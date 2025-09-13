@@ -1,0 +1,21 @@
+diff --git a/rosidl_typesupport_protobuf_cpp/rosidl_typesupport_protobuf_cpp/__init__.py b/rosidl_typesupport_protobuf_cpp/rosidl_typesupport_protobuf_cpp/__init__.py
+index 827e39f..4a529e1 100644
+--- a/rosidl_typesupport_protobuf_cpp/rosidl_typesupport_protobuf_cpp/__init__.py
++++ b/rosidl_typesupport_protobuf_cpp/rosidl_typesupport_protobuf_cpp/__init__.py
+@@ -16,14 +16,14 @@
+ #
+ # ================================= Apache 2.0 =================================
+ 
+-from rosidl_cmake import generate_files
++from rosidl_pycommon import generate_files
+ 
+ 
+ def generate_cpp(generator_arguments_file):
+     mapping = {
+         "idl__rosidl_typesupport_protobuf_cpp.hpp.em": "%s__rosidl_typesupport_protobuf_cpp.hpp",
+         "idl__typeadapter_protobuf_cpp.hpp.em": "%s__typeadapter_protobuf_cpp.hpp",
+-        "idl__type_support.cpp.em": "detail/%s__type_support.cpp",
++        "idl__type_support.cpp.em": "detail/%s__rosidl_typesupport_protobuf_cpp.cpp",
+     }
+     generate_files(generator_arguments_file, mapping)
+     return 0

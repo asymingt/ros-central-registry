@@ -1,0 +1,16 @@
+{
+    "homepage": "https://github.com/lttng/lttng-ust",
+    "maintainers": [
+        {
+            "email": "asymingt@users.noreply.github.com",
+            "name": "asymingt"
+        }
+    ],
+    "repository": [
+        "github:lttng/lttng-ust"
+    ],
+    "versions": [
+        "v2.14.0"
+    ],
+    "yanked_versions": {}
+}

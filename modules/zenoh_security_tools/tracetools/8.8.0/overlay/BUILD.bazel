@@ -1,0 +1,94 @@
+
+# Copyright 2025 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Imports
+
+load("@cmake_configure_file//:cmake_configure_file.bzl", "cmake_configure_file")
+load("@ament_cmake_gen_version_h//:macros.bzl", "generate_ros_version_defines")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+
+package(default_visibility = ["//visibility:public"])
+
+# Headers
+
+cmake_configure_file(
+    name = "version_h",
+    src = "@ament_cmake_gen_version_h//cmake:version.h.in",
+    out = "include/tracetools/version.h",
+    defines = generate_ros_version_defines(),
+)
+
+cmake_configure_file(
+    name = "config_h",
+    src = "include/tracetools/config.h.in",
+    out = "include/tracetools/config.h",
+    defines = [
+        "TRACETOOLS_DISABLED=1",
+        "TRACETOOLS_TRACEPOINTS_EXCLUDED=1",
+    ],
+)
+
+# Libraries
+
+cc_library(
+    name = "tracetools",
+    srcs = [
+        "src/tp_call.c",
+        "src/tracetools.c",
+        "src/utils.cpp",
+    ],
+    hdrs = [":config_h", ":version_h"] + glob([
+        "include/**/*.h",
+        "include/**/*.hpp"
+    ]),
+    includes = ["include"],
+    local_defines = ["ROS_PACKAGE_NAME=\\\"tracetools\\\""],
+    deps = [
+        "@lttng-ust//:lttng-ust",
+    ],
+)
+
+cc_library(
+    name = "tracetools_status",
+    srcs = ["src/status.c"],
+    deps = [
+        ":tracetools",
+    ],
+)
+
+# Executables
+
+cc_binary(
+    name = "status",
+    srcs = ["src/status_tool.c"],
+    deps = [
+        ":tracetools_status",
+    ],
+)
+
+# Tests
+
+cc_test(
+    name = "test_status",
+    visibility = ["//visibility:public"],
+    srcs = ["test/test_status.cpp"],
+    deps = [
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        ":tracetools",
+        ":tracetools_status",
+    ],
+    timeout = "short",
+)

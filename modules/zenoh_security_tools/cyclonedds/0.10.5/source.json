@@ -1,0 +1,14 @@
+{
+    "url": "https://github.com/eclipse-cyclonedds/cyclonedds/archive/refs/tags/0.10.5.tar.gz",
+    "integrity": "sha256-7D7ImMUrAvk5qWnNGiduIZQg5ehBmyHOonbbNbSCGEg=",
+    "strip_prefix": "cyclonedds-0.10.5",
+    "overlay": {
+        "BUILD.bazel": "sha256-Zi4cBktnvlIoYXthAvjOxpK/PJ5ahR0M9Q9RkVv3MSM=",
+        "MODULE.bazel": "sha256-XS4Ow+3V5ToWFKffYzfWsjh0ky9ViSzTe1sllR5/IHA=",
+        "MODULE.bazel.lock": "sha256-wW/cevmUZbklEUtckmAU1CNMlnjFymG+rWO8nlarog8="
+    },
+    "patches": {
+        "fix__gitignore.patch": "sha256-sgpFthkaxyQIUp/HIBUmCmZOujd+UcWo2X0AKdrp6+Y="
+    },
+    "patch_strip": 1
+}

@@ -1,0 +1,16 @@
+{
+    "homepage": "https://github.com/ros/pluginlib",
+    "maintainers": [
+        {
+            "email": "asymingt@users.noreply.github.com",
+            "name": "asymingt"
+        }
+    ],
+    "repository": [
+        "github:ros/pluginlib"
+    ],
+    "versions": [
+        "5.7.0"
+    ],
+    "yanked_versions": {}
+}

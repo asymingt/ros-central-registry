@@ -1,0 +1,9 @@
+{
+    "url": "https://github.com/ros2/rmw_implementation/archive/refs/tags/3.1.1.tar.gz",
+    "integrity": "sha256-Dc+9++n0B84WhQDV7em9avaOn0S6Ig9i9/+2rGYSJcA=",
+    "strip_prefix": "rmw_implementation-3.1.1/test_rmw_implementation",
+    "overlay": {
+        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "MODULE.bazel": "sha256-4GZ1vRdElXxV82fwrzcnDicfke9RooNAKbmLlLGHidY="
+    }
+}

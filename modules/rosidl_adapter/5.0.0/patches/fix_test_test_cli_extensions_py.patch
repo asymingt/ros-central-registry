@@ -1,0 +1,32 @@
+diff --git a/rosidl_adapter/test/test_cli_extensions.py b/rosidl_adapter/test/test_cli_extensions.py
+index b4f3399..0b4af1e 100644
+--- a/rosidl_adapter/test/test_cli_extensions.py
++++ b/rosidl_adapter/test/test_cli_extensions.py
+@@ -14,14 +14,26 @@
+ 
+ import filecmp
+ import pathlib
++import pytest
+ 
+ from pytest import CaptureFixture
+ from rosidl_cli.command.translate.api import translate
+ 
++from python.runfiles import Runfiles
+ 
+-DATA_PATH = pathlib.Path(__file__).parent / 'data'
++def get_data_path():
++    try:
++        runfiles = Runfiles.Create()
++        path = runfiles.Rlocation(source_repo="rosidl_adapter", path="test/data")
++        if path.is_dir():
++            return pathlib.Path(path)
++    except:
++        pass
++    return pathlib.Path(__file__).parent / 'data'
+ 
++DATA_PATH = get_data_path()
+ 
++@pytest.mark.xfail(reason="bazel does not support python entrypoints")
+ def test_translation_extensions(tmp_path: pathlib.Path,
+                                 capsys: CaptureFixture[str]) -> None:
+     # NOTE(hidmic): pytest and empy do not play along,

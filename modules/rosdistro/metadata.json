@@ -1,0 +1,16 @@
+{
+    "homepage": "https://github.com/ros/rosdistro",
+    "maintainers": [
+        {
+            "email": "asymingt@users.noreply.github.com",
+            "name": "asymingt"
+        }
+    ],
+    "repository": [
+        "github:ros/rosdistro"
+    ],
+    "versions": [
+        "rolling/2025-09-05"
+    ],
+    "yanked_versions": {}
+}

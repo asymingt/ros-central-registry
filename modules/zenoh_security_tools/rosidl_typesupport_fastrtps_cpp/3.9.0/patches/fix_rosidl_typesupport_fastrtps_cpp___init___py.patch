@@ -1,0 +1,15 @@
+diff --git a/rosidl_typesupport_fastrtps_cpp/rosidl_typesupport_fastrtps_cpp/__init__.py b/rosidl_typesupport_fastrtps_cpp/rosidl_typesupport_fastrtps_cpp/__init__.py
+index e971fac..d55a3a6 100644
+--- a/rosidl_typesupport_fastrtps_cpp/rosidl_typesupport_fastrtps_cpp/__init__.py
++++ b/rosidl_typesupport_fastrtps_cpp/rosidl_typesupport_fastrtps_cpp/__init__.py
+@@ -17,8 +17,7 @@ from rosidl_pycommon import generate_files
+ 
+ def generate_cpp(generator_arguments_file):
+     mapping = {
+-        'idl__rosidl_typesupport_fastrtps_cpp.hpp.em':
+-        'detail/%s__rosidl_typesupport_fastrtps_cpp.hpp',
+-        'idl__type_support.cpp.em': 'detail/dds_fastrtps/%s__type_support.cpp',
++        'idl__rosidl_typesupport_fastrtps_cpp.hpp.em': 'detail/%s__rosidl_typesupport_fastrtps_cpp.hpp',
++        'idl__type_support.cpp.em': 'detail/%s__rosidl_typesupport_fastrtps_cpp.cpp',
+     }
+     return generate_files(generator_arguments_file, mapping)

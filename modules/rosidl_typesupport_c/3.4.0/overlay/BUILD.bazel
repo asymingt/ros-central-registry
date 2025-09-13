@@ -1,0 +1,78 @@
+
+# Copyright 2025 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Imports
+
+load("@osrf_pycommon//:macros.bzl", "py_pytest")
+load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_python//python:defs.bzl", "py_library", "py_binary")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files(glob(["*.bzl"]))
+
+filegroup(
+    name = "interface_templates",
+    srcs = glob(["resource/**/*.em"]),
+)
+
+# C library
+
+cc_library(
+    name = "rosidl_typesupport_c",
+    srcs = glob(["src/**/*.c", "src/**/*.cpp", "src/**/*.hpp"]),
+    hdrs = glob(["include/**/*.h"]),
+    deps = [
+        "@rcpputils",
+        "@rosidl_runtime_c"
+    ],
+    includes = ["include"],
+)
+
+# Python library
+
+py_library(
+    name = "rosidl_typesupport_c_py",
+    srcs = glob(["rosidl_typesupport_c/**/*.py"]),
+    deps = [
+        "@ament_index_python",
+        "@rosidl_cli",
+        "@rosidl_pycommon",
+        "@rosidl_generator_c",
+    ],
+)
+
+genrule(
+    name = "cli_rename",
+    srcs = ["bin/rosidl_typesupport_c"],
+    outs = ["bin/rosidl_typesupport_c.py"],
+    cmd = "cp $(location :bin/rosidl_typesupport_c) $(location :bin/rosidl_typesupport_c.py)",
+)
+
+py_binary(
+    name = "cli",
+    srcs = [":bin/rosidl_typesupport_c.py"],
+    main = ":bin/rosidl_typesupport_c.py",
+    python_version = "PY3",
+    deps = [":rosidl_typesupport_c_py"],
+)
+
+py_pytest(
+    name = "test_cli_extension",
+    srcs = ["test/test_cli_extension.py"],
+    python_version = "PY3",
+#    data = ["test/msg/Test.msg"],
+    deps = [":rosidl_typesupport_c_py"],
+)

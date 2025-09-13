@@ -1,0 +1,13 @@
+diff --git a/rosidl_typesupport_protobuf_cpp/resource/idl__type_support.cpp.em b/rosidl_typesupport_protobuf_cpp/resource/idl__type_support.cpp.em
+index f1f18d3..8e851ce 100644
+--- a/rosidl_typesupport_protobuf_cpp/resource/idl__type_support.cpp.em
++++ b/rosidl_typesupport_protobuf_cpp/resource/idl__type_support.cpp.em
+@@ -32,7 +32,7 @@
+ @
+ @{
+ from rosidl_typesupport_protobuf import typesupport_header, ros_message_header
+-from rosidl_cmake import convert_camel_case_to_lower_case_underscore
++from rosidl_pycommon import convert_camel_case_to_lower_case_underscore
+ 
+ include_directives = set()
+ forward_declared_types = set()

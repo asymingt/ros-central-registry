@@ -1,0 +1,9 @@
+{
+    "url": "https://github.com/ros2/sros2/archive/refs/tags/0.16.1.tar.gz",
+    "integrity": "sha256-+oMMJKPxdSLu3BUAIMOx2bhWMi2UiqO2yLXMMD5un+Q=",
+    "strip_prefix": "sros2-0.16.1/sros2_cmake",
+    "overlay": {
+        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "MODULE.bazel": "sha256-kj+XE/Bs564jj0709JxmLaVSVpsiKdd552j0y0t70Qk="
+    }
+}

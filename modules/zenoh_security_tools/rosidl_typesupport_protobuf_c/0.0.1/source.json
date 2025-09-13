@@ -1,0 +1,20 @@
+{
+    "url": "https://github.com/asymingt/rosidl_typesupport_protobuf/archive/refs/tags/0.0.1.tar.gz",
+    "integrity": "sha256-o17hyXS8+7AdEBLExQ4v4+wCQX0KLlEtB5X4KPrGUlo=",
+    "strip_prefix": "rosidl_typesupport_protobuf-0.0.1/rosidl_typesupport_protobuf_c",
+    "overlay": {
+        "BUILD.bazel": "sha256-OL3tnLxvrLCnUoJBqMGH5W1MDOxSc4OMQrhOsXMCxII=",
+        "MODULE.bazel": "sha256-JjVEUeBsws5LtXfGfToyyXfhllO5xTkho4GJDyeqBj8="
+    },
+    "patches": {
+        "fix_CMakeLists_txt.patch": "sha256-vN5Omo0wi2VV7AT8ged26RNW/MKHyXoXFPQ6KR+HQ+Q=",
+        "fix_cmake_rosidl_typesupport_protobuf_c_generate_interfaces_cmake.patch": "sha256-Tl8ZJtLn23/7hAKtfJfCMTVDwoTblPmsC2WoAtLDwuQ=",
+        "fix_package_xml.patch": "sha256-oyfBQ8guci2GJyzEaFvChq+8wD0WSY+ts4cKWA4nxPI=",
+        "fix_resource_idl__type_support_cpp_em.patch": "sha256-7OR/szaaPsQ9ThyBFpGiO+TfrSGa89ggPLTGLLMyerg=",
+        "fix_resource_msg__rosidl_typesupport_protobuf_c_hpp_em.patch": "sha256-rhHCyGW9n1pmXfFXpH46+Rlyxt04rfk27ai1nh5uOpU=",
+        "fix_resource_msg__type_support_cpp_em.patch": "sha256-9CSTDPZCifN9xvWmii+cqf0CBfyjWFxJ0vYxpD5tpn4=",
+        "fix_resource_srv__type_support_cpp_em.patch": "sha256-B1c5/4KW0lvholkL9MeJspPRy5Hh1IQ/Ko7LW/58yaE=",
+        "fix_rosidl_typesupport_protobuf_c___init___py.patch": "sha256-isOFBz7mo6rfdpIcSse/ocSd0iVVqYroG3UD5M37bQo="
+    },
+    "patch_strip": 2
+}

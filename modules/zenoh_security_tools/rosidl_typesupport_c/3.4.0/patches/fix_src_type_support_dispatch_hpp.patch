@@ -1,0 +1,36 @@
+diff --git a/rosidl_typesupport_c/src/type_support_dispatch.hpp b/rosidl_typesupport_c/src/type_support_dispatch.hpp
+index c689f88..f63db1d 100644
+--- a/rosidl_typesupport_c/src/type_support_dispatch.hpp
++++ b/rosidl_typesupport_c/src/type_support_dispatch.hpp
+@@ -15,6 +15,8 @@
+ #ifndef TYPE_SUPPORT_DISPATCH_HPP_
+ #define TYPE_SUPPORT_DISPATCH_HPP_
+ 
++#include <dlfcn.h>
++
+ #include <cstddef>
+ #include <cstdio>
+ #include <cstring>
+@@ -53,6 +55,22 @@ get_typesupport_handle_function(
+       if (strcmp(map->typesupport_identifier[i], identifier) != 0) {
+         continue;
+       }
++    
++      /* First, check to see if the symbol is available in the current library
++       * to cover the case where Bazel has statically linked it in. */
++      void* handle = dlopen(NULL, RTLD_LAZY);
++      if (handle) {
++        void (*func_ptr)() = (void (*)()) dlsym(handle, map->symbol_name[i]);
++        if (func_ptr) {
++          typedef const TypeSupport * (* funcSignature)(void);
++          funcSignature func = reinterpret_cast<funcSignature>(func_ptr);
++          const TypeSupport * ts = func();
++          return ts;
++        }
++      }
++
++      /* If the symbol is not available on the current executable, fall back
++         to the shared library query */
+       rcpputils::SharedLibrary * lib = nullptr;
+ 
+       if (!map->data[i]) {

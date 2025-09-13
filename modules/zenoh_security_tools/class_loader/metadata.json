@@ -1,0 +1,16 @@
+{
+    "homepage": "https://github.com/ros/class_loader",
+    "maintainers": [
+        {
+            "email": "asymingt@users.noreply.github.com",
+            "name": "asymingt"
+        }
+    ],
+    "repository": [
+        "github:ros/class_loader"
+    ],
+    "versions": [
+        "2.9.0"
+    ],
+    "yanked_versions": {}
+}

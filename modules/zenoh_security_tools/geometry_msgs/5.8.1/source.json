@@ -1,0 +1,9 @@
+{
+    "url": "https://github.com/ros2/common_interfaces/archive/refs/tags/5.8.1.tar.gz",
+    "integrity": "sha256-4RPVCpaFsWIhxV46J+oUyni25mMUT+e1ROpcMMiXmMs=",
+    "strip_prefix": "common_interfaces-5.8.1/geometry_msgs",
+    "overlay": {
+        "MODULE.bazel": "sha256-ZbJpbEypFfcQVaEeFM38Q336WWP2uMPciH3CuVxZc1o=",
+        "msg/BUILD.bazel": "sha256-mheq794rFParUMrr7YaA/8me3qwo+FE/DRksbi9KLd8="
+    }
+}

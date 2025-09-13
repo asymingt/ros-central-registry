@@ -1,0 +1,13 @@
+{
+    "url": "https://github.com/ros2/rcutils/archive/refs/tags/7.0.0.tar.gz",
+    "integrity": "sha256-sMunKZR8bRMETnyno4Zp1qli//e7EtS85XPj5M+jNaE=",
+    "strip_prefix": "rcutils-7.0.0",
+    "overlay": {
+        "BUILD.bazel": "sha256-BGRJOXc1EXrvHQM/V73GEBW/EILtyGtcLH/PuyzelEs=",
+        "MODULE.bazel": "sha256-xYcGMQDh6UVYgTO6nPneDvKH2v+qUgt0cYVhVFpyI9w="
+    },
+    "patches": {
+        "fix_test_test_time_cpp.patch": "sha256-/gLwI3X1rDRf5abbMEqU0TUtghMg1CSvCTLHgIBsxww="
+    },
+    "patch_strip": 1
+}

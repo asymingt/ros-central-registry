@@ -1,0 +1,52 @@
+diff --git a/rosidl_adapter_proto/bin/rosidl_adapter_proto b/rosidl_adapter_proto/bin/rosidl_adapter_proto
+index bf49b23..0c566f9 100644
+--- a/rosidl_adapter_proto/bin/rosidl_adapter_proto
++++ b/rosidl_adapter_proto/bin/rosidl_adapter_proto
+@@ -23,7 +23,7 @@ import sys
+ import pathlib
+ import os
+ 
+-from rosidl_cmake import read_generator_arguments
++from rosidl_pycommon import read_generator_arguments
+ from rosidl_adapter_proto import generate_proto
+ from rosidl_adapter_proto import compile_proto
+ 
+@@ -35,10 +35,10 @@ def main(argv=sys.argv[1:]):
+         '--generator-arguments-file',
+         required=True,
+         help='The location of the file containing the generator arguments')
+-    parser.add_argument(
+-        '--protoc-path',
+-        required=True,
+-        help='Path to the protoc executable')
++    # parser.add_argument(
++    #     '--protoc-path',
++    #     required=True,
++    #     help='Path to the protoc executable')
+ 
+     args = parser.parse_args(argv)
+ 
+@@ -70,15 +70,17 @@ def main(argv=sys.argv[1:]):
+                     str(idl_rel_path.parent),
+                     idl_stem + ".proto"
+         )
++        print(str(pathlib.Path(generated_file).resolve()))
+         proto_files.append(str(pathlib.Path(generated_file).resolve()))
+ 
++
+     # compile proto files with protoc
+-    rc = compile_proto(protoc_path     = args.protoc_path,
+-                       proto_path_list = proto_path_list,
+-                       cpp_out_dir     = cpp_out_dir,
+-                       proto_files     = proto_files,
+-                       package_name    = package_name
+-    )
++    # rc = compile_proto(protoc_path     = args.protoc_path,
++    #                    proto_path_list = proto_path_list,
++    #                    cpp_out_dir     = cpp_out_dir,
++    #                    proto_files     = proto_files,
++    #                    package_name    = package_name
++    # )
+     
+     return rc
+ 

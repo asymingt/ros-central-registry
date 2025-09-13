@@ -1,0 +1,16 @@
+{
+    "url": "https://github.com/ros/rosdistro/archive/refs/tags/rolling/2025-09-05.tar.gz",
+    "integrity": "sha256-NFWQ4RYo3uIIJXpvDlg7f+PgqmwFXuDN4z171EsNxH4=",
+    "strip_prefix": "rosdistro-rolling-2025-09-05",
+    "overlay": {
+        "BUILD.bazel": "sha256-fDWlTCusElP9dlEJQk2ZBqeKft9z7Q+VWWL+6yk9aY8=",
+        "MODULE.bazel": "sha256-fi9gIXWVLkuzd9kG+30TatiyavHLs7LB2ZYYtDQ/5Ag=",
+        "bazel/python/BUILD.bazel": "sha256-CJs5ZtUYQm8MB0Wa3hEW/KX5JAfoGLAoTXlH2RHsmNY=",
+        "requirements.in": "sha256-7k1pmUNyhcerZCE8Ii+W9KxQrXRWUsjS/JsTRED54O4=",
+        "requirements_lock.txt": "sha256-c9FUR6GcoYPGaAEQiBKx+rfp+B0GenX6aeyQwvGQ/yE="
+    },
+    "patches": {
+        "fix__gitignore.patch": "sha256-uBgZaK1ljAHP5uXT8UizJq30yf/8rMrVyeGdfnO326k="
+    },
+    "patch_strip": 1
+}

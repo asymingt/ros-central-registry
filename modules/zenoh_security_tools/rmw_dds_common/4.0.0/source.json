@@ -1,0 +1,10 @@
+{
+    "url": "https://github.com/ros2/rmw_dds_common/archive/refs/tags/4.0.0.tar.gz",
+    "integrity": "sha256-0TCUBJK/QwGFW6q5VV19sHAKwDwsFb1AsXT4T03F73A=",
+    "strip_prefix": "rmw_dds_common-4.0.0/rmw_dds_common",
+    "overlay": {
+        "BUILD.bazel": "sha256-Y47K1mY9Hju2Ef9y7JRBOS+lMFHnnQN9wUAPH0l9yFs=",
+        "MODULE.bazel": "sha256-rva54ntRjhkdaLRZUg9t4V5g9jA0vfisvluIQ3zfGh8=",
+        "msg/BUILD.bazel": "sha256-bo8e0l0u+leQWAnzmwF3560itF5oVk3VJ91JZ42QQ/w="
+    }
+}

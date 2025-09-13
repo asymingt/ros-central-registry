@@ -1,0 +1,9 @@
+{
+    "url": "https://github.com/ros2/rosidl_defaults/archive/refs/tags/1.8.1.tar.gz",
+    "integrity": "sha256-72vocJlAi/+UJitLLyC0XFrZ47v4t1GSDLLlnaGKNl8=",
+    "strip_prefix": "rosidl_defaults-1.8.1/rosidl_default_runtime",
+    "overlay": {
+        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "MODULE.bazel": "sha256-K6Ki6FF48gAkxMnHBRRY/tD6qy90Q0fjcOq7yQYjDlg="
+    }
+}

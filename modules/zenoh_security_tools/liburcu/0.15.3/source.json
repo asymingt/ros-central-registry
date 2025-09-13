@@ -1,0 +1,14 @@
+{
+    "url": "https://github.com/urcu/userspace-rcu/archive/refs/tags/v0.15.3.tar.gz",
+    "integrity": "sha256-ubNRa0pAPpb+a+RxpS32ct/Ykkm4snsZvJ70zHy0AnU=",
+    "strip_prefix": "userspace-rcu-0.15.3",
+    "overlay": {
+        "BUILD.bazel": "sha256-YpswQI70a/wjsFUKuUhOyLBfrHfnA8lIKlohHZBM9G0=",
+        "MODULE.bazel": "sha256-JehU9jRCFDw5z70v7z79RPp3R6evDQVo30QrpujRL2Q=",
+        "MODULE.bazel.lock": "sha256-Tr9ulHNInAqcilcb9tSX309K68GsVOrwGM5aYO6BWp4="
+    },
+    "patches": {
+        "fix__gitignore.patch": "sha256-AVK/Cfl8+8QHdNc6q04JPWYiKMCaiJiyV2MHDO35QXA="
+    },
+    "patch_strip": 1
+}

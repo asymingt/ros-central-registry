@@ -1,0 +1,19 @@
+diff --git a/rosidl_typesupport_protobuf_c/rosidl_typesupport_protobuf_c/__init__.py b/rosidl_typesupport_protobuf_c/rosidl_typesupport_protobuf_c/__init__.py
+index db60ce3..b9f887b 100644
+--- a/rosidl_typesupport_protobuf_c/rosidl_typesupport_protobuf_c/__init__.py
++++ b/rosidl_typesupport_protobuf_c/rosidl_typesupport_protobuf_c/__init__.py
+@@ -12,12 +12,12 @@
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+ 
+-from rosidl_cmake import generate_files
++from rosidl_pycommon import generate_files
+ 
+ 
+ def generate_typesupport_protobuf_c(generator_arguments_file):
+     mapping = {
+         'idl__rosidl_typesupport_protobuf_c.hpp.em': '%s__rosidl_typesupport_protobuf_c.hpp',
+-        'idl__type_support.cpp.em': 'detail/%s__type_support.cpp',
++        'idl__type_support.cpp.em': '%s__rosidl_typesupport_protobuf_c.cpp',
+     }
+     generate_files(generator_arguments_file, mapping)

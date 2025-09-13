@@ -1,0 +1,16 @@
+{
+    "homepage": "https://github.com/ros-tooling/libstatistics_collector",
+    "maintainers": [
+        {
+            "email": "asymingt@users.noreply.github.com",
+            "name": "asymingt"
+        }
+    ],
+    "repository": [
+        "github:ros-tooling/libstatistics_collector"
+    ],
+    "versions": [
+        "2.1.1"
+    ],
+    "yanked_versions": {}
+}

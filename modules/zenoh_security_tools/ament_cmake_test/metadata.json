@@ -1,0 +1,16 @@
+{
+    "homepage": "https://github.com/ament/ament_cmake",
+    "maintainers": [
+        {
+            "email": "asymingt@users.noreply.github.com",
+            "name": "asymingt"
+        }
+    ],
+    "repository": [
+        "github:ament/ament_cmake"
+    ],
+    "versions": [
+        "2.8.4"
+    ],
+    "yanked_versions": {}
+}

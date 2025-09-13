@@ -1,0 +1,13 @@
+diff --git a/rosidl_typesupport_protobuf_cpp/resource/idl__typeadapter_protobuf_cpp.hpp.em b/rosidl_typesupport_protobuf_cpp/resource/idl__typeadapter_protobuf_cpp.hpp.em
+index 6140761..dd7ff7b 100644
+--- a/rosidl_typesupport_protobuf_cpp/resource/idl__typeadapter_protobuf_cpp.hpp.em
++++ b/rosidl_typesupport_protobuf_cpp/resource/idl__typeadapter_protobuf_cpp.hpp.em
+@@ -22,7 +22,7 @@
+ 
+ from rosidl_parser.definition import Message
+ 
+-from rosidl_cmake import convert_camel_case_to_lower_case_underscore
++from rosidl_pycommon import convert_camel_case_to_lower_case_underscore
+ from rosidl_typesupport_protobuf import *
+ 
+ system_header_files = [

@@ -1,0 +1,16 @@
+{
+    "url": "https://github.com/asymingt/rosidl_typesupport_protobuf/archive/refs/tags/0.0.1.tar.gz",
+    "integrity": "sha256-o17hyXS8+7AdEBLExQ4v4+wCQX0KLlEtB5X4KPrGUlo=",
+    "strip_prefix": "rosidl_typesupport_protobuf-0.0.1/rosidl_typesupport_protobuf",
+    "overlay": {
+        "BUILD.bazel": "sha256-aRGd5oWHEQBGRW5DZjxt94aCO30jVrHEfnIPQXlUFCw=",
+        "MODULE.bazel": "sha256-uSc9uQw/AqhJbVpcl+tA7e3xob3CwEmh5R4UBMk7pEY="
+    },
+    "patches": {
+        "fix_CMakeLists_txt.patch": "sha256-iuyiDKmCvisGW91N406iQdsHVg2t5/6hOeYBcuDXwok=",
+        "fix_include_rosidl_typesupport_protobuf_proto_descriptor_helper_hpp.patch": "sha256-sBqtu5IeMx9BCk+gaL0WSSP5oRLJAWdL2uPg7TWEjlQ=",
+        "fix_package_xml.patch": "sha256-EpK1RUvHHYtk452YR0eRs7ixGHBCDEun6de+e77Ljk0=",
+        "fix_rosidl_typesupport_protobuf___init___py.patch": "sha256-LByKnJ6p5kvvQXUjb8sZwlYdpO6XptjpM/tRyWh2LEs="
+    },
+    "patch_strip": 2
+}

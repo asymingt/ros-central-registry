@@ -1,0 +1,9 @@
+{
+    "url": "https://github.com/ros2/common_interfaces/archive/refs/tags/5.8.1.tar.gz",
+    "integrity": "sha256-4RPVCpaFsWIhxV46J+oUyni25mMUT+e1ROpcMMiXmMs=",
+    "strip_prefix": "common_interfaces-5.8.1/trajectory_msgs",
+    "overlay": {
+        "MODULE.bazel": "sha256-ubXSydpjjjkh015GIslgzrnv8+uT6KHZseEg/m/hp5M=",
+        "msg/BUILD.bazel": "sha256-m5fRfgmZN1YRC7xIVZU+NwhnuFQ7rOfwPQxz+iv5Sg8="
+    }
+}

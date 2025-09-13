@@ -1,0 +1,10 @@
+{
+    "url": "https://github.com/ros2/rclcpp/archive/refs/tags/30.0.0.tar.gz",
+    "integrity": "sha256-A8qAS1nVZa1FIBBKl72CX7BXdJge7Slf6ebDXjCl5v0=",
+    "strip_prefix": "rclcpp-30.0.0/rclcpp",
+    "overlay": {
+        "BUILD.bazel": "sha256-oSfzqHzNOSaRs08Y3zhWA5fbF7VKtpuy9m2A1gOLQak=",
+        "MODULE.bazel": "sha256-Y95X8SQ5f1YHAYzrvVgcxGFhXs8rah6hygKdgoMUL9E=",
+        "test/msg/BUILD.bazel": "sha256-UvGrgPUYEOH/E61N85eynSsy33upbkaKDiGDtp/Amlk="
+    }
+}

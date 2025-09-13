@@ -1,0 +1,16 @@
+{
+    "homepage": "https://github.com/eProsima/Fast-CDR",
+    "maintainers": [
+        {
+            "email": "asymingt@users.noreply.github.com",
+            "name": "asymingt"
+        }
+    ],
+    "repository": [
+        "github:eProsima/Fast-CDR"
+    ],
+    "versions": [
+        "2.3.0"
+    ],
+    "yanked_versions": {}
+}

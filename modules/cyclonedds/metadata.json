@@ -1,0 +1,16 @@
+{
+    "homepage": "https://github.com/eclipse-cyclonedds/cyclonedds",
+    "maintainers": [
+        {
+            "email": "asymingt@users.noreply.github.com",
+            "name": "asymingt"
+        }
+    ],
+    "repository": [
+        "github:eclipse-cyclonedds/cyclonedds"
+    ],
+    "versions": [
+        "0.10.5"
+    ],
+    "yanked_versions": {}
+}

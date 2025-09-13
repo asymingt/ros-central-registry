@@ -1,0 +1,102 @@
+
+# Copyright 2025 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Imports
+
+load("@rosidl_cmake//:rules.bzl", "ros_interface")
+
+package(default_visibility = ["//visibility:public"])
+
+ros_interface(
+    name = "FloatingPointRange",
+    src = "FloatingPointRange.msg",
+)
+
+ros_interface(
+    name = "IntegerRange",
+    src = "IntegerRange.msg",
+)
+
+ros_interface(
+    name = "ListParametersResult",
+    src = "ListParametersResult.msg",
+)
+
+ros_interface(
+    name = "Log",
+    src = "Log.msg",
+    deps = [
+        "@builtin_interfaces//msg:Time",
+    ],
+)
+
+ros_interface(
+    name = "LoggerLevel",
+    src = "LoggerLevel.msg",
+)
+
+ros_interface(
+    name = "Parameter",
+    src = "Parameter.msg",
+    deps = [
+        ":ParameterValue",
+    ],
+)
+
+ros_interface(
+    name = "ParameterDescriptor",
+    src = "ParameterDescriptor.msg",
+    deps = [
+        ":FloatingPointRange",
+        ":IntegerRange",
+    ],
+)
+
+ros_interface(
+    name = "ParameterEvent",
+    src = "ParameterEvent.msg",
+    deps = [
+        ":Parameter",
+        "@builtin_interfaces//msg:Time",
+    ],
+)
+
+ros_interface(
+    name = "ParameterEventDescriptors",
+    src = "ParameterEventDescriptors.msg",
+    deps = [
+        ":ParameterDescriptor",
+    ],
+)
+
+ros_interface(
+    name = "ParameterType",
+    src = "ParameterType.msg",
+)
+
+ros_interface(
+    name = "ParameterValue",
+    src = "ParameterValue.msg",
+)
+
+ros_interface(
+    name = "SetLoggerLevelsResult",
+    src = "SetLoggerLevelsResult.msg",
+)
+
+ros_interface(
+    name = "SetParametersResult",
+    src = "SetParametersResult.msg",
+)

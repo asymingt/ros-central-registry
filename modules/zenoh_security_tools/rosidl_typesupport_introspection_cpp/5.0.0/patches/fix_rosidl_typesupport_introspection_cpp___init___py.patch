@@ -1,0 +1,15 @@
+diff --git a/rosidl_typesupport_introspection_cpp/rosidl_typesupport_introspection_cpp/__init__.py b/rosidl_typesupport_introspection_cpp/rosidl_typesupport_introspection_cpp/__init__.py
+index b4ba5ed..689c474 100644
+--- a/rosidl_typesupport_introspection_cpp/rosidl_typesupport_introspection_cpp/__init__.py
++++ b/rosidl_typesupport_introspection_cpp/rosidl_typesupport_introspection_cpp/__init__.py
+@@ -26,8 +26,7 @@ def generate_cpp(generator_arguments_file: str) -> List[str]:
+     :type generator_arguments_file: str
+     """
+     mapping = {
+-        'idl__rosidl_typesupport_introspection_cpp.hpp.em':
+-        'detail/%s__rosidl_typesupport_introspection_cpp.hpp',
+-        'idl__type_support.cpp.em': 'detail/%s__type_support.cpp',
++        'idl__rosidl_typesupport_introspection_cpp.hpp.em': 'detail/%s__rosidl_typesupport_introspection_cpp.hpp',
++        'idl__type_support.cpp.em': 'detail/%s__rosidl_typesupport_introspection_cpp.cpp',
+     }
+     return generate_files(generator_arguments_file, mapping)

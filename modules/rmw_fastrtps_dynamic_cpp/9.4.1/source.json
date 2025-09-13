@@ -1,0 +1,9 @@
+{
+    "url": "https://github.com/ros2/rmw_fastrtps/archive/refs/tags/9.4.1.tar.gz",
+    "integrity": "sha256-7dUBQZqoLvVrk4C1veSWCkuDyMa13W+XBc26cAIZ6Mc=",
+    "strip_prefix": "rmw_fastrtps-9.4.1/rmw_fastrtps_dynamic_cpp",
+    "overlay": {
+        "BUILD.bazel": "sha256-tyx5JNOMqp+NE0WhQbUQL74Om751exLDDvT5HR7bGiE=",
+        "MODULE.bazel": "sha256-KCziov6f853jfpnCiPflKDd0YGrGK+BW4Xg61CAnpKU="
+    }
+}

@@ -1,0 +1,64 @@
+# Copyright 2025 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rules_python//python:defs.bzl", "py_library", "py_binary")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files(glob(["*.bzl"]))
+
+# These are the templates used for per-message header and source generation.
+filegroup(
+    name = "interface_templates",
+    srcs = glob(["resource/**/*.em"]),
+)
+
+# Template used for per-package visibility header generation.
+exports_files(
+    srcs = ["resource/rosidl_generator_c__visibility_control.h.in"],
+)
+
+# This is the python library that does the bulk of the work for converting
+# the .msg, .srv, .action files to the generic .idl representation.
+py_library(
+    name = "rosidl_generator_c",
+    srcs = glob(["rosidl_generator_c/**/*.py"]),
+    deps = [
+        "@ament_index_python",
+        "@rcutils",
+        "@rosidl_cli",
+        "@rosidl_generator_type_description",
+        "@rosidl_parser",
+        "@rosidl_pycommon",
+    ],
+)
+
+# The py_binary target does not accept files without the .py or .py3 suffix.
+# This rule simply renames the file to make it usable.
+genrule(
+    name = "cli_rename",
+    srcs = ["bin/rosidl_generator_c"],
+    outs = ["bin/rosidl_generator_c.py"],
+    cmd = "cp $(location :bin/rosidl_generator_c) $(location :bin/rosidl_generator_c.py)",
+)
+
+# This makes the setup script executable, and ensures that eny downstream
+# consumers of this script bring in the correct dependencies.
+py_binary(
+    name = "cli",
+    srcs = [":bin/rosidl_generator_c.py"],
+    main = ":bin/rosidl_generator_c.py",
+    python_version = "PY3",
+    deps = [":rosidl_generator_c"],
+)

@@ -1,0 +1,16 @@
+{
+    "homepage": "https://github.com/eProsima/Fast-DDS",
+    "maintainers": [
+        {
+            "email": "asymingt@users.noreply.github.com",
+            "name": "asymingt"
+        }
+    ],
+    "repository": [
+        "github:eProsima/Fast-DDS"
+    ],
+    "versions": [
+        "3.2.2"
+    ],
+    "yanked_versions": {}
+}

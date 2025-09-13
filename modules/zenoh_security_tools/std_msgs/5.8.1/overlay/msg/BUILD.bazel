@@ -1,0 +1,210 @@
+# Copyright 2025 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Imports
+
+load("@rosidl_cmake//:rules.bzl", "ros_interface")
+
+package(default_visibility = ["//visibility:public"])
+
+# Interfaces
+
+ros_interface(
+    name = "Bool",
+    src = "Bool.msg",
+)
+
+ros_interface(
+    name = "Byte",
+    src = "Byte.msg",
+)
+
+ros_interface(
+    name = "ByteMultiArray",
+    src = "ByteMultiArray.msg",
+    deps = [
+        ":MultiArrayLayout",
+    ],
+)
+
+ros_interface(
+    name = "Char",
+    src = "Char.msg",
+)
+
+ros_interface(
+    name = "ColorRGBA",
+    src = "ColorRGBA.msg",
+)
+
+ros_interface(
+    name = "Empty",
+    src = "Empty.msg",
+)
+
+ros_interface(
+    name = "Float32",
+    src = "Float32.msg",
+)
+
+ros_interface(
+    name = "Float32MultiArray",
+    src = "Float32MultiArray.msg",
+    deps = [
+        ":MultiArrayLayout",
+    ],
+)
+
+ros_interface(
+    name = "Float64",
+    src = "Float64.msg",
+)
+
+ros_interface(
+    name = "Float64MultiArray",
+    src = "Float64MultiArray.msg",
+    deps = [
+        ":MultiArrayLayout",
+    ],
+)
+
+ros_interface(
+    name = "Header",
+    src = "Header.msg",
+    deps = [
+        "@builtin_interfaces//msg:Time",
+    ],
+)
+
+ros_interface(
+    name = "Int16",
+    src = "Int16.msg",
+)
+
+ros_interface(
+    name = "Int16MultiArray",
+    src = "Int16MultiArray.msg",
+    deps = [
+        ":MultiArrayLayout",
+    ],
+)
+
+ros_interface(
+    name = "Int32",
+    src = "Int32.msg",
+)
+
+ros_interface(
+    name = "Int32MultiArray",
+    src = "Int32MultiArray.msg",
+    deps = [
+        ":MultiArrayLayout",
+    ],
+)
+
+ros_interface(
+    name = "Int64",
+    src = "Int64.msg",
+)
+
+ros_interface(
+    name = "Int64MultiArray",
+    src = "Int64MultiArray.msg",
+    deps = [
+        ":MultiArrayLayout",
+    ],
+)
+
+ros_interface(
+    name = "Int8",
+    src = "Int8.msg",
+)
+
+ros_interface(
+    name = "Int8MultiArray",
+    src = "Int8MultiArray.msg",
+    deps = [
+        ":MultiArrayLayout",
+    ],
+)
+
+ros_interface(
+    name = "MultiArrayDimension",
+    src = "MultiArrayDimension.msg",
+)
+
+ros_interface(
+    name = "MultiArrayLayout",
+    src = "MultiArrayLayout.msg",
+    deps = [
+        ":MultiArrayDimension",
+    ],
+)
+
+ros_interface(
+    name = "String",
+    src = "String.msg",
+)
+
+ros_interface(
+    name = "UInt16",
+    src = "UInt16.msg",
+)
+
+ros_interface(
+    name = "UInt16MultiArray",
+    src = "UInt16MultiArray.msg",
+    deps = [
+        ":MultiArrayLayout",
+    ],
+)
+
+ros_interface(
+    name = "UInt32",
+    src = "UInt32.msg",
+)
+
+ros_interface(
+    name = "UInt32MultiArray",
+    src = "UInt32MultiArray.msg",
+    deps = [
+        ":MultiArrayLayout",
+    ],
+)
+
+ros_interface(
+    name = "UInt64",
+    src = "UInt64.msg",
+)
+
+ros_interface(
+    name = "UInt64MultiArray",
+    src = "UInt64MultiArray.msg",
+    deps = [
+        ":MultiArrayLayout",
+    ],
+)
+
+ros_interface(
+    name = "UInt8",
+    src = "UInt8.msg",
+)
+
+ros_interface(
+    name = "UInt8MultiArray",
+    src = "UInt8MultiArray.msg",
+    deps = [
+        ":MultiArrayLayout",
+    ],
+)

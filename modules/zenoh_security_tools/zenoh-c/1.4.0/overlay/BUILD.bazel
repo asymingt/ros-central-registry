@@ -1,0 +1,76 @@
+# Copyright 2025 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rules_cc//cc:defs.bzl", "cc_test")
+load("@rules_foreign_cc//foreign_cc:defs.bzl", "cmake")
+
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "srcs",
+    srcs = glob(["**"], exclude=[
+        # Platform dependent generated files
+        "include/zenoh_configure.h",
+        "include/zenoh_opaque.h",
+        # Build resources
+        ".build_resources/**",
+        "src/opaque_types/mod.rs",
+        # Bazel files
+        "BUILD.bazel",
+        "MODULE.bazel",
+        "MODULE.bazel.lock"]
+    ),
+)
+
+cmake(
+    name = "zenoh-c",
+    cache_entries = {
+        "ZENOHC_CARGO_FLAGS" : "--features=shared-memory zenoh/transport_serial",
+        "ZENOHC_BUILD_WITH_UNSTABLE_API" : "TRUE",
+    },
+    lib_source = ":srcs",
+    out_static_libs = ["libzenohc.a"],
+    out_include_dir = "include",
+)
+
+[
+    cc_test(
+        name = 'test_' + name.removesuffix('_test'),
+        srcs = [       
+            "tests/z_int_helpers.h",
+            "tests/" + name + ".c"
+        ],
+        copts = [
+            "-Wno-unused-variable",
+            "-Wno-missing-braces"
+        ],
+        deps = [":zenoh-c"],
+        timeout = "short"
+    )
+    for name in [
+        "z_api_config_test",
+        "z_api_constants",
+        "z_api_double_drop_test",
+        "z_api_drop_options",
+        "z_api_encoding_test",
+        "z_api_keyexpr_drop_test",
+        "z_api_keyexpr_test",
+        "z_api_liveliness",
+        "z_api_null_drop_test",
+        "z_api_payload_test",
+        "z_api_session_test",
+        "z_api_shm_test",
+        "z_api_unitinialized_check",
+    ]
+]

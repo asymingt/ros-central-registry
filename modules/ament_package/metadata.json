@@ -1,0 +1,16 @@
+{
+    "homepage": "https://github.com/ament/ament_package",
+    "maintainers": [
+        {
+            "email": "asymingt@users.noreply.github.com",
+            "name": "asymingt"
+        }
+    ],
+    "repository": [
+        "github:ament/ament_package"
+    ],
+    "versions": [
+        "0.18.0"
+    ],
+    "yanked_versions": {}
+}

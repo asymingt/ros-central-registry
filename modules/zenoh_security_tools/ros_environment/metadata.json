@@ -1,0 +1,16 @@
+{
+    "homepage": "https://github.com/ros/ros_environment",
+    "maintainers": [
+        {
+            "email": "asymingt@users.noreply.github.com",
+            "name": "asymingt"
+        }
+    ],
+    "repository": [
+        "github:ros/ros_environment"
+    ],
+    "versions": [
+        "4.4.1"
+    ],
+    "yanked_versions": {}
+}

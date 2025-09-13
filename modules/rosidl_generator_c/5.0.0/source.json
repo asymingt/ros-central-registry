@@ -1,0 +1,16 @@
+{
+    "url": "https://github.com/ros2/rosidl/archive/refs/tags/5.0.0.tar.gz",
+    "integrity": "sha256-TSUAVI2+hRv0LVlqNmnsTbzkm74bvMhEEIcmZK+zDW0=",
+    "strip_prefix": "rosidl-5.0.0/rosidl_generator_c",
+    "overlay": {
+        "BUILD.bazel": "sha256-SGRIi/8MCF/Vf/HIqkBuNjmwNaXerBzEysO42RiBkQ8=",
+        "MODULE.bazel": "sha256-CrtyCiEUR89PFuUk/fP+l82dqtGsWpcdBJEOZJK9pOQ=",
+        "aspects.bzl": "sha256-5nZneYLfXTRs55HLVS1yO7UidygIVksZR1HiD/1L9F0=",
+        "rules.bzl": "sha256-lOk6SJcO7y4OhtTz7ZcZaxq5oqOAGKYOLgh3awtU/i0=",
+        "types.bzl": "sha256-Ybf1kzVI+tEc9NkMhRdxpVlwsMHU0sCtVICQYfOlzOM="
+    },
+    "patches": {
+        "fix_rosidl_generator_c___init___py.patch": "sha256-sbR3Y+QWqmEA3ZK1OeAXmXKMdI3zhSjGD+lu/KEv1c0="
+    },
+    "patch_strip": 2
+}

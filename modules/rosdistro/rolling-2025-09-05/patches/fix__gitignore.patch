@@ -1,0 +1,11 @@
+diff --git a/.gitignore b/.gitignore
+index e01b29e2c..46a18d0a5 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -2,3 +2,6 @@
+ .DS_STORE
+ *.pyc
+ .venv/*
++
++bazel-*
++MODULE.bazel.lock

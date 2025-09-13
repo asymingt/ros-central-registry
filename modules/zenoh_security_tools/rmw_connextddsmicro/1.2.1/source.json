@@ -1,0 +1,9 @@
+{
+    "url": "https://github.com/ros2/rmw_connextdds/archive/refs/tags/1.2.1.tar.gz",
+    "integrity": "sha256-nYTse6+w7FkqRJSftiN7JG3fa22VRkdOhiN9lRsRZYc=",
+    "strip_prefix": "rmw_connextdds-1.2.1/rmw_connextddsmicro",
+    "overlay": {
+        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "MODULE.bazel": "sha256-IhD4zgqi0EwSfYcAISG5uaCJaS7AwDMxvCP8D1bLTfk="
+    }
+}

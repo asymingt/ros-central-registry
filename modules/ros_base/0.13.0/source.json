@@ -1,0 +1,9 @@
+{
+    "url": "https://github.com/ros2/variants/archive/refs/tags/0.13.0.tar.gz",
+    "integrity": "sha256-0UzA7AklEbJssr5gIA6utZ7hsdIXULfWP+mPR25tuJ8=",
+    "strip_prefix": "variants-0.13.0/ros_base",
+    "overlay": {
+        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "MODULE.bazel": "sha256-UDyWtWtLey+P6pKjzlPObWe2DVhKL3tA5s1i3oRGUsI="
+    }
+}

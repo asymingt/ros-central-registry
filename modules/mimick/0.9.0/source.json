@@ -1,0 +1,13 @@
+{
+    "url": "https://github.com/ros2/Mimick/archive/refs/tags/ros2.tar.gz",
+    "integrity": "sha256-1VWM1BnI1GvclYBky5f5Y9HqeThmQUwCWQbsFQM1Eu0=",
+    "strip_prefix": "Mimick-ros2",
+    "overlay": {
+        "BUILD.bazel": "sha256-KlGsQ4/iWLO/RzHiWyfV6PN865E9mw1rK84MoiujbG4=",
+        "MODULE.bazel": "sha256-fdMNAGBLdFLY1klKt0fuG0UBi5ICHeXpXewBHywUEEU="
+    },
+    "patches": {
+        "fix__gitignore.patch": "sha256-8nV5TTrg4NGVTAlajekyo1IGrcSBquWdHxI5A4YqXW4="
+    },
+    "patch_strip": 1
+}

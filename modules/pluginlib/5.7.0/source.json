@@ -1,0 +1,9 @@
+{
+    "url": "https://github.com/ros/pluginlib/archive/refs/tags/5.7.0.tar.gz",
+    "integrity": "sha256-xANevigjKaFLnGUM9dnio3XjGOxPvNwtubLd5e891Z8=",
+    "strip_prefix": "pluginlib-5.7.0",
+    "overlay": {
+        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "MODULE.bazel": "sha256-sKdG4mVI/HmxI1RngyhPH8uqEJFcRIvcIO6BNOBi0tU="
+    }
+}

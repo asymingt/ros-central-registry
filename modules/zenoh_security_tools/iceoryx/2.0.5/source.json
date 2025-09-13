@@ -1,0 +1,13 @@
+{
+    "url": "https://github.com/eclipse-iceoryx/iceoryx/archive/refs/tags/v2.0.5.tar.gz",
+    "integrity": "sha256-v23nDj7e5xIj+ZOim/9eYa+VzkhxEEkp2L0XKfVEuvs=",
+    "strip_prefix": "iceoryx-2.0.5",
+    "overlay": {
+        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "MODULE.bazel": "sha256-vCYoaY73KJabZVc+e0QndaRzj7O0N5NGO1f+d9zN59c="
+    },
+    "patches": {
+        "fix__gitignore.patch": "sha256-PBedipG8cBZ7RDcKkPcaRjwaiorCCqeo8UUo8NXAm44="
+    },
+    "patch_strip": 1
+}

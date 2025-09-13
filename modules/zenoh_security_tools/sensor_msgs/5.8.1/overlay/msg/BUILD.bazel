@@ -1,0 +1,233 @@
+
+# Copyright 2025 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Imports
+
+load("@rosidl_cmake//:rules.bzl", "ros_interface")
+
+package(default_visibility = ["//visibility:public"])
+
+# Interfaces
+
+ros_interface(
+    name = "BatteryState",
+    src = "BatteryState.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "CameraInfo",
+    src = "CameraInfo.msg",
+    deps = [
+        ":RegionOfInterest",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "ChannelFloat32",
+    src = "ChannelFloat32.msg",
+)
+
+ros_interface(
+    name = "CompressedImage",
+    src = "CompressedImage.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "FluidPressure",
+    src = "FluidPressure.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "Illuminance",
+    src = "Illuminance.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "Image",
+    src = "Image.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "Imu",
+    src = "Imu.msg",
+    deps = [
+        "@geometry_msgs//msg:Quaternion",
+        "@geometry_msgs//msg:Vector3",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "JointState",
+    src = "JointState.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "Joy",
+    src = "Joy.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "JoyFeedback",
+    src = "JoyFeedback.msg",
+)
+
+ros_interface(
+    name = "JoyFeedbackArray",
+    src = "JoyFeedbackArray.msg",
+    deps = [
+        ":JoyFeedback",
+    ],
+)
+
+ros_interface(
+    name = "LaserEcho",
+    src = "LaserEcho.msg",
+)
+
+ros_interface(
+    name = "LaserScan",
+    src = "LaserScan.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "MagneticField",
+    src = "MagneticField.msg",
+    deps = [
+        "@geometry_msgs//msg:Vector3",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "MultiDOFJointState",
+    src = "MultiDOFJointState.msg",
+    deps = [
+        "@geometry_msgs//msg:Transform",
+        "@geometry_msgs//msg:Twist",
+        "@geometry_msgs//msg:Wrench",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "MultiEchoLaserScan",
+    src = "MultiEchoLaserScan.msg",
+    deps = [
+        ":LaserEcho",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "NavSatFix",
+    src = "NavSatFix.msg",
+    deps = [
+        ":NavSatStatus",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "NavSatStatus",
+    src = "NavSatStatus.msg",
+)
+
+ros_interface(
+    name = "PointCloud",
+    src = "PointCloud.msg",
+    deps = [
+        ":ChannelFloat32",
+        "@geometry_msgs//msg:Point32",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "PointCloud2",
+    src = "PointCloud2.msg",
+    deps = [
+        ":PointField",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "PointField",
+    src = "PointField.msg",
+)
+
+ros_interface(
+    name = "Range",
+    src = "Range.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "RegionOfInterest",
+    src = "RegionOfInterest.msg",
+)
+
+ros_interface(
+    name = "RelativeHumidity",
+    src = "RelativeHumidity.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "Temperature",
+    src = "Temperature.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_interface(
+    name = "TimeReference",
+    src = "TimeReference.msg",
+    deps = [
+        "@builtin_interfaces//msg:Time",
+        "@std_msgs//msg:Header",
+    ],
+)

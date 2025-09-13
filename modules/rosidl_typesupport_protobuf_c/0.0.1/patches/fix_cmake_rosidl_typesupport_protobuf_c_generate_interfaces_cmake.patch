@@ -1,0 +1,45 @@
+diff --git a/rosidl_typesupport_protobuf_c/cmake/rosidl_typesupport_protobuf_c_generate_interfaces.cmake b/rosidl_typesupport_protobuf_c/cmake/rosidl_typesupport_protobuf_c_generate_interfaces.cmake
+index 376a70d..ce5f13b 100644
+--- a/rosidl_typesupport_protobuf_c/cmake/rosidl_typesupport_protobuf_c_generate_interfaces.cmake
++++ b/rosidl_typesupport_protobuf_c/cmake/rosidl_typesupport_protobuf_c_generate_interfaces.cmake
+@@ -123,17 +123,14 @@ PUBLIC
+ "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/rosidl_generator_c>"
+ "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/rosidl_typesupport_protobuf_c>"
+ "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
++"${rosidl_typesupport_interface_INCLUDE_DIRS}"
+ )
+-
+-
+-ament_target_dependencies(${rosidl_generate_interfaces_TARGET}${_target_suffix}
+-  rmw
+-  rosidl_typesupport_protobuf
+-  rosidl_typesupport_protobuf_c
+-  rosidl_typesupport_interface
++target_link_libraries(${rosidl_generate_interfaces_TARGET}${_target_suffix} PUBLIC
++  rmw::rmw
++  rosidl_typesupport_interface::rosidl_typesupport_interface
++  rosidl_typesupport_protobuf_c::rosidl_typesupport_protobuf_c
+ )
+ 
+-
+ # generate header to switch between export and import for a specific package
+ set(_visibility_control_file
+ "${_output_path}/rosidl_typesupport_protobuf_c__visibility_control.h")
+@@ -146,13 +143,13 @@ configure_file(
+ 
+ # Depend on dependencies
+ foreach(_pkg_name ${rosidl_generate_interfaces_DEPENDENCY_PACKAGE_NAMES})
+-  ament_target_dependencies(${rosidl_generate_interfaces_TARGET}${_target_suffix}
+-    ${_pkg_name})
+-  target_link_libraries(${rosidl_generate_interfaces_TARGET}${_target_suffix}
++  target_include_directories(${rosidl_generate_interfaces_TARGET}${_target_suffix} PUBLIC
++    ${${_pkg_name}_INCLUDE_DIRS})
++  target_link_libraries(${rosidl_generate_interfaces_TARGET}${_target_suffix} PUBLIC
+     ${${_pkg_name}_LIBRARIES${_target_suffix}})
+ endforeach()
+ 
+-target_link_libraries(${rosidl_generate_interfaces_TARGET}${_target_suffix}
++target_link_libraries(${rosidl_generate_interfaces_TARGET}${_target_suffix} PUBLIC
+   ${Protobuf_LIBRARY}
+ )
+ 

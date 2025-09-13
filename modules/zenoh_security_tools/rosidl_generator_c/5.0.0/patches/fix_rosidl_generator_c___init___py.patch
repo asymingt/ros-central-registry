@@ -1,0 +1,20 @@
+diff --git a/rosidl_generator_c/rosidl_generator_c/__init__.py b/rosidl_generator_c/rosidl_generator_c/__init__.py
+index 4e4bf76..26017ed 100644
+--- a/rosidl_generator_c/rosidl_generator_c/__init__.py
++++ b/rosidl_generator_c/rosidl_generator_c/__init__.py
+@@ -33,13 +33,14 @@ from rosidl_pycommon import generate_files
+ def generate_c(generator_arguments_file, disable_description_codegen: bool = False) -> List[str]:
+     mapping = {
+         'idl.h.em': '%s.h',
+-        'idl__description.c.em': 'detail/%s__description.c',
+         'idl__functions.c.em': 'detail/%s__functions.c',
+         'idl__functions.h.em': 'detail/%s__functions.h',
+         'idl__struct.h.em': 'detail/%s__struct.h',
+         'idl__type_support.c.em': 'detail/%s__type_support.c',
+         'idl__type_support.h.em': 'detail/%s__type_support.h',
+     }
++    if not disable_description_codegen:
++        mapping['idl__description.c.em'] = 'detail/%s__description.c'
+     return generate_files(
+         generator_arguments_file, mapping,
+         post_process_callback=prefix_with_bom_if_necessary,

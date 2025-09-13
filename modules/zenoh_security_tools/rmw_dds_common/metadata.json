@@ -1,0 +1,16 @@
+{
+    "homepage": "https://github.com/ros2/rmw_dds_common",
+    "maintainers": [
+        {
+            "email": "asymingt@users.noreply.github.com",
+            "name": "asymingt"
+        }
+    ],
+    "repository": [
+        "github:ros2/rmw_dds_common"
+    ],
+    "versions": [
+        "4.0.0"
+    ],
+    "yanked_versions": {}
+}

@@ -1,0 +1,16 @@
+{
+    "homepage": "https://github.com/ros2/rosidl_defaults",
+    "maintainers": [
+        {
+            "email": "asymingt@users.noreply.github.com",
+            "name": "asymingt"
+        }
+    ],
+    "repository": [
+        "github:ros2/rosidl_defaults"
+    ],
+    "versions": [
+        "1.8.1"
+    ],
+    "yanked_versions": {}
+}

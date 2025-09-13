@@ -1,0 +1,139 @@
+diff --git a/rcl/test/rcl/test_arguments.cpp b/rcl/test/rcl/test_arguments.cpp
+index 3d944f5..31b26fb 100644
+--- a/rcl/test/rcl/test_arguments.cpp
++++ b/rcl/test/rcl/test_arguments.cpp
+@@ -31,12 +31,20 @@
+ #include "./allocator_testing_utils.h"
+ #include "./arguments_impl.h"
+ 
++#include "rules_cc/cc/runfiles/runfiles.h"
++
++using rules_cc::cc::runfiles::Runfiles;
++
+ class TestArgumentsFixture : public ::testing::Test
+ {
+ public:
+   void SetUp()
+   {
+-    test_path /= "test_arguments";
++    std::string error;
++    runfiles = std::unique_ptr<Runfiles>(Runfiles::CreateForTest(&error));
++    if (runfiles) {
++      std::cerr << "ERROR: " <<  error.c_str() << std::endl;
++    }
+   }
+ 
+   void TearDown()
+@@ -44,7 +52,7 @@ public:
+   }
+ 
+ protected:
+-  std::filesystem::path test_path{TEST_RESOURCES_DIRECTORY};
++  std::unique_ptr<Runfiles> runfiles;
+ };
+ 
+ #define EXPECT_UNPARSED(parsed_args, ...) \
+@@ -158,7 +166,7 @@ TEST_F(TestArgumentsFixture, check_known_vs_unknown_args) {
+   EXPECT_TRUE(are_known_ros_args({"--ros-args", "-p", "node:foo:=bar"}));
+   EXPECT_TRUE(are_known_ros_args({"--ros-args", "-p", "fizz123:=buzz456"}));
+ 
+-  const std::string parameters_filepath = (test_path / "test_parameters.1.yaml").string();
++  const std::string parameters_filepath = runfiles->Rlocation("rcl+/test/resources/test_arguments/test_parameters.1.yaml");
+   EXPECT_TRUE(are_known_ros_args({"--ros-args", "--params-file", parameters_filepath.c_str()}));
+ 
+   EXPECT_FALSE(are_known_ros_args({"--ros-args", "--custom-ros-arg"}));
+@@ -220,7 +228,7 @@ are_valid_ros_args(std::vector<const char *> argv)
+ }
+ 
+ TEST_F(TestArgumentsFixture, check_valid_vs_invalid_args) {
+-  const std::string parameters_filepath = (test_path / "test_parameters.1.yaml").string();
++  const std::string parameters_filepath = runfiles->Rlocation("rcl+/test/resources/test_arguments/test_parameters.1.yaml");
+   EXPECT_TRUE(
+     are_valid_ros_args(
+   {
+@@ -904,7 +912,7 @@ TEST_F(TestArgumentsFixture, test_param_argument_zero) {
+ }
+ 
+ TEST_F(TestArgumentsFixture, test_param_argument_single) {
+-  const std::string parameters_filepath = (test_path / "test_parameters.1.yaml").string();
++  const std::string parameters_filepath = runfiles->Rlocation("rcl+/test/resources/test_arguments/test_parameters.1.yaml");
+   const char * const argv[] = {
+     "process_name", "--ros-args", "-r", "__ns:=/namespace", "random:=arg",
+     "--params-file", parameters_filepath.c_str()
+@@ -966,8 +974,8 @@ TEST_F(TestArgumentsFixture, test_param_argument_single) {
+ }
+ 
+ TEST_F(TestArgumentsFixture, test_param_argument_multiple) {
+-  const std::string parameters_filepath1 = (test_path / "test_parameters.1.yaml").string();
+-  const std::string parameters_filepath2 = (test_path / "test_parameters.2.yaml").string();
++  const std::string parameters_filepath1 = runfiles->Rlocation("rcl+/test/resources/test_arguments/test_parameters.1.yaml");
++  const std::string parameters_filepath2 = runfiles->Rlocation("rcl+/test/resources/test_arguments/test_parameters.2.yaml");
+   const char * const argv[] = {
+     "process_name", "--ros-args", "--params-file", parameters_filepath1.c_str(),
+     "-r", "__ns:=/namespace", "random:=arg", "--params-file", parameters_filepath2.c_str()
+@@ -1037,8 +1045,8 @@ TEST_F(TestArgumentsFixture, test_param_argument_multiple) {
+ }
+ 
+ TEST_F(TestArgumentsFixture, test_param_arguments_copy) {
+-  const std::string parameters_filepath1 = (test_path / "test_parameters.1.yaml").string();
+-  const std::string parameters_filepath2 = (test_path / "test_parameters.2.yaml").string();
++  const std::string parameters_filepath1 = runfiles->Rlocation("rcl+/test/resources/test_arguments/test_parameters.1.yaml");
++  const std::string parameters_filepath2 = runfiles->Rlocation("rcl+/test/resources/test_arguments/test_parameters.2.yaml");
+   const char * const argv[] = {
+     "process_name", "--ros-args", "--params-file", parameters_filepath1.c_str(),
+     "-r", "__ns:=/namespace", "random:=arg", "--params-file", parameters_filepath2.c_str()
+@@ -1107,7 +1115,7 @@ TEST_F(TestArgumentsFixture, test_no_param_overrides) {
+ }
+ 
+ TEST_F(TestArgumentsFixture, test_param_overrides) {
+-  const std::string parameters_filepath = (test_path / "test_parameters.1.yaml").string();
++  const std::string parameters_filepath = runfiles->Rlocation("rcl+/test/resources/test_arguments/test_parameters.1.yaml");
+   const char * const argv[] = {
+     "process_name", "--ros-args",
+     "--params-file", parameters_filepath.c_str(),
+@@ -1160,8 +1168,8 @@ TEST_F(TestArgumentsFixture, test_param_overrides) {
+ }
+ 
+ TEST_F(TestArgumentsFixture, test_bad_alloc_get_param_files) {
+-  const std::string parameters_filepath1 = (test_path / "test_parameters.1.yaml").string();
+-  const std::string parameters_filepath2 = (test_path / "test_parameters.2.yaml").string();
++  const std::string parameters_filepath1 = runfiles->Rlocation("rcl+/test/resources/test_arguments/test_parameters.1.yaml");
++  const std::string parameters_filepath2 = runfiles->Rlocation("rcl+/test/resources/test_arguments/test_parameters.2.yaml");
+   const char * const argv[] = {
+     "process_name", "--ros-args", "--params-file", parameters_filepath1.c_str(),
+     "-r", "__ns:=/namespace", "random:=arg", "--params-file", parameters_filepath2.c_str()
+@@ -1196,7 +1204,7 @@ TEST_F(TestArgumentsFixture, test_bad_alloc_get_param_files) {
+ }
+ 
+ TEST_F(TestArgumentsFixture, test_null_get_param_files) {
+-  const std::string parameters_filepath1 = (test_path / "test_parameters.1.yaml").string();
++  const std::string parameters_filepath1 = runfiles->Rlocation("rcl+/test/resources/test_arguments/test_parameters.1.yaml");
+   const char * const argv[] = {
+     "process_name", "--ros-args", "--params-file", parameters_filepath1.c_str()
+   };
+@@ -1230,10 +1238,8 @@ TEST_F(TestArgumentsFixture, test_null_get_param_files) {
+ }
+ 
+ TEST_F(TestArgumentsFixture, test_parse_with_internal_errors) {
+-  const std::string parameters_filepath1 =
+-    (test_path / "test_parameters.1.yaml").string();
+-  const std::string parameters_filepath2 =
+-    (test_path / "test_parameters.2.yaml").string();
++  const std::string parameters_filepath1 = runfiles->Rlocation("rcl+/test/resources/test_arguments/test_parameters.1.yaml");
++  const std::string parameters_filepath2 = runfiles->Rlocation("rcl+/test/resources/test_arguments/test_parameters.2.yaml");
+   const char * const argv[] = {
+     "process_name", RCL_ROS_ARGS_FLAG,
+     RCL_PARAM_FILE_FLAG, parameters_filepath1.c_str(),
+@@ -1275,10 +1281,8 @@ TEST_F(TestArgumentsFixture, test_parse_with_internal_errors) {
+ }
+ 
+ TEST_F(TestArgumentsFixture, test_copy_with_internal_errors) {
+-  const std::string parameters_filepath1 =
+-    (test_path / "test_parameters.1.yaml").string();
+-  const std::string parameters_filepath2 =
+-    (test_path / "test_parameters.2.yaml").string();
++  const std::string parameters_filepath1 = runfiles->Rlocation("rcl+/test/resources/test_arguments/test_parameters.1.yaml");
++  const std::string parameters_filepath2 = runfiles->Rlocation("rcl+/test/resources/test_arguments/test_parameters.2.yaml");
+   const char * const argv[] = {
+     "process_name", RCL_ROS_ARGS_FLAG,
+     RCL_PARAM_FILE_FLAG, parameters_filepath1.c_str(),

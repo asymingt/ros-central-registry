@@ -1,0 +1,16 @@
+{
+    "homepage": "https://github.com/asymingt/rosidl_typesupport_protobuf",
+    "maintainers": [
+        {
+            "email": "asymingt@users.noreply.github.com",
+            "name": "asymingt"
+        }
+    ],
+    "repository": [
+        "github:asymingt/rosidl_typesupport_protobuf"
+    ],
+    "versions": [
+        "0.0.1"
+    ],
+    "yanked_versions": {}
+}

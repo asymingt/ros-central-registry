@@ -1,0 +1,8 @@
+{
+    "url": "https://github.com/asymingt/rosidl_typesupport_protobuf/archive/refs/tags/0.0.1.tar.gz",
+    "integrity": "sha256-o17hyXS8+7AdEBLExQ4v4+wCQX0KLlEtB5X4KPrGUlo=",
+    "strip_prefix": "rosidl_typesupport_protobuf-0.0.1/rosidl_typeadapter_protobuf_test",
+    "overlay": {
+        "MODULE.bazel": "sha256-YtLd8CPK8mr7Nx01TXYzrs/kETO4aEe2ymtJ//jA4Qw="
+    }
+}

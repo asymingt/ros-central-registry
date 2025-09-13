@@ -1,0 +1,202 @@
+""" Builds CycloneDDS.
+"""
+
+load("@bazel_skylib//lib:dicts.bzl", "dicts")
+load("@bazel_skylib//lib:selects.bzl", "selects")
+load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
+load("@rules_foreign_cc//foreign_cc:defs.bzl", "cmake")
+
+bool_flag(
+    name = "enable_shm",
+    build_setting_default = False,
+)
+
+config_setting(
+    name = "enable_shm_on",
+    flag_values = {":enable_shm": "True"},
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "enable_shm_off",
+    flag_values = {":enable_shm": "False"},
+    visibility = ["//visibility:public"],
+)
+
+selects.config_setting_group(
+    name = "linux_or_macos",
+    match_any = [
+        "@platforms//os:linux",
+        "@platforms//os:macos",
+    ],
+)
+
+selects.config_setting_group(
+    name = "linux_or_macos_with_shm",
+    match_all = [
+        ":linux_or_macos",
+        ":enable_shm_on",
+    ],
+)
+
+selects.config_setting_group(
+    name = "android_with_shm",
+    match_all = [
+        "@platforms//os:android",
+        ":enable_shm_on",
+    ],
+)
+
+selects.config_setting_group(
+    name = "qnx_with_shm",
+    match_all = [
+        "@platforms//os:qnx",
+        ":enable_shm_on",
+    ],
+)
+
+selects.config_setting_group(
+    name = "linux_or_macos_without_shm",
+    match_all = [
+        ":linux_or_macos",
+        ":enable_shm_off",
+    ],
+)
+
+selects.config_setting_group(
+    name = "android_without_shm",
+    match_all = [
+        "@platforms//os:android",
+        ":enable_shm_off",
+    ],
+)
+
+selects.config_setting_group(
+    name = "qnx_without_shm",
+    match_all = [
+        "@platforms//os:qnx",
+        ":enable_shm_off",
+    ],
+)
+
+filegroup(
+    name = "all_srcs",
+    # TODO(mvukov) Minimize srcs.
+    srcs = glob(["**"]),
+)
+
+cache_entries = {
+    "CMAKE_POSITION_INDEPENDENT_CODE": "ON",  # Must be set!
+    "BUILD_SHARED_LIBS": "OFF",
+    # CycloneDDS specific options.
+    "APPEND_PROJECT_NAME_TO_INCLUDEDIR": "OFF",
+    "BUILD_DDSPERF": "OFF",
+    "BUILD_DOCS": "OFF",
+    "BUILD_EXAMPLES": "OFF",
+    "BUILD_IDLC": "OFF",
+    "BUILD_IDLC_TESTING": "OFF",
+    "BUILD_TESTING": "OFF",
+    "ENABLE_DEADLINE_MISSED": "ON",
+    "ENABLE_LIFESPAN": "ON",
+    "ENABLE_LTO": "OFF",
+    "ENABLE_NETWORK_PARTITIONS": "ON",
+    "ENABLE_SECURITY": "OFF",
+    "ENABLE_SSL": "OFF",  # TODO(mvukov) Here we could use openssl/boringssl.
+    "ENABLE_TOPIC_DISCOVERY": "OFF",
+    "ENABLE_TYPE_DISCOVERY": "OFF",
+    "WERROR": "OFF",
+    "WITH_FREERTOS": "OFF",
+    "WITH_LWIP": "OFF",
+}
+
+cache_entries_linux_and_macos = {
+    "ENABLE_SOURCE_SPECIFIC_MULTICAST": "ON",
+}
+
+cache_entries_android_and_qnx = {
+    "ENABLE_SOURCE_SPECIFIC_MULTICAST": "OFF",
+    "ENABLE_IPV6": "OFF",
+}
+
+cache_entries_android = {
+    "CMAKE_SYSTEM_NAME": "Android",
+}
+
+cache_entries_qnx = {
+    "CMAKE_SYSTEM_NAME": "QNX",
+}
+
+cache_entries_with_shm = {
+    "ENABLE_SHM": "ON",
+    "CMAKE_PREFIX_PATH": "$$EXT_BUILD_DEPS/iceoryx",
+}
+
+cache_entries_without_shm = {
+    "ENABLE_SHM": "OFF",
+}
+
+cmake(
+    name = "cyclonedds",
+    build_args = [
+        "--",
+        "-j16",
+    ],
+    cache_entries = select(
+        {
+            ":linux_or_macos_with_shm": dicts.add(
+                cache_entries,
+                cache_entries_linux_and_macos,
+                cache_entries_with_shm,
+            ),
+            ":android_with_shm": dicts.add(
+                cache_entries,
+                cache_entries_android,
+                cache_entries_android_and_qnx,
+                cache_entries_with_shm,
+            ),
+            ":qnx_with_shm": dicts.add(
+                cache_entries,
+                cache_entries_qnx,
+                cache_entries_android_and_qnx,
+                cache_entries_with_shm,
+            ),
+            ":linux_or_macos_without_shm": dicts.add(
+                cache_entries,
+                cache_entries_linux_and_macos,
+                cache_entries_without_shm,
+            ),
+            ":android_without_shm": dicts.add(
+                cache_entries,
+                cache_entries_android,
+                cache_entries_android_and_qnx,
+                cache_entries_without_shm,
+            ),
+            ":qnx_without_shm": dicts.add(
+                cache_entries,
+                cache_entries_qnx,
+                cache_entries_android_and_qnx,
+                cache_entries_without_shm,
+            ),
+        },
+        no_match_error = "Unsupported build configuration",
+    ),
+    copts = [
+        "-w",
+        "-D__FILE__=\"redacted\"",
+    ],
+    generate_args = ["-GNinja"],
+    lib_source = ":all_srcs",
+    linkopts = selects.with_or(
+        {
+            ":linux_or_macos": ["-lpthread"],
+            ("@platforms//os:android", "@platforms//os:qnx"): [],
+        },
+        no_match_error = "Supported OSs: Android, Linux, macOS, QNX",
+    ),
+    out_static_libs = ["libddsc.a"],
+    visibility = ["//visibility:public"],
+    deps = select({
+        ":enable_shm_on": ["@iceoryx"],
+        "//conditions:default": [],
+    }),
+)

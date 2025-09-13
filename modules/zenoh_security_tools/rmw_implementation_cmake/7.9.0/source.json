@@ -1,0 +1,9 @@
+{
+    "url": "https://github.com/ros2/rmw/archive/refs/tags/7.9.0.tar.gz",
+    "integrity": "sha256-ec+D7p8IhF/GghL5uzHbxuoxoO2UNEjfpHfqWwQqYh4=",
+    "strip_prefix": "rmw-7.9.0/rmw_implementation_cmake",
+    "overlay": {
+        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "MODULE.bazel": "sha256-BMtx8pj52PpWdTXw6RfnAeQMxAGcRyALFU8Xoix45O8="
+    }
+}

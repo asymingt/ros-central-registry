@@ -1,0 +1,9 @@
+{
+    "url": "https://github.com/ros2/rcl_logging/archive/refs/tags/3.3.0.tar.gz",
+    "integrity": "sha256-Non8yu51qNN8BfGN+s4Fcdcdy0xDeZlLb5vaYmJziaw=",
+    "strip_prefix": "rcl_logging-3.3.0/rcl_logging_interface",
+    "overlay": {
+        "BUILD.bazel": "sha256-6Ab+Ec8fxY9Y/7ItHRLQVkYyWFpY9Gut32fN634ayaE=",
+        "MODULE.bazel": "sha256-qnkf/JWxt8uZulWERYFO0K6b8bJa+iZmLeoDNhpHecI="
+    }
+}

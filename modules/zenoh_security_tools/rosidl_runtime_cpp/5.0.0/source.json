@@ -1,0 +1,9 @@
+{
+    "url": "https://github.com/ros2/rosidl/archive/refs/tags/5.0.0.tar.gz",
+    "integrity": "sha256-TSUAVI2+hRv0LVlqNmnsTbzkm74bvMhEEIcmZK+zDW0=",
+    "strip_prefix": "rosidl-5.0.0/rosidl_runtime_cpp",
+    "overlay": {
+        "BUILD.bazel": "sha256-2u8g21X+drJ2EooK/+8G5+Bck8KuVwiBYfVZfTkBpJ4=",
+        "MODULE.bazel": "sha256-F9MUo5AslpNfsBXNcZhQKdCb6Mwy22GaBY4BbyqsiSY="
+    }
+}

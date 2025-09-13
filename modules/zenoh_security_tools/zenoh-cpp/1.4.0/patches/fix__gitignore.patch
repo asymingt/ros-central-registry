@@ -1,0 +1,14 @@
+diff --git a/.gitignore b/.gitignore
+index 16c7828..093705d 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -42,4 +42,8 @@ docs/latex
+ .DS_Store
+ 
+ zenohcpp.pc
+-.cache
++.cache
++
++# Bazel
++bazel-*
++*.bazel.lock

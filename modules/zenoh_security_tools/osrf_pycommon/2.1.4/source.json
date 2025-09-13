@@ -1,0 +1,11 @@
+{
+    "url": "https://github.com/osrf/osrf_pycommon/archive/refs/tags/2.1.4.tar.gz",
+    "integrity": "sha256-pcV6ECHRYgz+RiDE8WEeBA3obnr8zlNQnpaKQJjOH6I=",
+    "strip_prefix": "osrf_pycommon-2.1.4",
+    "overlay": {
+        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "MODULE.bazel": "sha256-g+ykYQc7BnpTnZhwyBgAWB+D4yUgNpzWmfLe3RGRcb4=",
+        "macros.bzl": "sha256-5+g1iwQrqxJsPoOclAJ1+1Nq3nTEiqB8f9NwsZS6vLw=",
+        "pytest_main.py": "sha256-L+t9GyH87xsqh4eJFDdSfM+tAYAj0I1oUMpPMUHA4Zg="
+    }
+}

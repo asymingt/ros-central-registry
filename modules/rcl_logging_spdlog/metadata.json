@@ -1,0 +1,16 @@
+{
+    "homepage": "https://github.com/ros2/rcl_logging",
+    "maintainers": [
+        {
+            "email": "asymingt@users.noreply.github.com",
+            "name": "asymingt"
+        }
+    ],
+    "repository": [
+        "github:ros2/rcl_logging"
+    ],
+    "versions": [
+        "3.3.0"
+    ],
+    "yanked_versions": {}
+}

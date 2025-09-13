@@ -1,0 +1,9 @@
+{
+    "url": "https://github.com/ros2/rmw_zenoh/archive/refs/tags/0.8.1.tar.gz",
+    "integrity": "sha256-Cyuc+TKLtakPr9dYoW8TsBIchdBZ3gf7rECbaWirp1A=",
+    "strip_prefix": "rmw_zenoh-0.8.1/zenoh_security_tools",
+    "overlay": {
+        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "MODULE.bazel": "sha256-WXA1hhj3nhZiekM4+a3WOk6EgTdPKBvBrtWCMP7HMks="
+    }
+}

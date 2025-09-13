@@ -1,0 +1,12 @@
+diff --git a/.gitignore b/.gitignore
+index 262d8614..8352db09 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -8,3 +8,7 @@ gen.*
+ build/
+ docs/manual/ddsc_api_docs/
+ *~
++
++# Bazel
++bazel-*
++*.bazel.lock

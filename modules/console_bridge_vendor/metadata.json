@@ -1,0 +1,16 @@
+{
+    "homepage": "https://github.com/ros2/console_bridge_vendor",
+    "maintainers": [
+        {
+            "email": "asymingt@users.noreply.github.com",
+            "name": "asymingt"
+        }
+    ],
+    "repository": [
+        "github:ros2/console_bridge_vendor"
+    ],
+    "versions": [
+        "1.9.1"
+    ],
+    "yanked_versions": {}
+}

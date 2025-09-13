@@ -1,0 +1,12 @@
+diff --git a/.gitignore b/.gitignore
+index f7b04b71..f34e3763 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -81,3 +81,7 @@ src/opaque_types/mod.rs
+ CMakeFiles/
+ debug/
+ release/
++
++# Bazel
++bazel-*
++*.bazel.lock

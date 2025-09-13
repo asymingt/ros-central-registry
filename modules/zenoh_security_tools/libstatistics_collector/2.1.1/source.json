@@ -1,0 +1,10 @@
+{
+    "url": "https://github.com/ros-tooling/libstatistics_collector/archive/refs/tags/2.1.1.tar.gz",
+    "integrity": "sha256-7CketqdN8N+NcU/mU2L0+aUJLDgmVvuUjjEMvUMy3RU=",
+    "strip_prefix": "libstatistics_collector-2.1.1",
+    "overlay": {
+        "BUILD.bazel": "sha256-WGqLkYOTuXXXlec5aXj9AmjIGa0fDDzc6VLn6eLEtO8=",
+        "MODULE.bazel": "sha256-J6D9dGvOQeZcGMyLEVL0/q9gfMs0f06INEfdXoGn76s=",
+        "test/msg/BUILD.bazel": "sha256-TjjWtL7PdX2VcUkt5Hns+Wcft9Nf+C8D+0Mh3RWxdAA="
+    }
+}

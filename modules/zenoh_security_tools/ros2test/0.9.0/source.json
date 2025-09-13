@@ -1,0 +1,9 @@
+{
+    "url": "https://github.com/ros2/ros_testing/archive/refs/tags/0.9.0.tar.gz",
+    "integrity": "sha256-tFYc/NTJx5yqUX4D3TbR4a45arSH85VYVEF/WvJFdfQ=",
+    "strip_prefix": "ros_testing-0.9.0/ros2test",
+    "overlay": {
+        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "MODULE.bazel": "sha256-Tma6zvL29hTuOeTLS6ixdAjQhGMdjHSbFAymSNV+JmQ="
+    }
+}

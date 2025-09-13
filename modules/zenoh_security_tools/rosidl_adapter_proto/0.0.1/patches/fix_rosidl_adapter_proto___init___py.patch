@@ -1,0 +1,13 @@
+diff --git a/rosidl_adapter_proto/rosidl_adapter_proto/__init__.py b/rosidl_adapter_proto/rosidl_adapter_proto/__init__.py
+index a76db58..21028e2 100644
+--- a/rosidl_adapter_proto/rosidl_adapter_proto/__init__.py
++++ b/rosidl_adapter_proto/rosidl_adapter_proto/__init__.py
+@@ -19,7 +19,7 @@
+ import subprocess
+ import zlib
+ 
+-from rosidl_cmake import generate_files
++from rosidl_pycommon import generate_files
+ import rosidl_parser.definition as rosidl
+ 
+ # A postfix for the protobuf package name / the c++ namespace

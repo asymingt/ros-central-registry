@@ -1,0 +1,27 @@
+diff --git a/rosidl_typesupport_protobuf/rosidl_typesupport_protobuf/__init__.py b/rosidl_typesupport_protobuf/rosidl_typesupport_protobuf/__init__.py
+index c3e690d..f818eef 100644
+--- a/rosidl_typesupport_protobuf/rosidl_typesupport_protobuf/__init__.py
++++ b/rosidl_typesupport_protobuf/rosidl_typesupport_protobuf/__init__.py
+@@ -16,7 +16,7 @@
+ #
+ # ================================= Apache 2.0 =================================
+ 
+-from rosidl_cmake import convert_camel_case_to_lower_case_underscore
++from rosidl_pycommon import convert_camel_case_to_lower_case_underscore
+ 
+ # A postfix for the protobuf package name / the c++ namespace
+ PROTO_PACKAGE_POSTFIX = 'pb'
+@@ -94,11 +94,11 @@ def typesupport_header(package_name, interface_path):
+ 
+ 
+ def visibility_control_header(package_name):
+-    return f'{package_name}/{_TYPE_SUPPORT_NAME}__visibility_control.h'
++    return f'{package_name}/msg/{_TYPE_SUPPORT_NAME}__visibility_control.h'
+ 
+ 
+ def adapter_visibility_control_header(package_name):
+-    return f'{package_name}/rosidl_adapter_proto__visibility_control.h'
++    return f'{package_name}/msg/rosidl_adapter_proto__visibility_control.h'
+ 
+ 
+ def ros_type_namespace(package_name, interface_path):
