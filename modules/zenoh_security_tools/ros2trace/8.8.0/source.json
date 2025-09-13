@@ -1,9 +1,0 @@
-{
-    "url": "https://github.com/ros2/ros2_tracing/archive/refs/tags/8.8.0.tar.gz",
-    "integrity": "sha256-kE6z2Vblk52w8DbfRGgTM8XLUcIC0oIiI74rXY1rumM=",
-    "strip_prefix": "ros2_tracing-8.8.0/ros2trace",
-    "overlay": {
-        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
-        "MODULE.bazel": "sha256-ycZE7SvUpa8dK1lA1ZB2p9dw6hnEhQLp/QbG/42dF0Y="
-    }
-}

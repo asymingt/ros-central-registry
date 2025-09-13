@@ -10,7 +10,7 @@
         "github:ros/rosdistro"
     ],
     "versions": [
-        "rolling/2025-09-05"
+        "rolling-2025-09-05"
     ],
     "yanked_versions": {}
 }

@@ -1,9 +1,0 @@
-{
-    "url": "https://github.com/ros2/rmw_cyclonedds/archive/refs/tags/4.1.1.tar.gz",
-    "integrity": "sha256-7iRLb9A0HSLeH8PeO8cCsLB2pPdHe5E+NmJVW/gNm5Y=",
-    "strip_prefix": "rmw_cyclonedds-4.1.1/rmw_cyclonedds_cpp",
-    "overlay": {
-        "BUILD.bazel": "sha256-QqDZ7nDm/Q3matwnltCJ2aaLWDz2djV6qmAYCpvcJe0=",
-        "MODULE.bazel": "sha256-UNK1PC7/F7aFvRfh8f2dJLTLqrmgMtjjydFCRAJBToM="
-    }
-}

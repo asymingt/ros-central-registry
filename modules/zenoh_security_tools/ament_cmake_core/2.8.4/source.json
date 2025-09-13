@@ -1,9 +1,0 @@
-{
-    "url": "https://github.com/ament/ament_cmake/archive/refs/tags/2.8.4.tar.gz",
-    "integrity": "sha256-HEC8h6AnAlqelts3GXVj0SABTl2n0zR0xAZcLouDP/Q=",
-    "strip_prefix": "ament_cmake-2.8.4/ament_cmake_core",
-    "overlay": {
-        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
-        "MODULE.bazel": "sha256-ToYOP44x3rBoZlaaf1OvQorPf6pq8FjLjdqWW74mXuk="
-    }
-}

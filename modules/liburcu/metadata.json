@@ -10,7 +10,7 @@
         "github:urcu/userspace-rcu"
     ],
     "versions": [
-        "v0.15.3"
+        "0.15.3"
     ],
     "yanked_versions": {}
 }

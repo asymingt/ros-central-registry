@@ -1,9 +1,0 @@
-{
-    "url": "https://github.com/ament/ament_lint/archive/refs/tags/0.20.1.tar.gz",
-    "integrity": "sha256-WS9RenL0zNVcmv+QP2El46NVow3anfJ7p/G8NfPe6e0=",
-    "strip_prefix": "ament_lint-0.20.1/ament_cmake_cpplint",
-    "overlay": {
-        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
-        "MODULE.bazel": "sha256-zs/IAQtn4MJUv8io95C54JTQW2hkhETycBjEEGdZcX0="
-    }
-}

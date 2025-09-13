@@ -1,9 +1,0 @@
-{
-    "url": "https://github.com/ament/ament_package/archive/refs/tags/0.18.0.tar.gz",
-    "integrity": "sha256-rCIiEVG5jxOzkb50DrjCEJVlWflZE21HWn9Iq1p7TAM=",
-    "strip_prefix": "ament_package-0.18.0",
-    "overlay": {
-        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
-        "MODULE.bazel": "sha256-S+KNWady8o09GxQMMgW5npRdM3gcsmjgMsIYCtl5AeI="
-    }
-}

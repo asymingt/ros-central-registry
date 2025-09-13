@@ -1,8 +1,0 @@
-{
-    "url": "https://github.com/ros2/common_interfaces/archive/refs/tags/5.8.1.tar.gz",
-    "integrity": "sha256-4RPVCpaFsWIhxV46J+oUyni25mMUT+e1ROpcMMiXmMs=",
-    "strip_prefix": "common_interfaces-5.8.1/sensor_msgs_py",
-    "overlay": {
-        "MODULE.bazel": "sha256-vNcPVrAjwJixiWqER6fHI7lqxg62wtAwyp5KwKNMXBA="
-    }
-}

@@ -1,9 +1,0 @@
-{
-    "url": "https://github.com/osrf/osrf_testing_tools_cpp/archive/refs/tags/2.3.0.tar.gz",
-    "integrity": "sha256-1gyW1KNUEcAaokNbRX3q7lLtA3Lx7kamUS30grt93t8=",
-    "strip_prefix": "osrf_testing_tools_cpp-2.3.0/test_osrf_testing_tools_cpp",
-    "overlay": {
-        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
-        "MODULE.bazel": "sha256-WDk7s1Gd64+y2scvX4h5oMu/DzOcXOV+LGFUhaF/X40="
-    }
-}

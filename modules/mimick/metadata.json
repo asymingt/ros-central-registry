@@ -10,7 +10,7 @@
         "github:ros2/Mimick"
     ],
     "versions": [
-        "ros2"
+        "0.9.0"
     ],
     "yanked_versions": {}
 }

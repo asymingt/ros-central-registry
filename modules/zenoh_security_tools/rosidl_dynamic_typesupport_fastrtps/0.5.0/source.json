@@ -1,9 +1,0 @@
-{
-    "url": "https://github.com/ros2/rosidl_dynamic_typesupport_fastrtps/archive/refs/tags/0.5.0.tar.gz",
-    "integrity": "sha256-Tb853XHrkf8eywP5uBHEKRcAI/lYCbeqmAf+F/Ztnqg=",
-    "strip_prefix": "rosidl_dynamic_typesupport_fastrtps-0.5.0",
-    "overlay": {
-        "BUILD.bazel": "sha256-q1R4XFrclxRRAGuzql2fJmJsvko5k75sXy33RS/Cx2w=",
-        "MODULE.bazel": "sha256-VaQgfiztKIeIsCYItl9oAkCWVwcZhBA4JXv4IcqD0iE="
-    }
-}

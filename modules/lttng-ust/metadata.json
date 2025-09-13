@@ -10,7 +10,7 @@
         "github:lttng/lttng-ust"
     ],
     "versions": [
-        "v2.14.0"
+        "2.14.0"
     ],
     "yanked_versions": {}
 }

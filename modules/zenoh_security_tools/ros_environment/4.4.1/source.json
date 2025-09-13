@@ -1,9 +1,0 @@
-{
-    "url": "https://github.com/ros/ros_environment/archive/refs/tags/4.4.1.tar.gz",
-    "integrity": "sha256-vfiv8EdMPJv11ACDQhZLKfao4/SSkQqYhANy8GA7Gbs=",
-    "strip_prefix": "ros_environment-4.4.1",
-    "overlay": {
-        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
-        "MODULE.bazel": "sha256-m/Dxtifj7JTFPGrZLGJOEYKxSYVz16Rs1IiQ12CNloQ="
-    }
-}

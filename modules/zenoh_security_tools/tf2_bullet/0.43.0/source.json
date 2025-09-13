@@ -1,9 +1,0 @@
-{
-    "url": "https://github.com/ros2/geometry2/archive/refs/tags/0.43.0.tar.gz",
-    "integrity": "sha256-p3YbC/YroHGquWweh6WKgSp8DdUwP2mUwqJAdIVZfZY=",
-    "strip_prefix": "geometry2-0.43.0/tf2_bullet",
-    "overlay": {
-        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
-        "MODULE.bazel": "sha256-73oNobVqx81YtS3zR+SH5r4wBfYMR45MsHFsSwfywbA="
-    }
-}

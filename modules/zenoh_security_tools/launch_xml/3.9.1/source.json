@@ -1,9 +1,0 @@
-{
-    "url": "https://github.com/ros2/launch/archive/refs/tags/3.9.1.tar.gz",
-    "integrity": "sha256-R4rAAFkamPxij+6rHGRtol8eclLxiQhBfGBHHdP5DBQ=",
-    "strip_prefix": "launch-3.9.1/launch_xml",
-    "overlay": {
-        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
-        "MODULE.bazel": "sha256-vIsSY7ewoGqyArN4BorRNz+EJjxqROJOXRPwWOKeV6M="
-    }
-}

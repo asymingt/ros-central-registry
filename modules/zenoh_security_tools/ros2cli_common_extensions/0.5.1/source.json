@@ -1,9 +1,0 @@
-{
-    "url": "https://github.com/ros2/ros2cli_common_extensions/archive/refs/tags/0.5.1.tar.gz",
-    "integrity": "sha256-gLxZx7ZXSTciq+7XNMNjk9hY25WRQJYNidhpqmpdqTQ=",
-    "strip_prefix": "ros2cli_common_extensions-0.5.1/ros2cli_common_extensions",
-    "overlay": {
-        "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
-        "MODULE.bazel": "sha256-IjGDnagUX/IUKfcWUBFs2Te5s7lhhFOBPAguVfgpTuU="
-    }
-}
