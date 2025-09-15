@@ -61,7 +61,7 @@ def _idl_adapter_aspect_impl(target, ctx):
     src = target[RosInterfaceInfo].srcs.to_list()[-1]
 
     # Calculate the metadata to package alongside the IDL.
-    package_name = target.label.workspace_name.removesuffix("+")    # eg. sensor_msgs
+    package_name = target[RosInterfaceInfo].package                 # eg. sensor_msgs
     interface_type = src.extension                                  # eg. msg
     interface_name = src.basename[:-len(src.extension) - 1]         # eg. CompressedImage
     interface_code = _snake_case_from_pascal_case(interface_name)   # eg. compressed_image
@@ -70,6 +70,7 @@ def _idl_adapter_aspect_impl(target, ctx):
     idl = ctx.actions.declare_file(
         "{}/{}/{}.idl".format(package_name, interface_type, interface_name)
     )
+
     if src.extension == 'msg':
         _generate(ctx, ctx.executable._msg2idl, package_name, src, idl, "IdlFromMsg")
     elif src.extension == 'srv':

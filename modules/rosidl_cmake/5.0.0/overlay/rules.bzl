@@ -22,10 +22,11 @@ def _ros_interface_impl(ctx):
             transitive = [
                 dep[RosInterfaceInfo].srcs for dep in ctx.attr.deps
             ]
-        )
+        ),
+        package = ctx.attr.package
     )
 
-ros_interface = rule(
+ros_interface_rule = rule(
     implementation = _ros_interface_impl,
     attrs = {
         "src": attr.label(
@@ -36,7 +37,21 @@ ros_interface = rule(
             ],
             mandatory = True,
         ),
+        "package": attr.string(mandatory=True),
         "deps": attr.label_list(providers = [RosInterfaceInfo]),
     },
     provides = [RosInterfaceInfo],
 )
+
+# This is a workaround to allow messages to be declared from the root
+# workspace. When this happens the target.label.workspace_name variable
+# is empty, and so we need this macro to propagate the name correctly
+# down the aspect chain.
+
+def ros_interface(name, src, deps = []):
+    ros_interface_rule(
+        name = name,
+        src = src,
+        package = native.module_name(),
+        deps = deps,
+    )
