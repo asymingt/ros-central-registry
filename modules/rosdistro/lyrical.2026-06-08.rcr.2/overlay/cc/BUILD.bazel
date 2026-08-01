@@ -1,0 +1,637 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rules_cc//cc:defs.bzl", "cc_import", "cc_library", "cc_shared_library")
+load("//cc:python_import.bzl", "py_import_lib_file")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files(glob(["*.bzl"]))
+
+# theora
+
+alias(
+    name = "theora_library",
+    actual = "@theora//:theora",
+)
+
+alias(
+    name = "theora",
+    actual = "@theora//:theora.shared",
+)
+
+# ogg
+
+alias(
+    name = "ogg_library",
+    actual = "@ogg//:ogg",
+)
+
+alias(
+    name = "ogg",
+    actual = "@ogg//:ogg.shared",
+)
+
+# pcl
+
+alias(
+    name = "pcl_io",
+    actual = "@pcl//:io",
+)
+
+alias(
+    name = "pcl_common",
+    actual = "@pcl//:common",
+)
+
+alias(
+    name = "pcl_filters",
+    actual = "@pcl//:filters",
+)
+
+# boost
+
+alias(
+    name = "boost.circular_buffer",
+    actual = "@boost.circular_buffer",
+)
+
+alias(
+    name = "boost.endian",
+    actual = "@boost.endian",
+)
+
+# ogre
+
+[
+    alias(
+        name = name,
+        actual = actual,
+    )
+    for name, actual in {
+        "Codec_STBI_library": "@ogre//:Codec_STBI_library",
+        "Codec_STBI": "@ogre//:Codec_STBI",
+        "OgreMain_library": "@ogre//:OgreMain_library",
+        "OgreMain": "@ogre//:OgreMain",
+        "OgreMeshLodGenerator_library": "@ogre//:OgreMeshLodGenerator_library",
+        "OgreMeshLodGenerator": "@ogre//:OgreMeshLodGenerator",
+        "OgreOverlay_library": "@ogre//:OgreOverlay_library",
+        "OgreOverlay": "@ogre//:OgreOverlay",
+        "OgrePaging_library": "@ogre//:OgrePaging_library",
+        "OgrePaging": "@ogre//:OgrePaging",
+        "OgreProperty_library": "@ogre//:OgreProperty_library",
+        "OgreProperty": "@ogre//:OgreProperty",
+        "OgreRTShaderSystem_library": "@ogre//:OgreRTShaderSystem_library",
+        "OgreRTShaderSystem": "@ogre//:OgreRTShaderSystem",
+        "OgreTerrain_library": "@ogre//:OgreTerrain_library",
+        "OgreTerrain": "@ogre//:OgreTerrain",
+        "OgreVolume_library": "@ogre//:OgreVolume_library",
+        "OgreVolume": "@ogre//:OgreVolume",
+        "RenderSystem_GL_library": "@ogre//:RenderSystem_GL_library",
+        "RenderSystem_GL": "@ogre//:RenderSystem_GL",
+        "RenderSystem_GL3Plus_library": "@ogre//:RenderSystem_GL3Plus_library",
+        "RenderSystem_GL3Plus": "@ogre//:RenderSystem_GL3Plus",
+        "RenderSystem_GLSupport": "@ogre//:RenderSystem_GLSupport",
+        "RenderSystems": "@ogre//:RenderSystems",
+    }.items()
+]
+
+# Gazebo
+
+[
+    alias(
+        name = name,
+        actual = actual,
+    )
+    for name, actual in {
+        "gz_common": "@gz-common",
+        "gz_fuel_tools": "@gz-fuel-tools",
+        "gz_math": "@gz-math",
+        "gz_msgs": "@gz-msgs",
+        "gz_physics": "@gz-physics",
+        "gz_plugin": "@gz-plugin",
+        "gz_rendering": "@gz-rendering",
+        "gz_sensors": "@gz-sensors",
+        "gz_sim": "@gz-sim",
+        "gz_transport": "@gz-transport",
+        "gz_utils": "@gz-utils",
+    }.items()
+]
+
+# assimp
+
+alias(
+    name = "assimp",
+    actual = "@assimp",
+)
+
+# orocos-kdl
+
+alias(
+    name = "orocos-kdl_library",
+    actual = "@orocos-kdl",
+)
+
+cc_shared_library(
+    name = "orocos-kdl",
+    exports_filter = [":orocos-kdl_library"],
+    deps = [":orocos-kdl_library"],
+)
+
+# cyclonedds
+
+alias(
+    name = "bullet-BulletCollision_library",
+    actual = "@bullet//:BulletCollision",
+)
+
+cc_shared_library(
+    name = "bullet-BulletCollision",
+    exports_filter = [":bullet-BulletCollision_library"],
+    deps = [":bullet-BulletCollision_library"],
+)
+
+# spdlog
+
+alias(
+    name = "spdlog",
+    actual = "@spdlog",
+)
+
+# cpplint
+
+alias(
+    name = "cpplint",
+    actual = "@cpplint",
+)
+
+# cppcheck
+
+alias(
+    name = "cppcheck",
+    actual = "@cppcheck",
+)
+
+# uncrustify
+
+alias(
+    name = "uncrustify",
+    actual = "@uncrustify",
+)
+
+# pybind11
+#
+# On Windows the Python C API symbols (PyErr_*, etc.) are __declspec(dllimport),
+# so every extension module must link against the Python import library. On
+# ELF/Mach-O those symbols are left undefined and resolved at load time by the
+# interpreter, so no link-time dependency is needed there. Wrap the upstream
+# pybind11 target so all `_py` bindings that depend on @rosdistro//cc:pybind11
+# pick up the import library on Windows without touching each package.
+
+py_import_lib_file(
+    name = "python_import_lib_file",
+    src = "@rules_python//python/cc:current_py_cc_libs",
+    lib_name = "python312.lib",
+)
+
+cc_import(
+    name = "python_import_lib",
+    static_library = ":python_import_lib_file",
+)
+
+cc_library(
+    name = "pybind11",
+    deps = [
+        "@@pybind11_bazel++internal_configure_extension+pybind11//:pybind11",
+    ] + select({
+        "@platforms//os:windows": [":python_import_lib"],
+        "//conditions:default": [],
+    }),
+)
+
+# cyclonedds
+
+alias(
+    name = "cyclonedds_library",
+    actual = "@cyclonedds//:cyclonedds",
+)
+
+cc_shared_library(
+    name = "cyclonedds",
+    exports_filter = [":cyclonedds_library"],
+    deps = [":cyclonedds_library"],
+)
+
+# fastcdr
+
+alias(
+    name = "fastcdr_library",
+    actual = "@fastcdr//:fastcdr",
+)
+
+cc_shared_library(
+    name = "fastcdr",
+    exports_filter = [":fastcdr_library"],
+    deps = [":fastcdr_library"],
+)
+
+# fastdds
+
+alias(
+    name = "fastdds_library",
+    actual = "@fastdds//:fastdds",
+)
+
+cc_shared_library(
+    name = "fastdds",
+    dynamic_deps = [
+        ":fastcdr",
+        ":sqlite3",
+        ":tinyxml2",
+    ],
+    exports_filter = [":fastdds_library"],
+    deps = [":fastdds_library"],
+)
+
+# tinyxml2
+
+alias(
+    name = "tinyxml2_library",
+    actual = "@tinyxml2//:tinyxml2",
+)
+
+cc_shared_library(
+    name = "tinyxml2",
+    exports_filter = [":tinyxml2_library"],
+    deps = [":tinyxml2_library"],
+)
+
+# yaml-cpp
+
+alias(
+    name = "yaml-cpp_library",
+    actual = "@yaml-cpp//:yaml-cpp",
+)
+
+cc_shared_library(
+    name = "yaml-cpp",
+    exports_filter = [":yaml-cpp_library"],
+    deps = [":yaml-cpp_library"],
+)
+
+# lz4
+
+alias(
+    name = "lz4_library",
+    actual = "@lz4//:lz4",
+)
+
+cc_shared_library(
+    name = "lz4",
+    exports_filter = [":lz4_library"],
+    deps = [":lz4_library"],
+)
+
+alias(
+    name = "lz4_hc_library",
+    actual = "@lz4//:lz4_hc",
+)
+
+cc_shared_library(
+    name = "lz4_hc",
+    dynamic_deps = [":lz4"],
+    exports_filter = [":lz4_hc_library"],
+    deps = [":lz4_hc_library"],
+)
+
+alias(
+    name = "lz4_frame_library",
+    actual = "@lz4//:lz4_frame",
+)
+
+cc_shared_library(
+    name = "lz4_frame",
+    dynamic_deps = [
+        ":lz4",
+        ":lz4_hc",
+    ],
+    exports_filter = [":lz4_frame_library"],
+    deps = [":lz4_frame_library"],
+)
+
+# mcap
+
+cc_library(
+    name = "mcap_library",
+    srcs = ["mcap_impl.cpp"],
+    copts = ["-std=c++17"],
+    deps = ["@mcap"],
+)
+
+cc_shared_library(
+    name = "mcap",
+    dynamic_deps = [
+        ":lz4_frame",
+        ":zstd",
+    ],
+    exports_filter = [":mcap_library"],
+    deps = [":mcap_library"],
+)
+
+# zstd
+
+alias(
+    name = "zstd_library",
+    actual = "@zstd//:zstd",
+)
+
+cc_shared_library(
+    name = "zstd",
+    exports_filter = [":zstd_library"],
+    deps = [":zstd_library"],
+)
+
+# sqlite3
+
+alias(
+    name = "sqlite3_library",
+    actual = "@sqlite3//:sqlite3",
+)
+
+cc_shared_library(
+    name = "sqlite3",
+    exports_filter = [":sqlite3_library"],
+    deps = [":sqlite3_library"],
+)
+
+# console_bridge
+
+alias(
+    name = "console_bridge_library",
+    actual = "@console_bridge//:console_bridge",
+)
+
+cc_shared_library(
+    name = "console_bridge",
+    exports_filter = [":console_bridge_library_library"],
+    deps = [":console_bridge_library"],
+)
+
+# curl
+
+alias(
+    name = "curl_library",
+    actual = "@curl//:curl_shared_lib_headers",
+)
+
+alias(
+    name = "curl_shared_lib_headers",
+    actual = "@curl//:curl_shared_lib_headers",
+)
+
+cc_shared_library(
+    name = "curl",
+    exports_filter = [
+        ":curl_library",
+        ":curl_shared_lib_headers",
+        "@boringssl//:crypto",
+        "@boringssl//:ssl",
+        "@boringssl//:crypto_internal",
+        "@boringssl//:ssl_internal",
+    ],
+    deps = [":curl_shared_lib_headers"],
+)
+
+# zlib
+
+alias(
+    name = "zlib_library",
+    actual = "@zlib//:z",
+)
+
+cc_shared_library(
+    name = "zlib",
+    exports_filter = [":zlib_library"],
+    deps = [":zlib_library"],
+)
+
+# protobuf
+
+alias(
+    name = "protobuf_library",
+    actual = "@protobuf//:protobuf",
+)
+
+cc_shared_library(
+    name = "protobuf",
+    dynamic_deps = [":zlib"],
+    exports_filter = [
+        # protobuf itself
+        "@@protobuf+//src/google/protobuf:protobuf",
+        "@@protobuf+//src/google/protobuf:protobuf_lite",
+        "@@protobuf+//src/google/protobuf:micro_string",
+        "@@protobuf+//src/google/protobuf/io:gzip_stream",
+        "@@protobuf+//src/google/protobuf/io:printer",
+        "@@protobuf+//src/google/protobuf/io:zero_copy_sink",
+        "@@protobuf+//src/google/protobuf/io:tokenizer",
+        "@@protobuf+//src/google/protobuf/io:io",
+        "@@protobuf+//src/google/protobuf/io:io_win32",
+        "@@protobuf+//src/google/protobuf:arena",
+        "@@protobuf+//src/google/protobuf:arena_align",
+        "@@protobuf+//src/google/protobuf/stubs:lite",
+        "@@protobuf+//src/google/protobuf:port",
+        "@@protobuf+//third_party/utf8_range:utf8_range",
+        # abseil-cpp (statically linked into libprotobuf.so via protobuf's deps)
+        "@@abseil-cpp+//absl/base:base",
+        "@@abseil-cpp+//absl/base:log_severity",
+        "@@abseil-cpp+//absl/base:malloc_internal",
+        "@@abseil-cpp+//absl/base:raw_logging_internal",
+        "@@abseil-cpp+//absl/base:spinlock_wait",
+        "@@abseil-cpp+//absl/base:strerror",
+        "@@abseil-cpp+//absl/base:throw_delegate",
+        "@@abseil-cpp+//absl/base:tracing_internal",
+        "@@abseil-cpp+//absl/container:hashtablez_sampler",
+        "@@abseil-cpp+//absl/container:raw_hash_set",
+        "@@abseil-cpp+//absl/crc:cpu_detect",
+        "@@abseil-cpp+//absl/crc:crc_cord_state",
+        "@@abseil-cpp+//absl/crc:crc_internal",
+        "@@abseil-cpp+//absl/crc:crc32c",
+        "@@abseil-cpp+//absl/debugging:debugging_internal",
+        "@@abseil-cpp+//absl/debugging:decode_rust_punycode",
+        "@@abseil-cpp+//absl/debugging:demangle_internal",
+        "@@abseil-cpp+//absl/debugging:demangle_rust",
+        "@@abseil-cpp+//absl/debugging:examine_stack",
+        "@@abseil-cpp+//absl/debugging:leak_check",
+        "@@abseil-cpp+//absl/debugging:stacktrace",
+        "@@abseil-cpp+//absl/debugging:symbolize",
+        "@@abseil-cpp+//absl/debugging:utf8_for_code_point",
+        "@@abseil-cpp+//absl/hash:city",
+        "@@abseil-cpp+//absl/hash:hash",
+        "@@abseil-cpp+//absl/hash:low_level_hash",
+        "@@abseil-cpp+//absl/log:globals",
+        "@@abseil-cpp+//absl/log:log_sink",
+        "@@abseil-cpp+//absl/log/internal:check_op",
+        "@@abseil-cpp+//absl/log/internal:conditions",
+        "@@abseil-cpp+//absl/log/internal:fnmatch",
+        "@@abseil-cpp+//absl/log/internal:format",
+        "@@abseil-cpp+//absl/log/internal:globals",
+        "@@abseil-cpp+//absl/log/internal:log_message",
+        "@@abseil-cpp+//absl/log/internal:log_sink_set",
+        "@@abseil-cpp+//absl/log/internal:nullguard",
+        "@@abseil-cpp+//absl/log/internal:proto",
+        "@@abseil-cpp+//absl/log/internal:structured_proto",
+        "@@abseil-cpp+//absl/log/internal:vlog_config",
+        "@@abseil-cpp+//absl/numeric:int128",
+        "@@abseil-cpp+//absl/profiling:exponential_biased",
+        "@@abseil-cpp+//absl/status:status",
+        "@@abseil-cpp+//absl/status:statusor",
+        "@@abseil-cpp+//absl/strings:cord",
+        "@@abseil-cpp+//absl/strings:cord_internal",
+        "@@abseil-cpp+//absl/strings:cordz_functions",
+        "@@abseil-cpp+//absl/strings:cordz_handle",
+        "@@abseil-cpp+//absl/strings:cordz_info",
+        "@@abseil-cpp+//absl/strings:internal",
+        "@@abseil-cpp+//absl/strings:str_format_internal",
+        "@@abseil-cpp+//absl/strings:string_view",
+        "@@abseil-cpp+//absl/strings:strings",
+        "@@abseil-cpp+//absl/synchronization:graphcycles_internal",
+        "@@abseil-cpp+//absl/synchronization:kernel_timeout_internal",
+        "@@abseil-cpp+//absl/synchronization:synchronization",
+        "@@abseil-cpp+//absl/time:time",
+        "@@abseil-cpp+//absl/time/internal/cctz:civil_time",
+        "@@abseil-cpp+//absl/time/internal/cctz:time_zone",
+    ],
+    deps = [":protobuf_library"],
+)
+
+# opencv
+
+alias(
+    name = "opencv_library",
+    actual = "@opencv//:opencv",
+)
+
+cc_shared_library(
+    name = "opencv",
+    dynamic_deps = [
+        ":protobuf",
+        ":zlib",
+    ],
+    exports_filter = [":opencv_library"],
+    user_link_flags = select({
+        "@platforms//os:macos": ["-Wl,-all_load"],
+        "//conditions:default": [],
+    }),
+    deps = [":opencv_library"],
+)
+
+# opencv
+
+cc_library(
+    name = "sdl2_library",
+    copts = ["-std=c11"],
+    deps = ["@sdl2"],
+)
+
+cc_shared_library(
+    name = "sdl2",
+    exports_filter = [":sdl2_library"],
+    deps = [":sdl2_library"],
+)
+
+# mimick
+
+alias(
+    name = "mimick",
+    actual = "@mimick",
+)
+
+# eigen
+
+alias(
+    name = "eigen",
+    actual = "@eigen",
+)
+
+# clang-format
+
+alias(
+    name = "clang-format",
+    actual = "@llvm-project//clang:clang-format",
+)
+
+alias(
+    name = "zenoh-cpp_library",
+    actual = "@zenoh-cpp",
+)
+
+cc_shared_library(
+    name = "zenoh-cpp",
+    exports_filter = [":zenoh-cpp_library"],
+    user_link_flags = select({
+        "@platforms//os:linux": [
+            "-lpthread",
+            "-lrt",
+        ],
+        "//conditions:default": [],
+    }),
+    deps = [":zenoh-cpp_library"],
+)
+
+# zenoh-cpp
+
+alias(
+    name = "libyaml_library",
+    actual = "@libyaml",
+)
+
+cc_shared_library(
+    name = "libyaml",
+    exports_filter = [":libyaml_library"],
+    deps = [":libyaml_library"],
+)
+
+# libzip
+
+alias(
+    name = "libzip_library",
+    actual = "@libzip//:libzip",
+)
+
+cc_shared_library(
+    name = "libzip",
+    exports_filter = [":libzip_library"],
+    deps = [":libzip_library"],
+)
+
+# Helper library to set up writable ROS_HOME and TMPDIR from TEST_TMPDIR for tests at runtime
+
+cc_library(
+    name = "bazel_test_helper",
+    srcs = ["bazel_test_helper.cpp"],
+    visibility = ["//visibility:public"],
+    alwayslink = True,
+)
+
+# Helper library to make sure a gtest cleans up background DDS threads before exiting
+
+cc_library(
+    name = "googletest",
+    srcs = ["gtest_dds_cleanup.cpp"],
+    deps = [
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+    ],
+    alwayslink = True,
+)

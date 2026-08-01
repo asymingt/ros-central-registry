@@ -1,0 +1,29 @@
+{
+    "integrity": "sha256-eGZogDCM8u8Ot9Z1yUwYX7TIpAvF6SFz4ouh0dQaZmc=",
+    "url": "https://github.com/asymingt/rosdistro/archive/refs/tags/lyrical/2026-06-08.tar.gz",
+    "strip_prefix": "rosdistro-lyrical-2026-06-08",
+    "overlay": {
+        "BUILD.bazel": "sha256-eOhEvWZD1t24ELoATe2whjSyZtCH7mVwLHW4D/GhXnA=",
+        "ament/BUILD.bazel": "sha256-ECvrn7FbsuaQMxarEQVcwHnxQ0i5Lm4u9jxWQQuzHyE=",
+        "ament/ament_index.bzl": "sha256-TkC7h23zqpNTdcK+Q7T9q3+qc5kVUhi4U36rmi3Hk6M=",
+        "ament/ament_package.bzl": "sha256-87QO2602ZPY8S7fyW8bx099idEZSMwEdLYLIScOgOv8=",
+        "ament/ament_resource.bzl": "sha256-3n2jJdUVUJz9zXJKpSLSF5LG/qc8Psblp9ekz0fWu6k=",
+        "ament/defs.bzl": "sha256-LKkaEcPY8WboF9qKgwQDH50nHezBgmsVkYt1jCEJRQM=",
+        "cc/BUILD.bazel": "sha256-2IWIMLsCi41yJ29fcbs4+1YNC1p5z/s3vrN8pXs8jck=",
+        "cc/aspects.bzl": "sha256-3ZYy2k+bwCogeto/A7ipoOE+GD7br4BDrv54sfwJwjY=",
+        "cc/bazel_test_helper.cpp": "sha256-94oB+nXrVk8l1nWJJ6o0g1w80KMWsrfDWKPcHg8REmk=",
+        "cc/defs.bzl": "sha256-CjrpSPeKNH5pafkHqlXGz+AYRso+FtJ8L1nZ8azsNBE=",
+        "cc/gtest_dds_cleanup.cpp": "sha256-aKyM27/8G48N7sP39M2pyB+qmt2iv7+75bSrZ5BmI1E=",
+        "cc/macros.bzl": "sha256-KzKT/+tSKdzHf4GhbWzv6VL8NUpg+yft7t6ftkvE3KI=",
+        "cc/mcap_impl.cpp": "sha256-/qFEIYCpqc9IB5xJpJUL6SXUnyVrTjFXc1dpyScZwKQ=",
+        "cc/python_import.bzl": "sha256-i/V4ZSXGd3SODCgfLYlhTyCpyCAdgNkj801sf27urwI=",
+        "cc/rules.bzl": "sha256-QQqwkKTjrTt/Qep1FXo9d1g2fIjm6yoUhhIP3bVtVzY=",
+        "cc/types.bzl": "sha256-rdlVPpnZM5fBfMRUrqSa+9GASlfn/i+mpMv4pul5+BI=",
+        "python/BUILD.bazel": "sha256-sP0ROcpNAotSp6EXjdHOsl43n2pyM6JfMNZtThCLGDY=",
+        "python/defs.bzl": "sha256-FlOqKavTbRjkQxuIa0TJmE4rUw5cup9zs6A5cb+OrHk=",
+        "python/pytest_main.py": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "requirements.in": "sha256-Yz7QMOMev6AYf5XG3GRMKjzYaO7mensoADaCuomERak=",
+        "requirements.txt": "sha256-EyAOC3hRsEHPNvkXmJ7PEqk4YWRSW334jb61bvJlICg=",
+        "requirements_windows.txt": "sha256-MagA6TOXPGc4KI/V4R9bSjFuuNZI+b2itiy/v2H4fnM="
+    }
+}
