@@ -1,0 +1,350 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rclcpp_components//:defs.bzl", "rclcpp_components_register_node")
+load("@rosdistro//ament:defs.bzl", "ament_index", "ament_package")
+load("@rosdistro//cc:defs.bzl", "collect_transitive_dynamic_deps", "ros_local_defines")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library", "cc_test")
+load("@rules_license//rules:license.bzl", "license")
+
+package(
+    default_applicable_licenses = [":license"],
+    default_visibility = ["//visibility:public"],
+)
+
+license(
+    name = "license",
+    license_kinds = [
+        "@rules_license//licenses/spdx:BSD-3-Clause",
+    ],
+)
+
+# NOTE: only the BUILD_SENSOR subset is wired up (matching this package's own
+# CMakeLists.txt, which disables BUILD_PCAP/BUILD_OSF/BUILD_MAPPING/BUILD_VIZ
+# when configuring the bundled ouster-sdk) -- so there is no os_pcap
+# component here, matching upstream's own default (non-PCAP) build.
+
+HEADERS = glob(["include/**/*.h"])
+
+### BASE LIBRARY
+
+# Dynamic (cross-.so singleton/registry state) vs. static deps, mirroring
+# ouster_ros_library's own CMakeLists.txt target_link_libraries/
+# ament_target_dependencies calls. tf2 itself is not a bazel_dep of this
+# package -- CMakeLists.txt's ament_target_dependencies lists it directly,
+# but package.xml never declares it (a latent upstream packaging omission,
+# only masked in CMake because tf2_eigen/tf2_ros transitively bring it in).
+# tf2_eigen's own DEPENDENCIES already includes @tf2//:tf2(_library), so
+# depending on tf2_eigen here provides tf2 transitively without needing a
+# bazel_dep this package doesn't actually declare.
+BASE_DEPENDENCIES = {
+    "@rclcpp//:rclcpp": "@rclcpp//:rclcpp_library",
+    "@tf2_eigen//:tf2_eigen": "@tf2_eigen//:tf2_eigen_library",
+}
+
+cc_library(
+    name = "ouster_ros_library",
+    srcs = ["src/os_ros.cpp"],
+    hdrs = HEADERS,
+    copts = ["-DEIGEN_MPL2_ONLY"],
+    includes = ["include"],
+    local_defines = ros_local_defines(),
+    deps = BASE_DEPENDENCIES.values() + [
+        "//ouster-sdk/ouster_sensor",
+        "@geometry_msgs//:cc",
+        "@ouster_sensor_msgs//:cc",
+        "@pcl_conversions//:pcl_conversions_library",
+        "@rosdistro//cc:eigen",
+        "@rosdistro//cc:opencv_library",
+        "@rosdistro//cc:pcl_common",
+        "@sensor_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "ouster_ros",
+    dynamic_deps = BASE_DEPENDENCIES.keys(),
+    exports_filter = [":ouster_ros_library"],
+    deps = [":ouster_ros_library"],
+)
+
+collect_transitive_dynamic_deps(
+    name = "ouster_ros_transitive",
+    dynamic_deps = [":ouster_ros"],
+    visibility = ["//visibility:private"],
+)
+
+### COMPONENTS
+
+# Common to every component, mirroring CMakeLists.txt's create_ros2_component
+# function.
+COMPONENT_DEPENDENCIES = {
+    "@class_loader//:class_loader": "@class_loader//:class_loader_library",
+    "@rclcpp//:rclcpp": "@rclcpp//:rclcpp_library",
+    "@rclcpp_components//:rclcpp_components": "@rclcpp_components//:rclcpp_components_library",
+    "@rclcpp_lifecycle//:rclcpp_lifecycle": "@rclcpp_lifecycle//:rclcpp_lifecycle_library",
+}
+
+# ==== os_sensor_component ====
+
+cc_library(
+    name = "os_sensor_component_library",
+    srcs = [
+        "src/os_sensor_node.cpp",
+        "src/os_sensor_node_base.cpp",
+    ],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines() + ["OUSTER_ROS_BUILDING_DLL"],
+    deps = COMPONENT_DEPENDENCIES.values() + [
+        ":ouster_ros_library",
+        "@geometry_msgs//:cc",
+        "@sensor_msgs//:cc",
+        "@std_msgs//:cc",
+        "@std_srvs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "os_sensor_component",
+    dynamic_deps = COMPONENT_DEPENDENCIES.keys() + [":ouster_ros"],
+    exports_filter = [":os_sensor_component_library"],
+    deps = [":os_sensor_component_library"],
+)
+
+rclcpp_components_register_node(
+    name = "os_sensor",
+    component = ":os_sensor_component",
+    node_name = "os_sensor",
+    plugin = "ouster_ros::OusterSensor",
+)
+
+# ==== os_replay_component ====
+
+cc_library(
+    name = "os_replay_component_library",
+    srcs = [
+        "src/os_replay_node.cpp",
+        "src/os_sensor_node_base.cpp",
+    ],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines() + ["OUSTER_ROS_BUILDING_DLL"],
+    deps = COMPONENT_DEPENDENCIES.values() + [
+        ":ouster_ros_library",
+        "@geometry_msgs//:cc",
+        "@sensor_msgs//:cc",
+        "@std_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "os_replay_component",
+    dynamic_deps = COMPONENT_DEPENDENCIES.keys() + [":ouster_ros"],
+    exports_filter = [":os_replay_component_library"],
+    deps = [":os_replay_component_library"],
+)
+
+rclcpp_components_register_node(
+    name = "os_replay",
+    component = ":os_replay_component",
+    node_name = "os_replay",
+    plugin = "ouster_ros::OusterReplay",
+)
+
+# ==== os_cloud_component ====
+
+cc_library(
+    name = "os_cloud_component_library",
+    srcs = [
+        "src/os_cloud_node.cpp",
+        "src/os_processing_node_base.cpp",
+    ],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines() + ["OUSTER_ROS_BUILDING_DLL"],
+    deps = COMPONENT_DEPENDENCIES.values() + [
+        ":ouster_ros_library",
+        "@geometry_msgs//:cc",
+        "@sensor_msgs//:cc",
+        "@std_msgs//:cc",
+        "@tf2_ros//:tf2_ros_library",
+    ],
+)
+
+cc_shared_library(
+    name = "os_cloud_component",
+    dynamic_deps = COMPONENT_DEPENDENCIES.keys() + [
+        ":ouster_ros",
+        "@tf2_ros//:tf2_ros",
+    ],
+    exports_filter = [":os_cloud_component_library"],
+    deps = [":os_cloud_component_library"],
+)
+
+rclcpp_components_register_node(
+    name = "os_cloud",
+    component = ":os_cloud_component",
+    node_name = "os_cloud",
+    plugin = "ouster_ros::OusterCloud",
+)
+
+# ==== os_image_component ====
+
+cc_library(
+    name = "os_image_component_library",
+    srcs = [
+        "src/os_image_node.cpp",
+        "src/os_processing_node_base.cpp",
+    ],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines() + ["OUSTER_ROS_BUILDING_DLL"],
+    deps = COMPONENT_DEPENDENCIES.values() + [
+        ":ouster_ros_library",
+        "@geometry_msgs//:cc",
+        "@sensor_msgs//:cc",
+        "@std_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "os_image_component",
+    dynamic_deps = COMPONENT_DEPENDENCIES.keys() + [":ouster_ros"],
+    exports_filter = [":os_image_component_library"],
+    deps = [":os_image_component_library"],
+)
+
+rclcpp_components_register_node(
+    name = "os_image",
+    component = ":os_image_component",
+    node_name = "os_image",
+    plugin = "ouster_ros::OusterImage",
+)
+
+# ==== os_driver_component ====
+
+cc_library(
+    name = "os_driver_component_library",
+    srcs = [
+        "src/os_driver_node.cpp",
+        "src/os_sensor_node.cpp",
+        "src/os_sensor_node_base.cpp",
+    ],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines() + ["OUSTER_ROS_BUILDING_DLL"],
+    deps = COMPONENT_DEPENDENCIES.values() + [
+        ":ouster_ros_library",
+        "@geometry_msgs//:cc",
+        "@sensor_msgs//:cc",
+        "@std_msgs//:cc",
+        "@std_srvs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "os_driver_component",
+    dynamic_deps = COMPONENT_DEPENDENCIES.keys() + [":ouster_ros"],
+    exports_filter = [":os_driver_component_library"],
+    deps = [":os_driver_component_library"],
+)
+
+rclcpp_components_register_node(
+    name = "os_driver",
+    component = ":os_driver_component",
+    node_name = "os_driver",
+    plugin = "ouster_ros::OusterDriver",
+)
+
+### TESTS
+
+cc_test(
+    name = "ouster_ros_test",
+    srcs = [
+        "src/lock_free_ring_buffer.h",
+        "src/os_ros.cpp",
+        "src/point_cloud_compose.h",
+        "src/point_meta_helpers.h",
+        "test/lock_free_ring_buffer_test.cpp",
+        "test/point_accessor_test.cpp",
+        "test/point_cloud_compose_test.cpp",
+        "test/point_transform_test.cpp",
+        "test/test_main.cpp",
+    ],
+    copts = ["-DEIGEN_MPL2_ONLY"],
+    # Everything os_ros.cpp itself needs (opencv, pcl, eigen, message types,
+    # ...) already comes in transitively via :ouster_ros_library -- the test
+    # files themselves only touch gtest, ouster/lidar_scan.h (via
+    # ouster_ros_library -> ouster-sdk/ouster_sensor), and these package's
+    # own public/private headers, so nothing else needs to be re-listed here.
+    dynamic_deps = [":ouster_ros_transitive"],
+    includes = ["include"],
+    deps = BASE_DEPENDENCIES.values() + [
+        ":ouster_ros_library",
+        "@rosdistro//cc:bazel_test_helper",
+        "@rosdistro//cc:googletest",
+    ],
+)
+
+### PACKAGING
+
+ament_index(
+    name = "ament_index",
+    components = [
+        ":os_cloud_record",
+        ":os_driver_record",
+        ":os_image_record",
+        ":os_replay_record",
+        ":os_sensor_record",
+    ],
+    libraries = [
+        ":ouster_ros",
+        ":os_cloud_component",
+        ":os_driver_component",
+        ":os_image_component",
+        ":os_replay_component",
+        ":os_sensor_component",
+    ],
+    package_xml = "package.xml",
+)
+
+ament_package(
+    name = "ament_package",
+    data = glob(["config/**"]),
+    package_xml = "package.xml",
+    deps = [
+        ":ament_index",
+        "@ament_cmake//:ament_package",
+        "@ament_cmake_gtest//:ament_package",
+        "@class_loader//:ament_package",
+        "@cv_bridge//:ament_package",
+        "@geometry_msgs//:ament_package",
+        "@launch//:ament_package",
+        "@launch_ros//:ament_package",
+        "@ouster_sensor_msgs//:ament_package",
+        "@pcl_conversions//:ament_package",
+        "@rclcpp//:ament_package",
+        "@rclcpp_components//:ament_package",
+        "@rclcpp_lifecycle//:ament_package",
+        "@rosdistro//:ament_package",
+        "@rosidl_default_generators//:ament_package",
+        "@rosidl_default_runtime//:ament_package",
+        "@sensor_msgs//:ament_package",
+        "@std_msgs//:ament_package",
+        "@std_srvs//:ament_package",
+        "@tf2_eigen//:ament_package",
+        "@tf2_ros//:ament_package",
+    ],
+)
