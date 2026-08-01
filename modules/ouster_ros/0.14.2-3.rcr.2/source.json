@@ -1,0 +1,12 @@
+{
+    "integrity": "sha256-MNJcR0qFEUCTIlp51sbNW/+EKYQ0JeWuehG7PJnZGaY=",
+    "url": "https://github.com/ros2-gbp/ouster-ros-release/archive/refs/tags/release/lyrical/ouster_ros/0.14.2-3.tar.gz",
+    "strip_prefix": "ouster-ros-release-release-lyrical-ouster_ros-0.14.2-3",
+    "overlay": {
+        "BUILD.bazel": "sha256-aKfPSMZ1VUMX01x6VyRMM8hyoumunjx1+T0YAACLJC4=",
+        "ouster-sdk/ouster_client/BUILD.bazel": "sha256-xoxhq5TB2BJnPdreZ+CM+GJB+uhD+RvYBPyFYzhPueE=",
+        "ouster-sdk/ouster_sensor/BUILD.bazel": "sha256-biSv9Q+ZgNvjx4uaCAXGLIWKMdbR9u27YglTPtg7TE4=",
+        "ouster-sdk/thirdparty/BUILD.bazel": "sha256-vCs0KTceMcs4CtrfdnpCc9s1u4TdhpLKdbI4dYRCFrw=",
+        "ouster-sdk/thirdparty/nmea/BUILD.bazel": "sha256-l0EHV7m854qHN8dBMs1o4L4b1zv8kpCrbZtDFE6E1yo="
+    }
+}
