@@ -1,0 +1,10 @@
+{
+    "integrity": "sha256-/UleC08JUeKdKZV9wLNLTcnS7qYmTbDU6cV+2WoLuhM=",
+    "url": "https://github.com/ros2-gbp/ouster-ros-release/archive/refs/tags/release/lyrical/ouster_sensor_msgs/0.14.2-3.tar.gz",
+    "strip_prefix": "ouster-ros-release-release-lyrical-ouster_sensor_msgs-0.14.2-3",
+    "overlay": {
+        "BUILD.bazel": "sha256-QMDc16wiHrb4q511cP0V92gA3W7UtAyYa/HwB6OCF20=",
+        "msg/BUILD.bazel": "sha256-UF105OX5MXD07iAnEwDg1bag1h9Xm8MrTHhEipQRb38=",
+        "srv/BUILD.bazel": "sha256-vpWmyhsu6luj/CbPtVHYqm5ZLHmZHC3jboyD5hCA3hU="
+    }
+}
