@@ -1,0 +1,65 @@
+--- a/test/rclcpp/test_typesupport_helpers.cpp
++++ b/test/rclcpp/test_typesupport_helpers.cpp
+@@ -46,6 +46,8 @@
+     std::runtime_error);
+ }
+ 
++// TODO(asymingt) fix generic clients (dynamic type loading) and mocking.
++// See: https://github.com/intrinsic-opensource/ros-central-registry/issues/66
+ TEST(TypesupportHelpersTest, returns_c_type_info_for_valid_legacy_library) {
+   try {
+     auto library = rclcpp::get_typesupport_library(
+@@ -61,6 +63,8 @@
+   }
+ }
+ 
++// TODO(asymingt) fix generic clients (dynamic type loading) and mocking.
++// See: https://github.com/intrinsic-opensource/ros-central-registry/issues/66
+ TEST(TypesupportHelpersTest, returns_c_type_info_for_valid_library) {
+   try {
+     auto library = rclcpp::get_typesupport_library(
+@@ -76,6 +80,8 @@
+   }
+ }
+ 
++// TODO(asymingt) fix generic clients (dynamic type loading) and mocking.
++// See: https://github.com/intrinsic-opensource/ros-central-registry/issues/66
+ TEST(TypesupportHelpersTest, returns_service_type_info_for_valid_legacy_library) {
+   try {
+     auto library = rclcpp::get_typesupport_library(
+@@ -91,6 +97,8 @@
+   }
+ }
+ 
++// TODO(asymingt) fix generic clients (dynamic type loading) and mocking.
++// See: https://github.com/intrinsic-opensource/ros-central-registry/issues/66
+ TEST(TypesupportHelpersTest, returns_service_type_info_for_valid_library) {
+   try {
+     auto library = rclcpp::get_typesupport_library(
+@@ -106,6 +114,8 @@
+   }
+ }
+ 
++// TODO(asymingt) fix generic clients (dynamic type loading) and mocking.
++// See: https://github.com/intrinsic-opensource/ros-central-registry/issues/66
+ TEST(TypesupportHelpersTest, returns_action_type_info_for_valid_legacy_library) {
+   try {
+     auto library = rclcpp::get_typesupport_library(
+@@ -121,6 +131,8 @@
+   }
+ }
+ 
++// TODO(asymingt) fix generic clients (dynamic type loading) and mocking.
++// See: https://github.com/intrinsic-opensource/ros-central-registry/issues/66
+ TEST(TypesupportHelpersTest, returns_action_type_info_for_valid_library) {
+   try {
+     auto library = rclcpp::get_typesupport_library(
+@@ -136,6 +148,8 @@
+   }
+ }
+ 
++// TODO(asymingt) fix generic clients (dynamic type loading) and mocking.
++// See: https://github.com/intrinsic-opensource/ros-central-registry/issues/66
+ TEST(TypesupportHelpersTest, test_throw_exception_with_invalid_type) {
+   // message
+   std::string invalid_type = "test_msgs/msg/InvalidType";

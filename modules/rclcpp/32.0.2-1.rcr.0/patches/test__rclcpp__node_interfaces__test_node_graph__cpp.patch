@@ -1,0 +1,10 @@
+--- a/test/rclcpp/node_interfaces/test_node_graph.cpp
++++ b/test/rclcpp/node_interfaces/test_node_graph.cpp
+@@ -291,7 +291,6 @@
+       " service names and types, leaking memory: error not set"));
+ }
+ 
+-
+ TEST_F(TestNodeGraph, get_client_names_and_types_by_node_rcl_errors)
+ {
+   auto client = node()->create_client<test_msgs::srv::Empty>("node1_service");

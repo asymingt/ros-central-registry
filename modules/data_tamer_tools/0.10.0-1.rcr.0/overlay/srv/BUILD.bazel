@@ -1,0 +1,8 @@
+load("@rosidl_default_generators//:defs.bzl", "ros_service")
+
+package(default_visibility = ["//visibility:public"])
+
+ros_service(
+    name = "Rotate",
+    src = "Rotate.srv",
+)

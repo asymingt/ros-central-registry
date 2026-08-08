@@ -1,0 +1,13 @@
+--- a/src/rviz_common/properties/property.cpp
++++ b/src/rviz_common/properties/property.cpp
+@@ -613,3 +613,10 @@
+ 
+ }  // namespace properties
+ }  // namespace rviz_common
++
++namespace QtPrivate { class QSlotObjectBase; }
++extern "C" void _ZN6QTimer14singleShotImplENSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEN2Qt9TimerTypeEPK7QObjectPN9QtPrivate15QSlotObjectBaseE(long long, Qt::TimerType, const QObject*, QtPrivate::QSlotObjectBase*);
++
++void QTimer::singleShotImpl(std::chrono::nanoseconds interval, Qt::TimerType timerType, const QObject *receiver, QtPrivate::QSlotObjectBase *slotObj) {
++  _ZN6QTimer14singleShotImplENSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEN2Qt9TimerTypeEPK7QObjectPN9QtPrivate15QSlotObjectBaseE(interval.count(), timerType, receiver, slotObj);
++}

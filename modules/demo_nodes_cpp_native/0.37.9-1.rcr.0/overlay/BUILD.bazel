@@ -1,0 +1,101 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rclcpp_components//:defs.bzl", "rclcpp_components_register_node")
+load("@rosdistro//ament:defs.bzl", "ament_package")
+load("@rosdistro//cc:defs.bzl", "ros_local_defines")
+load("@rosdistro//python:defs.bzl", "py_pytest")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library")
+
+package(default_visibility = ["//visibility:public"])
+
+DEPENDENCIES = {
+    "@rclcpp//:rclcpp": "@rclcpp//:rclcpp_library",
+    "@rclcpp_components//:rclcpp_components": "@rclcpp_components//:rclcpp_components_library",
+    "@rmw_fastrtps_cpp//:rmw_fastrtps_cpp": "@rmw_fastrtps_cpp//:rmw_fastrtps_cpp_library",
+}
+
+cc_library(
+    name = "talker_native_library",
+    srcs = ["src/talker.cpp"],
+    hdrs = glob(
+        [
+            "include/**/*.hpp",
+            "include/**/*.h",
+        ],
+        allow_empty = True,
+    ),
+    includes = ["include"],
+    local_defines = ros_local_defines() + ["DEMO_NODES_CPP_NATIVE_BUILDING_DLL"],
+    deps = DEPENDENCIES.values() + [
+        "@example_interfaces//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "talker_native",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = [":talker_native_library"],
+    deps = [":talker_native_library"],
+)
+
+rclcpp_components_register_node(
+    name = "node_talker",
+    component = ":talker_native",
+    executor = "SingleThreadedExecutor",
+    node_name = "talker",
+    plugin = "demo_nodes_cpp_native::Talker",
+)
+
+[
+    py_pytest(
+        name = f.split("/")[-1].removesuffix(".py"),
+        srcs = [f],
+        args = [
+            "-p",
+            "launch_testing.pytest.hooks",
+        ],
+        deps = [
+            "@rules_python//python/runfiles",
+        ],
+    )
+    for f in glob(
+        ["test/test_*.py"],
+        allow_empty = True,
+        exclude = ["**/test_flake8.py"],
+    )
+]
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    libraries = [":talker_native"],
+    package_xml = "package.xml",
+    deps = [
+        "@ament_cmake//:ament_package",
+        "@ament_cmake_pytest//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@example_interfaces//:ament_package",
+        "@launch//:ament_package",
+        "@launch_testing//:ament_package",
+        "@launch_testing_ament_cmake//:ament_package",
+        "@launch_testing_ros//:ament_package",
+        "@rclcpp//:ament_package",
+        "@rclcpp_components//:ament_package",
+        "@rmw_fastrtps_cpp//:ament_package",
+        "@rosdistro//:ament_package",
+    ],
+)

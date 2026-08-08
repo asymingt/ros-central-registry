@@ -1,0 +1,262 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosdistro//ament:defs.bzl", "ament_package")
+load("@rosdistro//cc:defs.bzl", "collect_transitive_dynamic_deps", "ros_local_defines")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library", "cc_test")
+
+package(default_visibility = ["//visibility:public"])
+
+### LIBRARIES
+
+HEADERS = glob(
+    [
+        "include/**/*.h",
+        "include/**/*.hpp",
+    ],
+    allow_empty = True,
+)
+
+DEPENDENCIES = {
+    "@camera_calibration_parsers//:camera_calibration_parsers": "@camera_calibration_parsers//:camera_calibration_parsers_library",
+    "@cv_bridge//:cv_bridge": "@cv_bridge//:cv_bridge_library",
+    "@image_geometry//:image_geometry": "@image_geometry//:image_geometry_library",
+    "@image_transport//:image_transport": "@image_transport//:image_transport_library",
+    "@rclcpp//:rclcpp": "@rclcpp//:rclcpp_library",
+    "@rclcpp_components//:rclcpp_components": "@rclcpp_components//:rclcpp_components_library",
+    "@rcutils//:rcutils": "@rcutils//:rcutils_library",
+    "@rosdistro//cc:opencv": "@rosdistro//cc:opencv_library",
+    "@tf2//:tf2": "@tf2//:tf2_library",
+    "@tf2_geometry_msgs//:tf2_geometry_msgs": "@tf2_geometry_msgs//:tf2_geometry_msgs_library",
+    "@tracetools_image_pipeline//:tracetools_image_pipeline": "@tracetools_image_pipeline//:tracetools_image_pipeline_library",
+}
+
+cc_library(
+    name = "image_proc_library",
+    srcs = ["src/image_proc/processor.cpp"],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines(),
+    deps = DEPENDENCIES.values() + [
+        "@geometry_msgs//:cc",
+        "@sensor_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "image_proc",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = [":image_proc_library"],
+    deps = [":image_proc_library"],
+)
+
+cc_library(
+    name = "rectify_library",
+    srcs = ["src/rectify.cpp"],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines() + ["COMPOSITION_BUILDING_DLL"],
+    deps = DEPENDENCIES.values() + [
+        ":image_proc_library",
+        "@geometry_msgs//:cc",
+        "@sensor_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "rectify",
+    dynamic_deps = DEPENDENCIES.keys() + [
+        ":image_proc",
+    ],
+    exports_filter = [":rectify_library"],
+    deps = [":rectify_library"],
+)
+
+cc_library(
+    name = "debayer_library",
+    srcs = [
+        "src/debayer.cpp",
+        "src/edge_aware.cpp",
+    ],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines() + ["COMPOSITION_BUILDING_DLL"],
+    deps = DEPENDENCIES.values() + [
+        ":image_proc_library",
+        "@geometry_msgs//:cc",
+        "@sensor_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "debayer",
+    dynamic_deps = DEPENDENCIES.keys() + [
+        ":image_proc",
+    ],
+    exports_filter = [":debayer_library"],
+    deps = [":debayer_library"],
+)
+
+cc_library(
+    name = "resize_library",
+    srcs = ["src/resize.cpp"],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines() + ["COMPOSITION_BUILDING_DLL"],
+    deps = DEPENDENCIES.values() + [
+        ":image_proc_library",
+        "@geometry_msgs//:cc",
+        "@sensor_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "resize",
+    dynamic_deps = DEPENDENCIES.keys() + [
+        ":image_proc",
+    ],
+    exports_filter = [":resize_library"],
+    deps = [":resize_library"],
+)
+
+cc_library(
+    name = "crop_decimate_library",
+    srcs = ["src/crop_decimate.cpp"],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines() + ["COMPOSITION_BUILDING_DLL"],
+    deps = DEPENDENCIES.values() + [
+        ":image_proc_library",
+        "@geometry_msgs//:cc",
+        "@sensor_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "crop_decimate",
+    dynamic_deps = DEPENDENCIES.keys() + [
+        ":image_proc",
+    ],
+    exports_filter = [":crop_decimate_library"],
+    deps = [":crop_decimate_library"],
+)
+
+cc_library(
+    name = "crop_non_zero_library",
+    srcs = ["src/crop_non_zero.cpp"],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines() + ["COMPOSITION_BUILDING_DLL"],
+    deps = DEPENDENCIES.values() + [
+        ":image_proc_library",
+        "@geometry_msgs//:cc",
+        "@sensor_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "crop_non_zero",
+    dynamic_deps = DEPENDENCIES.keys() + [
+        ":image_proc",
+    ],
+    exports_filter = [":crop_non_zero_library"],
+    deps = [":crop_non_zero_library"],
+)
+
+### TRANSITIVE DYNAMIC DEPS
+
+collect_transitive_dynamic_deps(
+    name = "transitive_dynamic_deps",
+    dynamic_deps = DEPENDENCIES.keys() + [
+        ":image_proc",
+        ":rectify",
+        ":debayer",
+        ":resize",
+        ":crop_decimate",
+        ":crop_non_zero",
+    ],
+    visibility = ["//visibility:private"],
+)
+
+### TESTS
+
+cc_test(
+    name = "test_rectify",
+    srcs = ["test/test_rectify.cpp"],
+    data = [
+        "@image_transport//:ament_index_package",
+        "@image_transport//:ament_index_plugin",
+    ],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    deps = DEPENDENCIES.values() + [
+        ":image_proc_library",
+        ":rectify_library",
+        "@rosdistro//cc:googletest",
+        "@sensor_msgs//:cc",
+    ],
+)
+
+cc_test(
+    name = "rostest",
+    srcs = ["test/rostest.cpp"],
+    data = [
+        "test/resources/calibration_file.ini",
+        "test/resources/logo.png",
+        "@image_transport//:ament_index_package",
+        "@image_transport//:ament_index_plugin",
+    ],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    local_defines = [
+        "_SRC_RESOURCES_DIR_PATH=\\\"../image_proc+/test/resources\\\"",
+    ],
+    deps = DEPENDENCIES.values() + [
+        ":image_proc_library",
+        "@rosdistro//cc:googletest",
+        "@sensor_msgs//:cc",
+    ],
+)
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    headers = HEADERS,
+    libraries = [
+        ":image_proc",
+        ":rectify",
+        ":debayer",
+        ":resize",
+        ":crop_decimate",
+        ":crop_non_zero",
+    ],
+    package_xml = "package.xml",
+    deps = [
+        "@ament_cmake_auto//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@camera_calibration_parsers//:ament_package",
+        "@cv_bridge//:ament_package",
+        "@geometry_msgs//:ament_package",
+        "@image_geometry//:ament_package",
+        "@image_transport//:ament_package",
+        "@rclcpp//:ament_package",
+        "@rclcpp_components//:ament_package",
+        "@rcutils//:ament_package",
+        "@rosdistro//:ament_package",
+        "@sensor_msgs//:ament_package",
+        "@tf2//:ament_package",
+        "@tf2_geometry_msgs//:ament_package",
+        "@tracetools_image_pipeline//:ament_package",
+    ],
+)

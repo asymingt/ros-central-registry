@@ -1,0 +1,25 @@
+--- a/test/rclcpp/test_node.cpp
++++ b/test/rclcpp/test_node.cpp
+@@ -37,6 +37,7 @@
+ #include "test_msgs/msg/empty.hpp"
+ #include "test_msgs/srv/empty.hpp"
+ 
++#include "../locate_test_assets.hpp"
+ #include "../mocking_utils/patch.hpp"
+ 
+ class TestNode : public ::testing::Test
+@@ -54,10 +55,10 @@
+ 
+   void SetUp() override
+   {
+-    test_resources_path /= "test_node";
+-  }
+-
+-  std::filesystem::path test_resources_path{TEST_RESOURCES_DIRECTORY};
++    test_resources_path = get_test_asset_dir() / "test_node";
++  }
++
++  std::filesystem::path test_resources_path;
+ };
+ 
+ /*

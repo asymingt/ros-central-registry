@@ -1,0 +1,10 @@
+{
+    "integrity": "sha256-tvI1fd8bqQtIOi6RQ/ZejIGrA771FCGyq21Am9yPQHI=",
+    "url": "https://github.com/ros2-gbp/automatika_ros_sugar-release/archive/refs/tags/release/lyrical/automatika_ros_sugar/0.7.1-1.tar.gz",
+    "strip_prefix": "automatika_ros_sugar-release-release-lyrical-automatika_ros_sugar-0.7.1-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-0HN0yAMBt22hvvZITQai0FfDBfbrt00kEYMZzI/DdpU=",
+        "msg/BUILD.bazel": "sha256-0V76m7tOz2R2DWzklEZ1W5XCOQuFXLANJx1QXabDxz8=",
+        "srv/BUILD.bazel": "sha256-A8myU0eb4NbisyHheulk2Umi4XOebBXbLqj0rZI6FKM="
+    }
+}

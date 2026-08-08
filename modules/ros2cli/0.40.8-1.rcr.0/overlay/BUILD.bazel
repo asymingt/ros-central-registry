@@ -1,0 +1,143 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@aspect_rules_py//py:defs.bzl", "py_library")
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load("@pip_ros//:requirements.bzl", "requirement")
+load("@rosdistro//ament:defs.bzl", "ament_index", "ament_package")
+load("@rosdistro//python:defs.bzl", "py_pytest")
+load("@rules_license//rules:license.bzl", "license")
+
+package(
+    default_applicable_licenses = [":license"],
+    default_visibility = ["//visibility:public"],
+)
+
+license(
+    name = "license",
+    license_kinds = [
+        "@rules_license//licenses/spdx:Apache-2.0",
+    ],
+)
+
+### DATA
+
+ament_index(
+    name = "ament_index",
+    data = glob(["resource/**"]),
+    package_xml = "package.xml",
+)
+
+### PYTHON MODULE
+
+write_file(
+    name = "pkg_info",
+    out = "ros2cli-0.40.6.egg-info/PKG-INFO",
+    content = [
+        "Metadata-Version: 2.1",
+        "Name: ros2cli",
+        "Version: 0.40.6",
+    ],
+)
+
+write_file(
+    name = "entry_points_txt",
+    out = "ros2cli-0.40.6.egg-info/entry_points.txt",
+    content = [
+        "[ros2cli.command]",
+        "daemon = ros2cli.command.daemon:DaemonCommand",
+        "extension_points = ros2cli.command.extension_points:ExtensionPointsCommand",
+        "extensions = ros2cli.command.extensions:ExtensionsCommand",
+        "",
+        "[ros2cli.extension_point]",
+        "ros2cli.command = ros2cli.command:CommandExtension",
+        "ros2cli.daemon.verb = ros2cli.verb.daemon:VerbExtension",
+        "",
+        "[ros2cli.daemon.verb]",
+        "start = ros2cli.verb.daemon.start:StartVerb",
+        "status = ros2cli.verb.daemon.status:StatusVerb",
+        "stop = ros2cli.verb.daemon.stop:StopVerb",
+        "",
+        "[console_scripts]",
+        "ros2 = ros2cli.cli:main",
+        "_ros2_daemon = ros2cli.daemon:main",
+    ],
+)
+
+py_library(
+    name = "ros2cli",
+    srcs = glob(["ros2cli/**/*"]),
+    data = [
+        ":ament_index",
+        ":entry_points_txt",
+        ":pkg_info",
+    ],
+    imports = ["."],
+    deps = ["@rclpy"],
+)
+
+### TESTS
+
+[
+    py_pytest(
+        name = test,
+        srcs = ["test/{0}.py".format(test)],
+        deps = [
+            ":ros2cli",
+            "@test_msgs//:test_msgs_py",
+            requirement("pyyaml"),
+        ],
+    )
+    for test in [
+        "test_helpers",
+        "test_qos_conversions",
+        "test_ros2cli_daemon",
+        "test_ros2cli_direct",
+        "test_strategy",
+    ]
+]
+
+[
+    py_pytest(
+        name = "test_{0}".format(linter),
+        srcs = ["test/test_{0}.py".format(linter)],
+        data = glob(["**/*"]),
+        deps = ["@ament_{0}".format(linter)],
+    )
+    for linter in [
+        "copyright",
+        "flake8",
+        "pep257",
+        "xmllint",
+    ]
+]
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    package_xml = "package.xml",
+    deps = [
+        ":ament_index",
+        ":ros2cli",
+        "@ament_copyright//:ament_package",
+        "@ament_flake8//:ament_package",
+        "@ament_pep257//:ament_package",
+        "@ament_xmllint//:ament_package",
+        "@rclpy//:ament_package",
+        "@rmw_test_fixture_implementation//:ament_package",
+        "@rosdistro//:ament_package",
+        "@test_msgs//:ament_package",
+    ],
+)

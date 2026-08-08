@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-fRqbvcNKnkU8d37YRf3YFwFnSvnOVCY8sFGTZyz3ZFg=",
+    "url": "https://github.com/ros2-gbp/gz_physics_vendor-release/archive/refs/tags/release/lyrical/gz_physics_vendor/0.4.4-1.tar.gz",
+    "strip_prefix": "gz_physics_vendor-release-release-lyrical-gz_physics_vendor-0.4.4-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-NQZc75Sto5doNROpFZq/CMyBz/HphVAsypnqpqfqYXg="
+    }
+}

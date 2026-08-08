@@ -1,0 +1,9 @@
+{
+    "integrity": "sha256-OZ+1CMrYK+gdq0vtAKoEBdrGgfF34WHZjLXKA0tNlQY=",
+    "url": "https://github.com/ros2-gbp/common_interfaces-release/archive/refs/tags/release/lyrical/geometry_msgs/5.9.3-1.tar.gz",
+    "strip_prefix": "common_interfaces-release-release-lyrical-geometry_msgs-5.9.3-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-HWPZfjCNPHNjUw3IPA/zN0e75+2fjTzWpNqGNwAKwRY=",
+        "msg/BUILD.bazel": "sha256-ndP0NqW64HR+FJatBLoGuUjz6rWsGXZhBFPjbNM4+bo="
+    }
+}

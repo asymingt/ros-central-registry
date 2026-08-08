@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-OVU12lMcgKWezql7yDX6ECiCc3kljRwN5d1eAh4UKhc=",
+    "url": "https://github.com/ros2-gbp/moveit_visual_tools-release/archive/refs/tags/release/lyrical/moveit_visual_tools/4.2.0-1.tar.gz",
+    "strip_prefix": "moveit_visual_tools-release-release-lyrical-moveit_visual_tools-4.2.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-hlrC95w2XnWBh+TdZUjpSU67EMtLCjET7MGQQAMu+jo="
+    }
+}

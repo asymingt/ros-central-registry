@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-exBFN3fBOwSdrYSJpf8lNGlfe0tbubIBZqvn7I2Cwq8=",
+    "url": "https://github.com/ros2-gbp/mrpt_ros-release/archive/refs/tags/release/lyrical/mrpt_libtclap/2.15.20-1.tar.gz",
+    "strip_prefix": "mrpt_ros-release-release-lyrical-mrpt_libtclap-2.15.20-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-ECz41jBQE2UZb+HSSL347Iv9N05mziTbMiRYvhjhQU4="
+    }
+}

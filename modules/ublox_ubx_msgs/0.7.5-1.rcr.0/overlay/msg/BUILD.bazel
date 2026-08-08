@@ -1,0 +1,474 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosidl_default_generators//:defs.bzl", "ros_message")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files(glob(["*.msg"]))
+
+ros_message(
+    name = "CarrSoln",
+    src = "CarrSoln.msg",
+)
+
+ros_message(
+    name = "CommsPortInfo",
+    src = "CommsPortInfo.msg",
+)
+
+ros_message(
+    name = "CorStatusInfo",
+    src = "CorStatusInfo.msg",
+)
+
+ros_message(
+    name = "ESFMeasDataItem",
+    src = "ESFMeasDataItem.msg",
+)
+
+ros_message(
+    name = "ESFSensorStatus",
+    src = "ESFSensorStatus.msg",
+)
+
+ros_message(
+    name = "GpsFix",
+    src = "GpsFix.msg",
+)
+
+ros_message(
+    name = "JamStateCentFreq",
+    src = "JamStateCentFreq.msg",
+)
+
+ros_message(
+    name = "MapMatching",
+    src = "MapMatching.msg",
+)
+
+ros_message(
+    name = "MeasxData",
+    src = "MeasxData.msg",
+)
+
+ros_message(
+    name = "OrbAlmInfo",
+    src = "OrbAlmInfo.msg",
+)
+
+ros_message(
+    name = "OrbEphInfo",
+    src = "OrbEphInfo.msg",
+)
+
+ros_message(
+    name = "OrbSVFlag",
+    src = "OrbSVFlag.msg",
+)
+
+ros_message(
+    name = "OrbSVInfo",
+    src = "OrbSVInfo.msg",
+    deps = [
+        ":OrbAlmInfo",
+        ":OrbEphInfo",
+        ":OrbSVFlag",
+        ":OtherOrbInfo",
+    ],
+)
+
+ros_message(
+    name = "OtherOrbInfo",
+    src = "OtherOrbInfo.msg",
+)
+
+ros_message(
+    name = "PSMPVT",
+    src = "PSMPVT.msg",
+)
+
+ros_message(
+    name = "PSMStatus",
+    src = "PSMStatus.msg",
+)
+
+ros_message(
+    name = "RawxData",
+    src = "RawxData.msg",
+    deps = [
+        ":TrkStat",
+    ],
+)
+
+ros_message(
+    name = "RecStat",
+    src = "RecStat.msg",
+)
+
+ros_message(
+    name = "SBASService",
+    src = "SBASService.msg",
+)
+
+ros_message(
+    name = "SBASStatusFlags",
+    src = "SBASStatusFlags.msg",
+)
+
+ros_message(
+    name = "SBASSvData",
+    src = "SBASSvData.msg",
+)
+
+ros_message(
+    name = "SatFlags",
+    src = "SatFlags.msg",
+)
+
+ros_message(
+    name = "SatInfo",
+    src = "SatInfo.msg",
+    deps = [
+        ":SatFlags",
+    ],
+)
+
+ros_message(
+    name = "SigData",
+    src = "SigData.msg",
+    deps = [
+        ":SigFlags",
+    ],
+)
+
+ros_message(
+    name = "SigFlags",
+    src = "SigFlags.msg",
+)
+
+ros_message(
+    name = "SigLogEvent",
+    src = "SigLogEvent.msg",
+)
+
+ros_message(
+    name = "SpartnKeyInfo",
+    src = "SpartnKeyInfo.msg",
+)
+
+ros_message(
+    name = "SpoofDet",
+    src = "SpoofDet.msg",
+)
+
+ros_message(
+    name = "TrkStat",
+    src = "TrkStat.msg",
+)
+
+ros_message(
+    name = "UBXEsfMeas",
+    src = "UBXEsfMeas.msg",
+    deps = [
+        ":ESFMeasDataItem",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXEsfStatus",
+    src = "UBXEsfStatus.msg",
+    deps = [
+        ":ESFSensorStatus",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXMonComms",
+    src = "UBXMonComms.msg",
+    deps = [
+        ":CommsPortInfo",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXNavClock",
+    src = "UBXNavClock.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXNavCov",
+    src = "UBXNavCov.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXNavDOP",
+    src = "UBXNavDOP.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXNavEOE",
+    src = "UBXNavEOE.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXNavHPPosECEF",
+    src = "UBXNavHPPosECEF.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXNavHPPosLLH",
+    src = "UBXNavHPPosLLH.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXNavOdo",
+    src = "UBXNavOdo.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXNavOrb",
+    src = "UBXNavOrb.msg",
+    deps = [
+        ":OrbSVInfo",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXNavPVT",
+    src = "UBXNavPVT.msg",
+    deps = [
+        ":CarrSoln",
+        ":GpsFix",
+        ":PSMPVT",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXNavPosECEF",
+    src = "UBXNavPosECEF.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXNavPosLLH",
+    src = "UBXNavPosLLH.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXNavRelPosNED",
+    src = "UBXNavRelPosNED.msg",
+    deps = [
+        ":CarrSoln",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXNavSBAS",
+    src = "UBXNavSBAS.msg",
+    deps = [
+        ":SBASService",
+        ":SBASStatusFlags",
+        ":SBASSvData",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXNavSat",
+    src = "UBXNavSat.msg",
+    deps = [
+        ":SatInfo",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXNavSig",
+    src = "UBXNavSig.msg",
+    deps = [
+        ":SigData",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXNavStatus",
+    src = "UBXNavStatus.msg",
+    deps = [
+        ":CarrSoln",
+        ":GpsFix",
+        ":MapMatching",
+        ":PSMStatus",
+        ":SpoofDet",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXNavSvin",
+    src = "UBXNavSvin.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXNavTimeUTC",
+    src = "UBXNavTimeUTC.msg",
+    deps = [
+        ":UtcStd",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXNavVelECEF",
+    src = "UBXNavVelECEF.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXNavVelNED",
+    src = "UBXNavVelNED.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXRxmCor",
+    src = "UBXRxmCor.msg",
+    deps = [
+        ":CorStatusInfo",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXRxmMeasx",
+    src = "UBXRxmMeasx.msg",
+    deps = [
+        ":MeasxData",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXRxmRTCM",
+    src = "UBXRxmRTCM.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXRxmRawx",
+    src = "UBXRxmRawx.msg",
+    deps = [
+        ":RawxData",
+        ":RecStat",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXRxmSpartn",
+    src = "UBXRxmSpartn.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXRxmSpartnKey",
+    src = "UBXRxmSpartnKey.msg",
+    deps = [
+        ":SpartnKeyInfo",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXSecSig",
+    src = "UBXSecSig.msg",
+    deps = [
+        ":JamStateCentFreq",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXSecSigLog",
+    src = "UBXSecSigLog.msg",
+    deps = [
+        ":SigLogEvent",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UBXSecUniqid",
+    src = "UBXSecUniqid.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "UtcStd",
+    src = "UtcStd.msg",
+)
+
+ros_message(
+    name = "UBXRxmSfrbx",
+    src = "UBXRxmSfrbx.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)

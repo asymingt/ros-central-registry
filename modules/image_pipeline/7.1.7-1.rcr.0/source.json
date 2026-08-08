@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-WIhIBRdUIUbZtYXOqKlj6okzy4YExgBJu6L7c8sJDAA=",
+    "url": "https://github.com/ros2-gbp/image_pipeline-release/archive/refs/tags/release/lyrical/image_pipeline/7.1.7-1.tar.gz",
+    "strip_prefix": "image_pipeline-release-release-lyrical-image_pipeline-7.1.7-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-lpp+bMauHkNlGvrjmP2QrJciIQdpAc8of20HpTYUvPY="
+    }
+}

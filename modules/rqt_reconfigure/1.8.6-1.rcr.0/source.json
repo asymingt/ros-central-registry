@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-1EI5DVbkx2xjSZHGczIbJe3ba4NJKeOuLBvJwgnfgUI=",
+    "url": "https://github.com/ros2-gbp/rqt_reconfigure-release/archive/refs/tags/release/lyrical/rqt_reconfigure/1.8.6-1.tar.gz",
+    "strip_prefix": "rqt_reconfigure-release-release-lyrical-rqt_reconfigure-1.8.6-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-T+tLToe/+CZ/JQQunya7/q4LoBHm0ALN7Cbf0Q3lRyw="
+    }
+}

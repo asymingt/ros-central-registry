@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-qSGHpL287FOM58R7aBB4E5z7bCsSOCddVnlgSjH85vY=",
+    "url": "https://github.com/ros2-gbp/rmw_zenoh-release/archive/refs/tags/release/lyrical/zenoh_security_tools/0.10.5-1.tar.gz",
+    "strip_prefix": "rmw_zenoh-release-release-lyrical-zenoh_security_tools-0.10.5-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-Cl9VGCb/gkg9rAEGuuyj+Y6g1PlZvjaQGCG777UZ0hI="
+    }
+}

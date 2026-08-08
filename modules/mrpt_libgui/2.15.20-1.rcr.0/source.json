@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-kSx6vivVDJCv/d54AUsg9bUC/i7bR5LgMtbnGx3Xc2o=",
+    "url": "https://github.com/ros2-gbp/mrpt_ros-release/archive/refs/tags/release/lyrical/mrpt_libgui/2.15.20-1.tar.gz",
+    "strip_prefix": "mrpt_ros-release-release-lyrical-mrpt_libgui-2.15.20-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-fdOr8XkOQ8EBw62JQyB69H2bIagtsJs6hGlLH4FtnUE="
+    }
+}

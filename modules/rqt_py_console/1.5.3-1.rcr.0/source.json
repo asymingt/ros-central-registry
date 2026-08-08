@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-69vqgsnoGQTaN7zWt2v/lmC70o3aUeeRHFr16x+BskQ=",
+    "url": "https://github.com/ros2-gbp/rqt_py_console-release/archive/refs/tags/release/lyrical/rqt_py_console/1.5.3-1.tar.gz",
+    "strip_prefix": "rqt_py_console-release-release-lyrical-rqt_py_console-1.5.3-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-3ITS99OjV+RmKzjL0GlsSosldr4wmjY1+YhcaQ9F5eQ="
+    }
+}

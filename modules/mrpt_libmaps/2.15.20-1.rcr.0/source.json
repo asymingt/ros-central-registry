@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-ADlZsaWdefJNZ3G61GppoP86hezmKuZON9EyK9b4Ve0=",
+    "url": "https://github.com/ros2-gbp/mrpt_ros-release/archive/refs/tags/release/lyrical/mrpt_libmaps/2.15.20-1.tar.gz",
+    "strip_prefix": "mrpt_ros-release-release-lyrical-mrpt_libmaps-2.15.20-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-7Yyhqxz7n/v+a+B/+N1Ub8mw5PH27X2dV7IWkRaqkvs="
+    }
+}

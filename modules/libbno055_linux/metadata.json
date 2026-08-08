@@ -1,0 +1,17 @@
+{
+    "homepage": "https://github.com/lazytatzv/libbno055_linux-release",
+    "maintainers": [
+        {
+            "email": "simmers@google.com",
+            "github": "asymingt",
+            "github_user_id": 37671,
+            "name": "Andrew Symington"
+        }
+    ],
+    "versions": [
+        "0.0.0",
+        "1.7.2-1",
+        "1.7.2-1.rcr.0"
+    ],
+    "yanked_versions": {}
+}

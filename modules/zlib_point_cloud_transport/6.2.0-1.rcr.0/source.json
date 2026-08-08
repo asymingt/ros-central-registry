@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-6I0iGaHBCB3+fOPfSY4b8jhZupUhBMEI8oW8GuQddOo=",
+    "url": "https://github.com/ros2-gbp/point_cloud_transport_plugins-release/archive/refs/tags/release/lyrical/zlib_point_cloud_transport/6.2.0-1.tar.gz",
+    "strip_prefix": "point_cloud_transport_plugins-release-release-lyrical-zlib_point_cloud_transport-6.2.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-JDche19aUkPtMoT0dWCwyBnMLP7Zn6PhN52IvAEWaDU="
+    }
+}

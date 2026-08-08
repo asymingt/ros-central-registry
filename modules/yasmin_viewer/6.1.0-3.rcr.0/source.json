@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-oS3GB9XzJivOKCMxU8BUFkTBeeCapwULZRYEyS7Z9/M=",
+    "url": "https://github.com/ros2-gbp/yasmin-release/archive/refs/tags/release/lyrical/yasmin_viewer/6.1.0-3.tar.gz",
+    "strip_prefix": "yasmin-release-release-lyrical-yasmin_viewer-6.1.0-3",
+    "overlay": {
+        "BUILD.bazel": "sha256-xlzdxu3M4gapf4TjJhxmzU2opcIC+C7h78M0VHoVQmY="
+    }
+}

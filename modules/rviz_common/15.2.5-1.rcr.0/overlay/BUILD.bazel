@@ -1,0 +1,330 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@cmake_configure_file//:cmake_configure_file.bzl", "cmake_configure_file")
+load("@rosdistro//ament:defs.bzl", "ament_index", "ament_package")
+load("@rosdistro//cc:defs.bzl", "collect_transitive_dynamic_deps", "ros_local_defines")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library")
+load("@rules_qt//:qt.bzl", "qt_cc_library", "qt_cc_test")
+
+package(default_visibility = ["//visibility:public"])
+
+DEPENDENCIES = {
+    "@message_filters//:message_filters": "@message_filters//:message_filters_library",
+    "@pluginlib//:pluginlib": "@pluginlib//:pluginlib_library",
+    "@rclcpp//:rclcpp": "@rclcpp//:rclcpp_library",
+    "@resource_retriever//:resource_retriever": "@resource_retriever//:resource_retriever_library",
+    "@rviz_rendering//:rviz_rendering": "@rviz_rendering//:rviz_rendering_library",
+    "@tf2//:tf2": "@tf2//:tf2_library",
+    "@tf2_ros//:tf2_ros": "@tf2_ros//:tf2_ros_library",
+    "@rosdistro//cc:tinyxml2": "@rosdistro//cc:tinyxml2_library",
+    "@rosdistro//cc:yaml-cpp": "@rosdistro//cc:yaml-cpp_library",
+}
+
+ament_index(
+    name = "ament_index",
+    data = glob([
+        "icons/**",
+        "images/**",
+        "help/**",
+        "default.rviz",
+    ]),
+)
+
+cmake_configure_file(
+    name = "env_config_cpp",
+    src = "src/rviz_common/env_config.cpp.in",
+    out = "src/rviz_common/env_config.cpp",
+    defines = [
+        "RVIZ_VERSION=15.1.15",
+        "ROS_DISTRO=ROS 2",
+        "OGRE_PLUGIN_PATH=rviz_ogre_vendor",
+    ],
+)
+
+qt_cc_library(
+    name = "rviz_common_library",
+    srcs = glob(
+        [
+            "src/**/*.cpp",
+        ],
+    ) + [
+        ":env_config_cpp",
+    ],
+    hdrs = glob(
+        [
+            "include/**/*.hpp",
+            "include/**/*.h",
+            "src/**/*.hpp",
+        ],
+        allow_empty = True,
+    ),
+    includes = [
+        "include",
+        "src",
+        "src/rviz_common",
+    ],
+    local_defines = ros_local_defines() + ["RVIZ_COMMON_BUILDING_LIBRARY"],
+    deps = DEPENDENCIES.values() + [
+        "@geometry_msgs//:cc",
+        "@rules_qt//:qt",
+        "@rules_qt//:qt_gui",
+        "@rules_qt//:qt_opengl",
+        "@rules_qt//:qt_svg",
+        "@rules_qt//:qt_widgets",
+        "@sensor_msgs//:cc",
+        "@std_msgs//:cc",
+        "@std_srvs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "rviz_common",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = [
+        ":rviz_common_library",
+        "@rules_qt//:qt",
+        "@rules_qt//:qt_gui",
+        "@rules_qt//:qt_opengl",
+        "@rules_qt//:qt_svg",
+        "@rules_qt//:qt_widgets",
+    ],
+    deps = [":rviz_common_library"],
+)
+
+### TESTS
+
+TEST_DEPENDENCIES = DEPENDENCIES | {
+    ":rviz_common": ":rviz_common_library",
+    "@rosdistro//cc:OgreMain": "@rosdistro//cc:OgreMain_library",
+    "@rosdistro//cc:OgreOverlay": "@rosdistro//cc:OgreOverlay_library",
+}
+
+qt_cc_library(
+    name = "rviz_common_test_utils_library",
+    srcs = [
+        "test/display_context_fixture.cpp",
+        "test/mock_display.cpp",
+        "test/mock_property_change_receiver.cpp",
+        "test/ogre_testing_environment.cpp",
+    ],
+    hdrs = glob([
+        "test/**/*.hpp",
+    ]),
+    data = [
+        ":ament_index",
+        "@rviz_rendering//:ament_index",
+    ],
+    includes = ["test"],
+    local_defines = ros_local_defines() + ["RVIZ_COMMON_PUBLIC="],
+    deps = TEST_DEPENDENCIES.values() + [
+        "@rosdistro//cc:googletest",
+        "@rules_qt//:qt",
+        "@rules_qt//:qt_widgets",
+    ],
+)
+
+collect_transitive_dynamic_deps(
+    name = "transitive_dynamic_deps_test",
+    dynamic_deps = TEST_DEPENDENCIES.keys(),
+    visibility = ["//visibility:private"],
+)
+
+qt_cc_test(
+    name = "rviz_common_core_tests",
+    srcs = [
+        "test/config_test.cpp",
+        "test/display_test.cpp",
+        "test/mock_display_group.cpp",
+        "test/mock_display_group.hpp",
+        "test/properties/qos_profile_property_test.cpp",
+        "test/property_test.cpp",
+        "test/ros_node_abstraction_test.cpp",
+        "test/transformation/identity_frame_transformer_test.cpp",
+        "test/uniform_string_stream_test.cpp",
+        "test/visualizer_app_test.cpp",
+    ],
+    data = [
+        ":ament_index",
+        "@rviz_rendering//:ament_index",
+    ],
+    dynamic_deps = [":transitive_dynamic_deps_test"],
+    env_inherit = [
+        "DISPLAY",
+        "QT_QPA_PLATFORM",
+    ],
+    includes = [
+        "include",
+        "src",
+        "src/rviz_common",
+        "test",
+    ],
+    linkopts = [
+        "-Wl,--no-as-needed",
+        "-lQt6Core",
+        "-lQt6Widgets",
+        "-Wl,--as-needed",
+        "-Wl,--allow-shlib-undefined",
+    ],
+    linkstatic = True,
+    local_defines = ros_local_defines() + ["RVIZ_COMMON_PUBLIC="],
+    tags = ["no-sandbox"],
+    deps = TEST_DEPENDENCIES.values() + [
+        ":rviz_common_test_utils_library",
+        "@rosdistro//cc:googletest",
+    ],
+)
+
+qt_cc_test(
+    name = "rviz_common_interaction_tests",
+    srcs = [
+        "test/interaction/selection_handler_test.cpp",
+        "test/interaction/selection_manager_test.cpp",
+    ],
+    data = [
+        ":ament_index",
+        "@rviz_rendering//:ament_index",
+    ],
+    dynamic_deps = [":transitive_dynamic_deps_test"],
+    env_inherit = [
+        "DISPLAY",
+        "QT_QPA_PLATFORM",
+    ],
+    includes = [
+        "include",
+        "src",
+        "src/rviz_common",
+        "test",
+    ],
+    linkopts = [
+        "-Wl,--no-as-needed",
+        "-lQt6Core",
+        "-lQt6Widgets",
+        "-Wl,--as-needed",
+        "-Wl,--allow-shlib-undefined",
+    ],
+    linkstatic = True,
+    local_defines = ros_local_defines() + ["RVIZ_COMMON_PUBLIC="],
+    tags = ["no-sandbox"],
+    deps = TEST_DEPENDENCIES.values() + [
+        ":rviz_common_test_utils_library",
+        "@rosdistro//cc:googletest",
+    ],
+)
+
+qt_cc_test(
+    name = "display_factory_test",
+    srcs = [
+        "src/rviz_common/display_factory.cpp",
+        "test/display_factory_test.cpp",
+    ],
+    data = [
+        ":ament_index",
+        "@rviz_rendering//:ament_index",
+    ] + glob(["test/resources/**"]),
+    dynamic_deps = [":transitive_dynamic_deps_test"],
+    env_inherit = [
+        "DISPLAY",
+        "QT_QPA_PLATFORM",
+    ],
+    includes = [
+        "include",
+        "src",
+        "src/rviz_common",
+        "test",
+    ],
+    linkopts = [
+        "-Wl,--no-as-needed",
+        "-lQt6Core",
+        "-lQt6Widgets",
+        "-Wl,--as-needed",
+        "-Wl,--allow-shlib-undefined",
+    ],
+    linkstatic = True,
+    local_defines = ros_local_defines() + [
+        "RVIZ_COMMON_PUBLIC=",
+        '_TEST_PLUGIN_DESCRIPTIONS=\\"ros-desktop/rviz_common\\"',
+    ],
+    tags = ["no-sandbox"],
+    deps = TEST_DEPENDENCIES.values() + [
+        ":rviz_common_test_utils_library",
+        "@rosdistro//cc:googletest",
+    ],
+)
+
+cc_library(
+    name = "frame_manager_test_lib",
+    srcs = [
+        "src/rviz_common/frame_manager.cpp",
+        "test/frame_manager_test.cpp",
+        ":moc_src/rviz_common/frame_manager",
+    ],
+    hdrs = [
+        "src/rviz_common/frame_manager.hpp",
+    ],
+    includes = [
+        "include",
+        "src",
+        "src/rviz_common",
+        "test",
+    ],
+    local_defines = ros_local_defines() + ["RVIZ_COMMON_PUBLIC="],
+    deps = TEST_DEPENDENCIES.values() + [
+        ":rviz_common_test_utils_library",
+        "@rosdistro//cc:googletest",
+    ],
+)
+
+qt_cc_test(
+    name = "frame_manager_test",
+    srcs = [],
+    data = [
+        ":ament_index",
+        "@rviz_rendering//:ament_index",
+    ],
+    dynamic_deps = [":transitive_dynamic_deps_test"],
+    local_defines = ros_local_defines() + ["RVIZ_COMMON_PUBLIC="],
+    deps = [
+        ":frame_manager_test_lib",
+        "@rosdistro//cc:googletest",
+    ],
+)
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    package_xml = "package.xml",
+    deps = [
+        ":ament_index",
+        "@ament_cmake//:ament_package",
+        "@ament_cmake_gmock//:ament_package",
+        "@ament_cmake_gtest//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@geometry_msgs//:ament_package",
+        "@message_filters//:ament_package",
+        "@pluginlib//:ament_package",
+        "@rclcpp//:ament_package",
+        "@resource_retriever//:ament_package",
+        "@rosdistro//:ament_package",
+        "@rviz_rendering//:ament_package",
+        "@sensor_msgs//:ament_package",
+        "@std_msgs//:ament_package",
+        "@std_srvs//:ament_package",
+        "@tf2//:ament_package",
+        "@tf2_ros//:ament_package",
+        "@urdf//:ament_package",
+    ],
+)

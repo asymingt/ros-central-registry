@@ -1,0 +1,19 @@
+{
+    "homepage": "https://github.com/ros2-gbp/ros2_medkit-release",
+    "maintainers": [
+        {
+            "email": "simmers@google.com",
+            "github": "asymingt",
+            "github_user_id": 37671,
+            "name": "Andrew Symington"
+        }
+    ],
+    "versions": [
+        "0.0.0",
+        "0.5.0-3",
+        "0.5.0-3.rcr.0",
+        "0.6.0-1",
+        "0.6.0-1.rcr.0"
+    ],
+    "yanked_versions": {}
+}

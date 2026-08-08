@@ -1,0 +1,9 @@
+{
+    "integrity": "sha256-hB53iSPp2DJjzmiekM4nZD/pB4prJo2QbV5AGoIeCnI=",
+    "url": "https://github.com/ros2-gbp/demos-release/archive/refs/tags/release/lyrical/pendulum_msgs/0.37.9-1.tar.gz",
+    "strip_prefix": "demos-release-release-lyrical-pendulum_msgs-0.37.9-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-GN5DUZ95tc9qHPeuopS7Iu9uJns995FFAswFVbqfkoA=",
+        "msg/BUILD.bazel": "sha256-bz43X3gnubUfxgrevAaXOALWwhhSUsGAQiGYd7E0d/Q="
+    }
+}

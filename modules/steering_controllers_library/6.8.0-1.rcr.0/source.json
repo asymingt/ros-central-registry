@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-hgGmx7HHc2l0U3GgIJw9LfuJ97kQukKb2BYV1TJNkIg=",
+    "url": "https://github.com/ros2-gbp/ros2_controllers-release/archive/refs/tags/release/lyrical/steering_controllers_library/6.8.0-1.tar.gz",
+    "strip_prefix": "ros2_controllers-release-release-lyrical-steering_controllers_library-6.8.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-hIkht/uWVbQLhD20DP/bBoVSzl12pNYFDvg75767qos="
+    }
+}

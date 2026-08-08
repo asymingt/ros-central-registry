@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-TcQQU45Yeo2B3WFz+SO3zqr04MZ6bpKGl1QDQQpXDA8=",
+    "url": "https://github.com/ros2-gbp/demos-release/archive/refs/tags/release/lyrical/dummy_map_server/0.37.9-1.tar.gz",
+    "strip_prefix": "demos-release-release-lyrical-dummy_map_server-0.37.9-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-Ssorw8nQIIhXdql/i8vwIQY4XJdm1CTeJUdCmlid8LE="
+    }
+}

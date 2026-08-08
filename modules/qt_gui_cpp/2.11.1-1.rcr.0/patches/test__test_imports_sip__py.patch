@@ -1,0 +1,11 @@
+--- a/test/test_imports_sip.py
++++ b/test/test_imports_sip.py
+@@ -16,3 +16,8 @@
+ def test_import_libqt_gui_cpp_sip():
+     from qt_gui_cpp import libqt_gui_cpp_sip
+     assert libqt_gui_cpp_sip is not None
++
++if __name__ == "__main__":
++    import sys
++    import pytest
++    sys.exit(pytest.main([__file__]))

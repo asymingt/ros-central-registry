@@ -1,0 +1,10 @@
+{
+    "integrity": "sha256-DLnRIIVFgGRZZfFWv8H337WiRZp37l/Nj+U0gL4xkqE=",
+    "url": "https://github.com/ros2-gbp/foxglove_bridge-release/archive/refs/tags/release/lyrical/foxglove_msgs/3.4.3-1.tar.gz",
+    "strip_prefix": "foxglove_bridge-release-release-lyrical-foxglove_msgs-3.4.3-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-0Il6ZgCyLjNuar2xAufNbPZ+8Jp858CYb1mqXW8CLgo=",
+        "ros1/BUILD.bazel": "sha256-8tX7v1ghPQFjONYO7RzdR/ojBZqjBWm6ehToCRzUr4E=",
+        "ros2/BUILD.bazel": "sha256-JjORqTkbjPfIH4MkHGxxakp/nWCEA8xRfIS1FGtDgoU="
+    }
+}

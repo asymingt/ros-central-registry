@@ -1,0 +1,100 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosdistro//ament:defs.bzl", "ament_package")
+load("@rosdistro//cc:defs.bzl", "ros_local_defines")
+load("@rules_cc//cc:defs.bzl", "cc_shared_library")
+load("@rules_qt//:qt.bzl", "qt_cc_library")
+
+package(default_visibility = ["//visibility:public"])
+
+# DEPENDENCIES
+
+DEPENDENCIES = {
+    "@rclcpp//:rclcpp": "@rclcpp//:rclcpp_library",
+    "@rcutils//:rcutils": "@rcutils//:rcutils_library",
+    "@rviz_common//:rviz_common": "@rviz_common//:rviz_common_library",
+    "@rviz_rendering//:rviz_rendering": "@rviz_rendering//:rviz_rendering_library",
+    "@tf2//:tf2": "@tf2//:tf2_library",
+    "@tf2_ros//:tf2_ros": "@tf2_ros//:tf2_ros_library",
+}
+
+# LIBRARIES
+
+qt_cc_library(
+    name = "rviz_visual_testing_framework_impl",
+    srcs = [
+        "src/internal/display_handler.cpp",
+        "src/internal/executor.cpp",
+        "src/internal/image_tester.cpp",
+        "src/internal/rviz_scene_test.cpp",
+        "src/internal/transform_message_creator.cpp",
+        "src/internal/visual_test.cpp",
+        "src/page_objects/base_page_object.cpp",
+        "src/page_objects/page_object_with_window.cpp",
+        "src/test_helpers.cpp",
+        "src/visual_test_fixture.cpp",
+    ],
+    hdrs = glob(
+        [
+            "include/**/*.hpp",
+            "include/**/*.h",
+        ],
+        allow_empty = True,
+    ),
+    includes = ["include"],
+    local_defines = ros_local_defines() + [
+        '_BUILD_DIR_PATH=\\".\\"',
+        '_SRC_DIR_PATH=\\".\\"',
+        "QT_WIDGETS_LIB",
+    ],
+    deps = DEPENDENCIES.values() + [
+        "@geometry_msgs//:cc",
+        "@rosdistro//cc:googletest",
+        "@rules_qt//:qt_test",
+        "@rules_qt//:qt_widgets",
+        "@std_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "rviz_visual_testing_framework",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = [":rviz_visual_testing_framework_impl"],
+    deps = [":rviz_visual_testing_framework_impl"],
+)
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    data = glob(["config/**"]),
+    package_xml = "package.xml",
+    deps = [
+        "@ament_cmake//:ament_package",
+        "@ament_cmake_gmock//:ament_package",
+        "@ament_cmake_gtest//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@geometry_msgs//:ament_package",
+        "@rclcpp//:ament_package",
+        "@rcutils//:ament_package",
+        "@rosdistro//:ament_package",
+        "@rviz_common//:ament_package",
+        "@rviz_rendering//:ament_package",
+        "@std_msgs//:ament_package",
+        "@tf2//:ament_package",
+        "@tf2_ros//:ament_package",
+    ],
+)

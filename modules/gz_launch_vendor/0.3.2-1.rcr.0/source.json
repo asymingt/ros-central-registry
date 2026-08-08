@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-ay60pNhV2yJoNEJyBC6grReLixCg2acBA5o7mvPgdKg=",
+    "url": "https://github.com/ros2-gbp/gz_launch_vendor-release/archive/refs/tags/release/lyrical/gz_launch_vendor/0.3.2-1.tar.gz",
+    "strip_prefix": "gz_launch_vendor-release-release-lyrical-gz_launch_vendor-0.3.2-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-TLJil5O352S6paFgGCuJsiLTr/MQABrzwPo8Yu50oeo="
+    }
+}

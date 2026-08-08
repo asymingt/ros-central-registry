@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-mLxFaXTc4QdezI3cudTFzRw6hAnuBSS6WsCV4ZDQ+uM=",
+    "url": "https://github.com/ros2-gbp/mrpt_ros-release/archive/refs/tags/release/lyrical/mrpt_libslam/2.15.20-1.tar.gz",
+    "strip_prefix": "mrpt_ros-release-release-lyrical-mrpt_libslam-2.15.20-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-RG4WxgT3TO09GyNVVOAT6IGBlbvb3EYniZ6BuxcI+l0="
+    }
+}

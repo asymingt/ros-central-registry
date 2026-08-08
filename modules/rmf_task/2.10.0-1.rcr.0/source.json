@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-gnMTmmWoCgCMJcjnCtdGDZUBjwfdk1e7kheO0Cdva/Y=",
+    "url": "https://github.com/ros2-gbp/rmf_task-release/archive/refs/tags/release/lyrical/rmf_task/2.10.0-1.tar.gz",
+    "strip_prefix": "rmf_task-release-release-lyrical-rmf_task-2.10.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-BQ+8Mi28+i3HUK3lO8/nU8zUakQeiXe41rDPGpGO9qs="
+    }
+}

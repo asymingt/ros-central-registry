@@ -1,0 +1,159 @@
+# Copyright 2025 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosdistro//ament:defs.bzl", "ament_package")
+load("@rosdistro//cc:defs.bzl", "collect_transitive_dynamic_deps", "ros_local_defines")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library", "cc_test")
+load("@rules_license//rules:license.bzl", "license")
+
+package(
+    default_applicable_licenses = [":license"],
+    default_visibility = ["//visibility:public"],
+)
+
+license(
+    name = "license",
+    license_kinds = [
+        "@rules_license//licenses/spdx:Apache-2.0",
+    ],
+)
+
+### LIBRARY
+
+HEADERS = glob(["include/**/*.hpp"])
+
+DEPENDENCIES = {
+    "@rcl//:rcl": "@rcl//:rcl_library",
+    "@rcl_action//:rcl_action": "@rcl_action//:rcl_action_library",
+    "@rclcpp//:rclcpp": "@rclcpp//:rclcpp_library",
+    "@rosidl_runtime_c//:rosidl_runtime_c": "@rosidl_runtime_c//:rosidl_runtime_c_library",
+}
+
+cc_library(
+    name = "rclcpp_action_library",
+    srcs = glob(["src/**/*.cpp"]),
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines(),
+    deps = DEPENDENCIES.values() + [
+        "@action_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "rclcpp_action",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = [":rclcpp_action_library"],
+    deps = [":rclcpp_action_library"],
+)
+
+### TRANSITIVELY COLLECT ALL DYNAMIC DEPS TO ENSURE LINKING WORKS
+
+# This is a workaround for the fact that dynamic_deps does not work transitively.
+# So, if you have a (foo -> bar -> baz) dynamic_dep dep chain, the symbols from
+# foo will not be available to baz at compile-time. This resolves that by running
+# an aspect over the dynamic_deps attribute to collect everything in the chain.
+
+collect_transitive_dynamic_deps(
+    name = "transitive_dynamic_deps",
+    dynamic_deps = [":rclcpp_action"],
+    visibility = ["//visibility:private"],
+)
+
+### TESTING
+
+TEST_DEPENDENCIES = {
+    "@rcpputils//:rcpputils": "@rcpputils//:rcpputils_library",
+}
+
+collect_transitive_dynamic_deps(
+    name = "transitive_dynamic_deps_test",
+    dynamic_deps = TEST_DEPENDENCIES.keys(),
+    visibility = ["//visibility:private"],
+)
+
+[
+    cc_test(
+        name = name,
+        timeout = "moderate",
+        srcs = ["test/{}.cpp".format(name)] + ["test/mocking_utils/patch.hpp"],
+        dynamic_deps = [
+            ":transitive_dynamic_deps",
+            ":transitive_dynamic_deps_test",
+        ],
+        local_defines = ros_local_defines(),
+        deps = DEPENDENCIES.values() + TEST_DEPENDENCIES.values() + [
+            ":rclcpp_action_library",
+            "@rosdistro//cc:googletest",
+            "@rosdistro//cc:mimick",
+            "@test_msgs//:cc",
+        ],
+    )
+    for name in [
+        "test_client",
+        # See: https://github.com/intrinsic-opensource/ros-central-registry/issues/66
+        # "test_generic_client",
+        "test_server_goal_handle",
+        "test_server",
+        "test_traits",
+        "test_types",
+    ]
+]
+
+[
+    cc_test(
+        name = name,
+        timeout = "moderate",
+        srcs = ["test/benchmark/{}.cpp".format(name)],
+        dynamic_deps = [
+            ":transitive_dynamic_deps",
+            ":transitive_dynamic_deps_test",
+        ],
+        local_defines = ros_local_defines(),
+        tags = ["manual"],
+        deps = DEPENDENCIES.values() + TEST_DEPENDENCIES.values() + [
+            ":rclcpp_action_library",
+            "@google_benchmark//:benchmark_main",
+            "@performance_test_fixture",
+        ],
+    )
+    for name in [
+        "benchmark_action_client",
+        "benchmark_action_server",
+    ]
+]
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    headers = HEADERS,
+    libraries = [":rclcpp_action"],
+    package_xml = "package.xml",
+    deps = [
+        "@action_msgs//:ament_package",
+        "@ament_cmake_gtest//:ament_package",
+        "@ament_cmake_ros//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@performance_test_fixture//:ament_package",
+        "@rcl//:ament_package",
+        "@rcl_action//:ament_package",
+        "@rclcpp//:ament_package",
+        "@rcpputils//:ament_package",
+        "@rosdistro//:ament_package",
+        "@rosidl_runtime_c//:ament_package",
+        "@test_msgs//:ament_package",
+    ],
+)

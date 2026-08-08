@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-+2QB5ixinDR+Jd/GsARvuD7VOfbitzRf5lcoNZFh0Oc=",
+    "url": "https://github.com/ros2-gbp/rmf_demos-release/archive/refs/tags/release/lyrical/rmf_demos_tasks/2.9.0-1.tar.gz",
+    "strip_prefix": "rmf_demos-release-release-lyrical-rmf_demos_tasks-2.9.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-IBVv6R/ASo0DhtooFUjduge6Ek4Ok4M46z4dNMhI2eM="
+    }
+}

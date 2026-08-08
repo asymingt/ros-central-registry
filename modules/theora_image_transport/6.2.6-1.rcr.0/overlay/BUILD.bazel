@@ -1,0 +1,125 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosdistro//ament:defs.bzl", "ament_index", "ament_package")
+load("@rosdistro//cc:defs.bzl", "collect_transitive_dynamic_deps", "ros_local_defines")
+load("@rosidl_default_generators//:defs.bzl", "default_generators")
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_shared_library")
+
+package(default_visibility = ["//visibility:public"])
+
+### INTERFACES
+
+default_generators(
+    package_xml = "package.xml",
+    deps = [
+        "//msg:Packet",
+    ],
+)
+
+### LIBRARIES
+
+HEADERS = glob(["include/**/*.hpp"])
+
+DEPENDENCIES = {
+    "@cv_bridge//:cv_bridge": "@cv_bridge//:cv_bridge_library",
+    "@image_transport//:image_transport": "@image_transport//:image_transport_library",
+    "@pluginlib//:pluginlib": "@pluginlib//:pluginlib_library",
+    "@rclcpp//:rclcpp": "@rclcpp//:rclcpp_library",
+    "@rcutils//:rcutils": "@rcutils//:rcutils_library",
+    "@rosdistro//cc:opencv": "@rosdistro//cc:opencv_library",
+    "@rosdistro//cc:ogg": "@rosdistro//cc:ogg_library",
+    "@rosdistro//cc:theora": "@rosdistro//cc:theora_library",
+}
+
+cc_library(
+    name = "theora_image_transport_component_library",
+    srcs = [
+        "src/manifest.cpp",
+        "src/theora_publisher.cpp",
+        "src/theora_subscriber.cpp",
+    ],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines(),
+    deps = DEPENDENCIES.values() + [
+        ":cc",
+        "@sensor_msgs//:cc",
+        "@std_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "theora_image_transport_component",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = [":theora_image_transport_component_library"],
+    deps = [":theora_image_transport_component_library"],
+)
+
+### TRANSITIVE DYNAMIC DEPS
+
+collect_transitive_dynamic_deps(
+    name = "transitive_dynamic_deps",
+    dynamic_deps = [":theora_image_transport_component"],
+    visibility = ["//visibility:private"],
+)
+
+### EXECUTABLES
+
+cc_binary(
+    name = "ogg_saver",
+    srcs = ["src/ogg_saver.cpp"],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    deps = DEPENDENCIES.values() + [
+        ":cc",
+        ":theora_image_transport_component_library",
+    ],
+)
+
+### AMENT INDEX
+
+ament_index(
+    name = "ament_index_plugins",
+    export_name = "theora_image_transport",
+    libraries = [":theora_image_transport_component"],
+    package_xml = "package.xml",
+    plugin_category = "image_transport",
+    plugins = ["theora_plugins.xml"],
+)
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    executables = [":ogg_saver"],
+    headers = HEADERS,
+    libraries = [":theora_image_transport_component"],
+    package_xml = "package.xml",
+    deps = [
+        ":ament_index_plugins",
+        "@ament_cmake//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@cv_bridge//:ament_package",
+        "@image_transport//:ament_package",
+        "@pluginlib//:ament_package",
+        "@rclcpp//:ament_package",
+        "@rcutils//:ament_package",
+        "@rosdistro//:ament_package",
+        "@rosidl_default_generators//:ament_package",
+        "@rosidl_default_runtime//:ament_package",
+        "@sensor_msgs//:ament_package",
+        "@std_msgs//:ament_package",
+    ],
+)

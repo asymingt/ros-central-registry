@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-tnJoMJeo5L81bG+n70ZzLjNPvoHuIQHUUOeYH7VkPNQ=",
+    "url": "https://github.com/ros2-gbp/message_tf_frame_transformer-release/archive/refs/tags/release/lyrical/message_tf_frame_transformer/1.1.3-4.tar.gz",
+    "strip_prefix": "message_tf_frame_transformer-release-release-lyrical-message_tf_frame_transformer-1.1.3-4",
+    "overlay": {
+        "BUILD.bazel": "sha256-NZ2lO2E4AZlIjgKmVYVd46FCuaYEphkmlUgQvjsw9pM="
+    }
+}

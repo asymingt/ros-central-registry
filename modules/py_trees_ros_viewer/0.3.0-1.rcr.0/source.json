@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-r+y+VS6zufW74l1FC8vxFj+tN8wBUK0zfeiQ5wy+Ybg=",
+    "url": "https://github.com/ros2-gbp/py_trees_ros_viewer-release/archive/refs/tags/release/lyrical/py_trees_ros_viewer/0.3.0-1.tar.gz",
+    "strip_prefix": "py_trees_ros_viewer-release-release-lyrical-py_trees_ros_viewer-0.3.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-o1fkdsoqK1iibZcOfhumlj/hg/2WsshzTewbuMFZJI0="
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "integrity": "sha256-U5nxzkpucQSV6czSa0CiqSDPmVeVGTvMoNilHfYTsc4=",
+    "url": "https://github.com/ros2-gbp/common_interfaces-release/archive/refs/tags/release/lyrical/visualization_msgs/5.9.3-1.tar.gz",
+    "strip_prefix": "common_interfaces-release-release-lyrical-visualization_msgs-5.9.3-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-lyQE4RU1VHJJVi0Ol+T7z1m/+YmFHYyF6nzQVyu0Juc=",
+        "msg/BUILD.bazel": "sha256-kBONi/1shQ63nDk/htasc2pK/MxoJdZdPEmO4CQMJ3I=",
+        "srv/BUILD.bazel": "sha256-bcsp/YDpFsTFyU9Ppbe5zqX1+JNOjmyhHhwWTfq/5ww="
+    }
+}

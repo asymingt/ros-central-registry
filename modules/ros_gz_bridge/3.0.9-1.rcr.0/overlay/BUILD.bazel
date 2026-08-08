@@ -1,0 +1,411 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@aspect_rules_py//py:defs.bzl", "py_binary", "py_library")
+load("@rclcpp_components//:defs.bzl", "rclcpp_components_register_node")
+load("@rosdistro//ament:defs.bzl", "ament_package")
+load("@rosdistro//cc:defs.bzl", "collect_transitive_dynamic_deps", "ros_local_defines")
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_shared_library", "cc_test")
+
+package(default_visibility = ["//visibility:public"])
+
+BRIDGE_MESSAGE_TYPES = [
+    # "builtin_interfaces",
+    "actuator_msgs",
+    "geometry_msgs",
+    "gps_msgs",
+    "marine_acoustic_msgs",
+    "nav_msgs",
+    # "rcl_interfaces",
+    "ros_gz_interfaces",
+    "rosgraph_msgs",
+    "sensor_msgs",
+    "std_msgs",
+    "tf2_msgs",
+    "trajectory_msgs",
+    "vision_msgs",
+]
+
+### PYTHON GENERATORS
+
+py_library(
+    name = "ros_gz_bridge_py",
+    srcs = glob(["ros_gz_bridge/**/*.py"]),
+    imports = ["."],
+    deps = ["@rosidl_pycommon"],
+)
+
+genrule(
+    name = "generate_factories_script_py",
+    srcs = ["bin/ros_gz_bridge_generate_factories"],
+    outs = ["bin/ros_gz_bridge_generate_factories.py"],
+    cmd = "cp $< $@",
+)
+
+genrule(
+    name = "generate_tests_script_py",
+    srcs = ["bin/ros_gz_bridge_generate_tests"],
+    outs = ["bin/ros_gz_bridge_generate_tests.py"],
+    cmd = "cp $< $@",
+)
+
+py_binary(
+    name = "ros_gz_bridge_generate_factories",
+    srcs = ["bin/ros_gz_bridge_generate_factories.py"],
+    main = "bin/ros_gz_bridge_generate_factories.py",
+    deps = [":ros_gz_bridge_py"],
+)
+
+py_binary(
+    name = "ros_gz_bridge_generate_tests",
+    srcs = ["bin/ros_gz_bridge_generate_tests.py"],
+    main = "bin/ros_gz_bridge_generate_tests.py",
+    deps = [":ros_gz_bridge_py"],
+)
+
+### CODE GENERATION
+
+genrule(
+    name = "generate_factories",
+    srcs = [
+        "resource/get_factory.cpp.em",
+        "resource/get_mappings.cpp.em",
+        "resource/pkg_factories.cpp.em",
+        "resource/pkg_factories.hpp.em",
+    ],
+    outs = [
+        "generated/get_factory.cpp",
+        "generated/get_mappings.cpp",
+    ] + [
+        "generated/factories/%s.cpp" % pkg
+        for pkg in BRIDGE_MESSAGE_TYPES
+    ] + [
+        "generated/factories/%s.hpp" % pkg
+        for pkg in BRIDGE_MESSAGE_TYPES
+    ],
+    cmd = "$(execpath :ros_gz_bridge_generate_factories) --output-path $(RULEDIR)/generated --template-dir $$(dirname $(location resource/get_factory.cpp.em)) --gz-msgs-ver 0.0.0",
+    tools = [":ros_gz_bridge_generate_factories"],
+)
+
+genrule(
+    name = "generate_test_helpers",
+    srcs = [
+        "test/resource/gz_publisher.cpp.em",
+        "test/resource/gz_subscriber.cpp.em",
+        "test/resource/ros_publisher.cpp.em",
+        "test/resource/ros_pkg_subscriber.cpp.em",
+    ],
+    outs = [
+        "generated/test/gz_publisher.cpp",
+        "generated/test/gz_subscriber.cpp",
+        "generated/test/ros_publisher.cpp",
+    ] + [
+        "generated/test/%s_subscriber.cpp" % pkg
+        for pkg in BRIDGE_MESSAGE_TYPES
+    ],
+    cmd = "$(execpath :ros_gz_bridge_generate_tests) --output-path $(RULEDIR)/generated/test --template-dir $$(dirname $(location test/resource/gz_publisher.cpp.em)) --gz-msgs-ver 0.0.0",
+    tools = [":ros_gz_bridge_generate_tests"],
+)
+
+### LIBRARIES
+
+DEPENDENCIES = {
+    "@rclcpp//:rclcpp": "@rclcpp//:rclcpp_library",
+    "@rclcpp_components//:rclcpp_components": "@rclcpp_components//:rclcpp_components_library",
+    "@rosdistro//cc:yaml-cpp": "@rosdistro//cc:yaml-cpp_library",
+    "@rosdistro//cc:gz_msgs": "@rosdistro//cc:gz_msgs",
+    "@rosdistro//cc:gz_transport": "@rosdistro//cc:gz_transport",
+}
+
+cc_library(
+    name = "ros_gz_bridge_library",
+    srcs = [
+        "src/bridge_config.cpp",
+        "src/bridge_handle.cpp",
+        "src/bridge_handle_gz_to_ros.cpp",
+        "src/bridge_handle_ros_to_gz.cpp",
+        "src/convert/utils.cpp",
+        "src/convert/utils.hpp",
+        "src/factory_interface.cpp",
+        "src/ros_gz_bridge.cpp",
+        "src/service_factories/ros_gz_interfaces.cpp",
+        "src/service_factory_interface.cpp",
+    ] + [
+        "src/convert/%s.cpp" % pkg
+        for pkg in BRIDGE_MESSAGE_TYPES
+    ] + [
+        "generated/get_factory.cpp",
+        "generated/get_mappings.cpp",
+    ] + [
+        "generated/factories/%s.cpp" % pkg
+        for pkg in BRIDGE_MESSAGE_TYPES
+    ],
+    hdrs = glob(["include/**/*.hpp"]) + [
+        "generated/factories/%s.hpp" % pkg
+        for pkg in BRIDGE_MESSAGE_TYPES
+    ],
+    includes = [
+        "generated",
+        "include",
+        "src",
+    ],
+    local_defines = ros_local_defines(),
+    deps = DEPENDENCIES.values() + [
+        "@%s//:cc" % pkg
+        for pkg in BRIDGE_MESSAGE_TYPES
+    ],
+)
+
+cc_shared_library(
+    name = "ros_gz_bridge",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = [":ros_gz_bridge_library"],
+    deps = [":ros_gz_bridge_library"],
+)
+
+collect_transitive_dynamic_deps(
+    name = "transitive_dynamic_deps",
+    dynamic_deps = [":ros_gz_bridge"],
+)
+
+### COMPONENT REGISTRATION
+
+rclcpp_components_register_node(
+    name = "bridge_node",
+    component = ":ros_gz_bridge",
+    node_name = "bridge_node",
+    plugin = "ros_gz_bridge::RosGzBridge",
+)
+
+### EXECUTABLES
+
+cc_binary(
+    name = "parameter_bridge",
+    srcs = ["src/parameter_bridge.cpp"],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    local_defines = ros_local_defines(),
+    deps = DEPENDENCIES.values() + [
+        ":ros_gz_bridge_library",
+    ],
+)
+
+cc_binary(
+    name = "static_bridge",
+    srcs = ["src/static_bridge.cpp"],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    local_defines = ros_local_defines(),
+    deps = DEPENDENCIES.values() + [
+        ":ros_gz_bridge_library",
+    ],
+)
+
+cc_binary(
+    name = "bridge_types",
+    srcs = ["src/bridge_types.cpp"],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    local_defines = ros_local_defines(),
+    deps = DEPENDENCIES.values() + [
+        ":ros_gz_bridge_library",
+    ],
+)
+
+### TESTS
+
+cc_test(
+    name = "test_rcl_interfaces",
+    srcs = [
+        "src/convert/rcl_interfaces.cpp",
+        "src/convert/rcl_interfaces_TEST.cpp",
+        "src/convert/utils.cpp",
+        "src/convert/utils.hpp",
+    ] + glob(["include/**/*.hpp"]),
+    includes = [
+        "include",
+        "src",
+    ],
+    deps = [
+        "@rosdistro//cc:googletest",
+        #"@rcl_interfaces//:cc",
+        "@rosdistro//cc:gz_msgs",
+    ],
+)
+
+cc_test(
+    name = "test_ros_gz_interfaces",
+    srcs = [
+        "src/convert/ros_gz_interfaces.cpp",
+        "src/convert/ros_gz_interfaces_TEST.cpp",
+        "src/convert/utils.cpp",
+        "src/convert/utils.hpp",
+    ],
+    includes = [
+        "include",
+        "src",
+    ],
+    deps = [
+        ":ros_gz_bridge_library",
+        "@ros_gz_interfaces//:cc",
+        "@rosdistro//cc:googletest",
+    ],
+)
+
+cc_library(
+    name = "test_utils",
+    srcs = [
+        "test/utils/gz_test_msg.cpp",
+        "test/utils/ros_test_msg.cpp",
+    ],
+    hdrs = glob(
+        [
+            "test/**/*.hpp",
+            "test/**/*.h",
+        ],
+        allow_empty = True,
+    ),
+    includes = [
+        "include",
+        "test",
+    ],
+    deps = DEPENDENCIES.values() + [
+        "@%s//:cc" % pkg
+        for pkg in BRIDGE_MESSAGE_TYPES
+    ] + [
+        "@rosdistro//cc:googletest",
+    ],
+)
+
+cc_binary(
+    name = "test_gz_publisher",
+    srcs = ["generated/test/gz_publisher.cpp"],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    local_defines = ros_local_defines(),
+    deps = [":test_utils"],
+)
+
+cc_binary(
+    name = "test_ros_publisher",
+    srcs = ["generated/test/ros_publisher.cpp"],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    local_defines = ros_local_defines(),
+    deps = [":test_utils"],
+)
+
+cc_binary(
+    name = "test_gz_subscriber",
+    srcs = ["generated/test/gz_subscriber.cpp"],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    local_defines = ros_local_defines(),
+    deps = [":test_utils"],
+)
+
+cc_binary(
+    name = "test_gz_server",
+    srcs = ["test/serverclient/gz_server.cpp"],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    local_defines = ros_local_defines(),
+    deps = [":test_utils"],
+)
+
+cc_binary(
+    name = "test_ros_client",
+    srcs = ["test/serverclient/ros_client.cpp"],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    local_defines = ros_local_defines(),
+    deps = [":test_utils"],
+)
+
+cc_binary(
+    name = "test_ros_subscriber",
+    srcs = [
+        "test/subscribers/ros_subscriber.cpp",
+    ] + [
+        "generated/test/%s_subscriber.cpp" % pkg
+        for pkg in BRIDGE_MESSAGE_TYPES
+    ],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    includes = ["test/subscribers"],
+    local_defines = ros_local_defines(),
+    deps = [":test_utils"],
+)
+
+cc_binary(
+    name = "test_launch_action_subscriber",
+    srcs = ["test/subscribers/launch_action_subscriber.cpp"],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    includes = ["test/subscribers"],
+    local_defines = ros_local_defines(),
+    deps = [":test_utils"],
+)
+
+cc_test(
+    name = "ros_gz_bridge_bridge_config",
+    srcs = ["test/bridge_config.cpp"],
+    includes = ["src"],
+    deps = [
+        ":ros_gz_bridge_library",
+        "@rclcpp//:rclcpp_library",
+        "@rosdistro//cc:googletest",
+    ],
+)
+
+cc_test(
+    name = "ros_gz_bridge_gid_filtering",
+    srcs = ["test/test_gid_filtering.cpp"],
+    deps = [
+        "@rclcpp//:rclcpp_library",
+        "@rosdistro//cc:googletest",
+        "@std_msgs//:cc",
+    ],
+)
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    executables = [
+        ":bridge_node",
+        ":parameter_bridge",
+        ":static_bridge",
+        ":bridge_types",
+    ],
+    libraries = [":ros_gz_bridge"],
+    package_xml = "package.xml",
+    deps = [
+        "@actuator_msgs//:ament_package",
+        "@ament_cmake//:ament_package",
+        "@ament_cmake_gtest//:ament_package",
+        "@ament_cmake_python//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@geometry_msgs//:ament_package",
+        "@gps_msgs//:ament_package",
+        "@launch//:ament_package",
+        "@launch_ros//:ament_package",
+        "@launch_testing//:ament_package",
+        "@launch_testing_ament_cmake//:ament_package",
+        "@marine_acoustic_msgs//:ament_package",
+        "@nav_msgs//:ament_package",
+        "@rclcpp//:ament_package",
+        "@rclcpp_components//:ament_package",
+        "@ros_gz_interfaces//:ament_package",
+        "@rosdistro//:ament_package",
+        "@rosgraph_msgs//:ament_package",
+        "@rosidl_pycommon//:ament_package",
+        "@sensor_msgs//:ament_package",
+        "@std_msgs//:ament_package",
+        "@tf2_msgs//:ament_package",
+        "@trajectory_msgs//:ament_package",
+        "@vision_msgs//:ament_package",
+    ],
+)

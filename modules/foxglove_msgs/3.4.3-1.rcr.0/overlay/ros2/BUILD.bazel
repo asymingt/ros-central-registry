@@ -1,0 +1,372 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosidl_default_generators//:defs.bzl", "ros_message")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files(glob(["*.msg"]))
+
+ros_message(
+    name = "ArrowPrimitive",
+    src = "ArrowPrimitive.msg",
+    deps = [
+        ":Color",
+        "@geometry_msgs//msg:Pose",
+    ],
+)
+
+ros_message(
+    name = "CameraCalibration",
+    src = "CameraCalibration.msg",
+    deps = [
+        "@builtin_interfaces//msg:Time",
+    ],
+)
+
+ros_message(
+    name = "CircleAnnotation",
+    src = "CircleAnnotation.msg",
+    deps = [
+        ":Color",
+        ":Point2",
+        "@builtin_interfaces//msg:Time",
+    ],
+)
+
+ros_message(
+    name = "Color",
+    src = "Color.msg",
+)
+
+ros_message(
+    name = "CompressedImage",
+    src = "CompressedImage.msg",
+    deps = [
+        "@builtin_interfaces//msg:Time",
+    ],
+)
+
+ros_message(
+    name = "CompressedVideo",
+    src = "CompressedVideo.msg",
+    deps = [
+        "@builtin_interfaces//msg:Time",
+    ],
+)
+
+ros_message(
+    name = "CubePrimitive",
+    src = "CubePrimitive.msg",
+    deps = [
+        ":Color",
+        "@geometry_msgs//msg:Pose",
+        "@geometry_msgs//msg:Vector3",
+    ],
+)
+
+ros_message(
+    name = "CylinderPrimitive",
+    src = "CylinderPrimitive.msg",
+    deps = [
+        ":Color",
+        "@geometry_msgs//msg:Pose",
+        "@geometry_msgs//msg:Vector3",
+    ],
+)
+
+ros_message(
+    name = "FrameTransform",
+    src = "FrameTransform.msg",
+    deps = [
+        "@builtin_interfaces//msg:Time",
+        "@geometry_msgs//msg:Quaternion",
+        "@geometry_msgs//msg:Vector3",
+    ],
+)
+
+ros_message(
+    name = "FrameTransforms",
+    src = "FrameTransforms.msg",
+    deps = [
+        ":FrameTransform",
+    ],
+)
+
+ros_message(
+    name = "GeoJSON",
+    src = "GeoJSON.msg",
+)
+
+ros_message(
+    name = "Grid",
+    src = "Grid.msg",
+    deps = [
+        ":PackedElementField",
+        ":Vector2",
+        "@builtin_interfaces//msg:Time",
+        "@geometry_msgs//msg:Pose",
+    ],
+)
+
+ros_message(
+    name = "ImageAnnotations",
+    src = "ImageAnnotations.msg",
+    deps = [
+        ":CircleAnnotation",
+        ":PointsAnnotation",
+        ":TextAnnotation",
+    ],
+)
+
+ros_message(
+    name = "KeyValuePair",
+    src = "KeyValuePair.msg",
+)
+
+ros_message(
+    name = "LaserScan",
+    src = "LaserScan.msg",
+    deps = [
+        "@builtin_interfaces//msg:Time",
+        "@geometry_msgs//msg:Pose",
+    ],
+)
+
+ros_message(
+    name = "LinePrimitive",
+    src = "LinePrimitive.msg",
+    deps = [
+        ":Color",
+        "@geometry_msgs//msg:Point",
+        "@geometry_msgs//msg:Pose",
+    ],
+)
+
+ros_message(
+    name = "LocationFix",
+    src = "LocationFix.msg",
+    deps = [
+        ":Color",
+        "@builtin_interfaces//msg:Time",
+    ],
+)
+
+ros_message(
+    name = "LocationFixes",
+    src = "LocationFixes.msg",
+    deps = [
+        ":LocationFix",
+    ],
+)
+
+ros_message(
+    name = "Log",
+    src = "Log.msg",
+    deps = [
+        "@builtin_interfaces//msg:Time",
+    ],
+)
+
+ros_message(
+    name = "ModelPrimitive",
+    src = "ModelPrimitive.msg",
+    deps = [
+        ":Color",
+        "@geometry_msgs//msg:Pose",
+        "@geometry_msgs//msg:Vector3",
+    ],
+)
+
+ros_message(
+    name = "PackedElementField",
+    src = "PackedElementField.msg",
+)
+
+ros_message(
+    name = "Point2",
+    src = "Point2.msg",
+)
+
+ros_message(
+    name = "PointCloud",
+    src = "PointCloud.msg",
+    deps = [
+        ":PackedElementField",
+        "@builtin_interfaces//msg:Time",
+        "@geometry_msgs//msg:Pose",
+    ],
+)
+
+ros_message(
+    name = "PointsAnnotation",
+    src = "PointsAnnotation.msg",
+    deps = [
+        ":Color",
+        ":Point2",
+        "@builtin_interfaces//msg:Time",
+    ],
+)
+
+ros_message(
+    name = "PoseInFrame",
+    src = "PoseInFrame.msg",
+    deps = [
+        "@builtin_interfaces//msg:Time",
+        "@geometry_msgs//msg:Pose",
+    ],
+)
+
+ros_message(
+    name = "PosesInFrame",
+    src = "PosesInFrame.msg",
+    deps = [
+        "@builtin_interfaces//msg:Time",
+        "@geometry_msgs//msg:Pose",
+    ],
+)
+
+ros_message(
+    name = "RawAudio",
+    src = "RawAudio.msg",
+    deps = [
+        "@builtin_interfaces//msg:Time",
+    ],
+)
+
+ros_message(
+    name = "RawImage",
+    src = "RawImage.msg",
+    deps = [
+        "@builtin_interfaces//msg:Time",
+    ],
+)
+
+ros_message(
+    name = "SceneEntity",
+    src = "SceneEntity.msg",
+    deps = [
+        ":ArrowPrimitive",
+        ":CubePrimitive",
+        ":CylinderPrimitive",
+        ":KeyValuePair",
+        ":LinePrimitive",
+        ":ModelPrimitive",
+        ":SpherePrimitive",
+        ":TextPrimitive",
+        ":TriangleListPrimitive",
+        "@builtin_interfaces//msg:Duration",
+        "@builtin_interfaces//msg:Time",
+    ],
+)
+
+ros_message(
+    name = "SceneEntityDeletion",
+    src = "SceneEntityDeletion.msg",
+    deps = [
+        "@builtin_interfaces//msg:Time",
+    ],
+)
+
+ros_message(
+    name = "SceneUpdate",
+    src = "SceneUpdate.msg",
+    deps = [
+        ":SceneEntity",
+        ":SceneEntityDeletion",
+    ],
+)
+
+ros_message(
+    name = "SpherePrimitive",
+    src = "SpherePrimitive.msg",
+    deps = [
+        ":Color",
+        "@geometry_msgs//msg:Pose",
+        "@geometry_msgs//msg:Vector3",
+    ],
+)
+
+ros_message(
+    name = "TextAnnotation",
+    src = "TextAnnotation.msg",
+    deps = [
+        ":Color",
+        ":Point2",
+        "@builtin_interfaces//msg:Time",
+    ],
+)
+
+ros_message(
+    name = "TextPrimitive",
+    src = "TextPrimitive.msg",
+    deps = [
+        ":Color",
+        "@geometry_msgs//msg:Pose",
+    ],
+)
+
+ros_message(
+    name = "TriangleListPrimitive",
+    src = "TriangleListPrimitive.msg",
+    deps = [
+        ":Color",
+        "@geometry_msgs//msg:Point",
+        "@geometry_msgs//msg:Pose",
+    ],
+)
+
+ros_message(
+    name = "Vector2",
+    src = "Vector2.msg",
+)
+
+ros_message(
+    name = "VoxelGrid",
+    src = "VoxelGrid.msg",
+    deps = [
+        ":PackedElementField",
+        "@builtin_interfaces//msg:Time",
+        "@geometry_msgs//msg:Pose",
+        "@geometry_msgs//msg:Vector3",
+    ],
+)
+
+ros_message(
+    name = "JointState",
+    src = "JointState.msg",
+)
+
+ros_message(
+    name = "Velocity3",
+    src = "Velocity3.msg",
+)
+
+ros_message(
+    name = "JointStates",
+    src = "JointStates.msg",
+    deps = [
+        "@builtin_interfaces//msg:Time",
+        "@foxglove_msgs//msg:JointState",
+    ],
+)
+
+ros_message(
+    name = "CompressedPointCloud",
+    src = "CompressedPointCloud.msg",
+    deps = [
+        "@builtin_interfaces//msg:Time",
+        "@geometry_msgs//msg:Pose",
+    ],
+)

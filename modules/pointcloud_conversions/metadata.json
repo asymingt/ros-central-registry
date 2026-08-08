@@ -1,0 +1,17 @@
+{
+    "homepage": "https://github.com/li9i/pointcloud-conversions-release",
+    "maintainers": [
+        {
+            "email": "simmers@google.com",
+            "github": "asymingt",
+            "github_user_id": 37671,
+            "name": "Andrew Symington"
+        }
+    ],
+    "versions": [
+        "0.0.0",
+        "0.0.4-3",
+        "0.0.4-3.rcr.0"
+    ],
+    "yanked_versions": {}
+}

@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-laHDFN0Ql2O/5xGkNV4GXEtnBly1fF2fHiR546Y8KuA=",
+    "url": "https://github.com/ros2-gbp/ros2_controllers-release/archive/refs/tags/release/lyrical/parallel_gripper_controller/6.8.0-1.tar.gz",
+    "strip_prefix": "ros2_controllers-release-release-lyrical-parallel_gripper_controller-6.8.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-dtRB44JwW9yYq7wG7X0foWofj90bSqRbusNwyZrXxLI="
+    }
+}

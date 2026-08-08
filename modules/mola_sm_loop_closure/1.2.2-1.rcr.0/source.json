@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-qACgeOFDtUj4KY3ymAC3rApuKClGg3BrXTQ6jpKl6Y4=",
+    "url": "https://github.com/ros2-gbp/mola_sm_loop_closure-release/archive/refs/tags/release/lyrical/mola_sm_loop_closure/1.2.2-1.tar.gz",
+    "strip_prefix": "mola_sm_loop_closure-release-release-lyrical-mola_sm_loop_closure-1.2.2-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-yXA5Z2C6BbW+gvXwjxfy+JqCUjrTHSy/M33fateH+4A="
+    }
+}

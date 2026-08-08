@@ -1,0 +1,11 @@
+--- a/src/detail/rmw_context_impl_s.cpp
++++ b/src/detail/rmw_context_impl_s.cpp
+@@ -384,7 +384,7 @@
+           RMW_ZENOH_LOG_WARN_NAMED(
+             "rmw_zenoh_cpp",
+             "Unable to connect to a Zenoh router. "
+-            "Have you started a router with `ros2 run rmw_zenoh_cpp rmw_zenohd`?");
++            "Have you started a router with `bazel run @rmw_zenoh_cpp//:rmw_zenohd`?");
+         }
+         if (++connection_attempts >= configured_connection_attempts.value()) {
+           RMW_ZENOH_LOG_WARN_NAMED(

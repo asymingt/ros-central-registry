@@ -1,0 +1,235 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosidl_default_generators//:defs.bzl", "ros_message")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files(glob(["*.msg"]))
+
+ros_message(
+    name = "AIMPlusStatus",
+    src = "AIMPlusStatus.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "AttCovEuler",
+    src = "AttCovEuler.msg",
+    deps = [
+        ":BlockHeader",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "AttEuler",
+    src = "AttEuler.msg",
+    deps = [
+        ":BlockHeader",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "BaseVectorCart",
+    src = "BaseVectorCart.msg",
+    deps = [
+        ":BlockHeader",
+        ":VectorInfoCart",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "BaseVectorGeod",
+    src = "BaseVectorGeod.msg",
+    deps = [
+        ":BlockHeader",
+        ":VectorInfoGeod",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "BlockHeader",
+    src = "BlockHeader.msg",
+)
+
+ros_message(
+    name = "ExtSensorMeas",
+    src = "ExtSensorMeas.msg",
+    deps = [
+        ":BlockHeader",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "GALAuthStatus",
+    src = "GALAuthStatus.msg",
+    deps = [
+        ":BlockHeader",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "IMUSetup",
+    src = "IMUSetup.msg",
+    deps = [
+        ":BlockHeader",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "INSNavCart",
+    src = "INSNavCart.msg",
+    deps = [
+        ":BlockHeader",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "INSNavGeod",
+    src = "INSNavGeod.msg",
+    deps = [
+        ":BlockHeader",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "MeasEpoch",
+    src = "MeasEpoch.msg",
+    deps = [
+        ":BlockHeader",
+        ":MeasEpochChannelType1",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "MeasEpochChannelType1",
+    src = "MeasEpochChannelType1.msg",
+    deps = [
+        ":MeasEpochChannelType2",
+    ],
+)
+
+ros_message(
+    name = "MeasEpochChannelType2",
+    src = "MeasEpochChannelType2.msg",
+)
+
+ros_message(
+    name = "PVTCartesian",
+    src = "PVTCartesian.msg",
+    deps = [
+        ":BlockHeader",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "PVTGeodetic",
+    src = "PVTGeodetic.msg",
+    deps = [
+        ":BlockHeader",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "PosCovCartesian",
+    src = "PosCovCartesian.msg",
+    deps = [
+        ":BlockHeader",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "PosCovGeodetic",
+    src = "PosCovGeodetic.msg",
+    deps = [
+        ":BlockHeader",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "RFBand",
+    src = "RFBand.msg",
+)
+
+ros_message(
+    name = "RFStatus",
+    src = "RFStatus.msg",
+    deps = [
+        ":BlockHeader",
+        ":RFBand",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "ReceiverTime",
+    src = "ReceiverTime.msg",
+    deps = [
+        ":BlockHeader",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "VectorInfoCart",
+    src = "VectorInfoCart.msg",
+)
+
+ros_message(
+    name = "VectorInfoGeod",
+    src = "VectorInfoGeod.msg",
+)
+
+ros_message(
+    name = "VelCovCartesian",
+    src = "VelCovCartesian.msg",
+    deps = [
+        ":BlockHeader",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "VelCovGeodetic",
+    src = "VelCovGeodetic.msg",
+    deps = [
+        ":BlockHeader",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "VelSensorSetup",
+    src = "VelSensorSetup.msg",
+    deps = [
+        ":BlockHeader",
+        "@std_msgs//msg:Header",
+    ],
+)

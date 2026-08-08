@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-+HYxhZAVrGPlJ6xVsMbMjV9PddF77A7/PFTvOijSis8=",
+    "url": "https://github.com/ros2-gbp/ament_cmake-release/archive/refs/tags/release/lyrical/ament_cmake_export_targets/2.8.8-1.tar.gz",
+    "strip_prefix": "ament_cmake-release-release-lyrical-ament_cmake_export_targets-2.8.8-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-LJhM1SHFjcow/f4BhWMo8FqoGqn+roP8LDB6rkFDCZY="
+    }
+}

@@ -1,0 +1,88 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@aspect_rules_py//py:defs.bzl", "py_binary", "py_library")
+load("@rosdistro//ament:defs.bzl", "ament_index", "ament_package")
+load("@rosdistro//python:defs.bzl", "py_pytest")
+
+package(default_visibility = ["//visibility:public"])
+
+ament_index(
+    name = "ament_index",
+    package_xml = "package.xml",
+)
+
+py_library(
+    name = "quality_of_service_demo_py_lib",
+    srcs = glob(["quality_of_service_demo_py/**/*.py"]),
+    data = [
+        ":ament_index",
+    ],
+    imports = ["."],
+    deps = [
+        "@example_interfaces//:py",
+        "@rclpy",
+        "@sensor_msgs//:py",
+    ],
+)
+
+[
+    py_binary(
+        name = b,
+        srcs = ["quality_of_service_demo_py/" + b + ".py"],
+        main = "quality_of_service_demo_py/" + b + ".py",
+        deps = [
+            ":quality_of_service_demo_py_lib",
+        ],
+    )
+    for b in [
+        "deadline",
+        "incompatible_qos",
+        "lifespan",
+        "liveliness",
+        "message_lost_listener",
+        "qos_overrides_listener",
+        "qos_overrides_talker",
+    ]
+]
+
+[
+    py_pytest(
+        name = "test_{0}".format(linter),
+        srcs = ["test/test_{0}.py".format(linter)],
+        data = glob(["**/*"]),
+        deps = ["@ament_{0}".format(linter)],
+    )
+    for linter in [
+        "xmllint",
+    ]
+]
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    package_xml = "package.xml",
+    deps = [
+        ":ament_index",
+        "@ament_copyright//:ament_package",
+        "@ament_flake8//:ament_package",
+        "@ament_pep257//:ament_package",
+        "@ament_xmllint//:ament_package",
+        "@example_interfaces//:ament_package",
+        "@rclpy//:ament_package",
+        "@rosdistro//:ament_package",
+        "@sensor_msgs//:ament_package",
+    ],
+)

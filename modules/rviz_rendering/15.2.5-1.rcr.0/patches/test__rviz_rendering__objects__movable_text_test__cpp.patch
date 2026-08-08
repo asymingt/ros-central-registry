@@ -1,0 +1,11 @@
+--- a/test/rviz_rendering/objects/movable_text_test.cpp
++++ b/test/rviz_rendering/objects/movable_text_test.cpp
+@@ -35,7 +35,7 @@
+ #include <vector>
+ 
+ #include <OgreVector.h>
+-#include <Overlay/OgreFontManager.h>  // NOLINT: cpplint cannot handle include order here
++#include <OgreFontManager.h>  // NOLINT: cpplint cannot handle include order here
+ 
+ #include "rviz_rendering/objects/movable_text.hpp"
+ #include "../ogre_testing_environment.hpp"

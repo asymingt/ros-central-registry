@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-NqtfvEBrXqbI5t8+VDCnxMXH1KkQX4hClFZzaccZdmk=",
+    "url": "https://github.com/ros2-gbp/rmf_demos-release/archive/refs/tags/release/lyrical/rmf_demos_maps/2.9.0-1.tar.gz",
+    "strip_prefix": "rmf_demos-release-release-lyrical-rmf_demos_maps-2.9.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-3PVgpDpnU+ZngcAhEx05Ky1ZBwLlqNJ8m6uHWme/TFs="
+    }
+}

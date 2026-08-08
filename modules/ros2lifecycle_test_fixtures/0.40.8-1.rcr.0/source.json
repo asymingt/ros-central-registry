@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-Z/ZidcCl3uukdCMoMAqLkn7km2Qsu8jzrkTeHQapAoE=",
+    "url": "https://github.com/ros2-gbp/ros2cli-release/archive/refs/tags/release/lyrical/ros2lifecycle_test_fixtures/0.40.8-1.tar.gz",
+    "strip_prefix": "ros2cli-release-release-lyrical-ros2lifecycle_test_fixtures-0.40.8-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-hWJHLGGWAttsu16smp4xvh0gHqE0zLImV321GTB1WwA="
+    }
+}

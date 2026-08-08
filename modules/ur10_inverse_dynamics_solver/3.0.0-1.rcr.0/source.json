@@ -1,0 +1,5 @@
+{
+    "integrity": "sha256-5nQWAnCgdC+4yJgfSaLBmv1P19MD+tpnDicxKuJ7Bzo=",
+    "url": "https://github.com/ros2-gbp/inverse_dynamics_solver-release/archive/refs/tags/release/lyrical/ur10_inverse_dynamics_solver/3.0.0-1.tar.gz",
+    "strip_prefix": "inverse_dynamics_solver-release-release-lyrical-ur10_inverse_dynamics_solver-3.0.0-1"
+}

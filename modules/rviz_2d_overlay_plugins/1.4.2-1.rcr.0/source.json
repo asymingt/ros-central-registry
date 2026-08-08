@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-o6ROWWRuPVAMEzD2Zd0cQFiwPGtnedok/a66pEKLOZY=",
+    "url": "https://github.com/ros2-gbp/rviz_2d_overlay_plugins-release/archive/refs/tags/release/lyrical/rviz_2d_overlay_plugins/1.4.2-1.tar.gz",
+    "strip_prefix": "rviz_2d_overlay_plugins-release-release-lyrical-rviz_2d_overlay_plugins-1.4.2-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-LU35YxADOkchGTfiGlUaVH0jNnZqv1rgmPfwMuD9q9A="
+    }
+}

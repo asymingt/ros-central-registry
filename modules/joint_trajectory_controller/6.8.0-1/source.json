@@ -1,0 +1,5 @@
+{
+    "integrity": "sha256-o8cWxK9EnF8zwF6OnKQ2Th5gWiSrZrICD76sopNH4uI=",
+    "url": "https://github.com/ros2-gbp/ros2_controllers-release/archive/refs/tags/release/lyrical/joint_trajectory_controller/6.8.0-1.tar.gz",
+    "strip_prefix": "ros2_controllers-release-release-lyrical-joint_trajectory_controller-6.8.0-1"
+}

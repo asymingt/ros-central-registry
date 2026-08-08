@@ -1,0 +1,5 @@
+{
+    "integrity": "sha256-lk8JCV+mF/QVS4EINBHPt1rUMgf+E6BxQAx+wTLXOo4=",
+    "url": "https://github.com/ros2-gbp/cascade_lifecycle-release/archive/refs/tags/release/lyrical/rclcpp_cascade_lifecycle/2.0.6-1.tar.gz",
+    "strip_prefix": "cascade_lifecycle-release-release-lyrical-rclcpp_cascade_lifecycle-2.0.6-1"
+}

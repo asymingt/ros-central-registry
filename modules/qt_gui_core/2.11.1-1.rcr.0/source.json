@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-SlPlwsoAvEEq7VamUi6UQhfYMSdBPoyL8om/xRM32cc=",
+    "url": "https://github.com/ros2-gbp/qt_gui_core-release/archive/refs/tags/release/lyrical/qt_gui_core/2.11.1-1.tar.gz",
+    "strip_prefix": "qt_gui_core-release-release-lyrical-qt_gui_core-2.11.1-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-KO4qPH2fKD4q8Oi0syOO96T56Y65ghP7sPHuxPBMKeY="
+    }
+}

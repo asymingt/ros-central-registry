@@ -1,0 +1,10 @@
+{
+    "integrity": "sha256-759ot3XSG9ZhLhJoPHkFBN2pmTpMGbNGjisIsplqnT4=",
+    "url": "https://github.com/ros2-gbp/common_interfaces-release/archive/refs/tags/release/lyrical/sensor_msgs/5.9.3-1.tar.gz",
+    "strip_prefix": "common_interfaces-release-release-lyrical-sensor_msgs-5.9.3-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-d+aq766r1KqcWQqamcrehggcWFupvpzREjgf+/QEuyU=",
+        "msg/BUILD.bazel": "sha256-ZBVSzlQ4V8E7vZoQI5Xo6xu3TDtq3QzgV/NgLf/lkZ4=",
+        "srv/BUILD.bazel": "sha256-uxzWygX6L0KfG+rn3aRjbLsJMUaQKIjArzlHOKFCsas="
+    }
+}

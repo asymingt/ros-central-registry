@@ -1,0 +1,28 @@
+--- a/test/rclcpp/node_interfaces/test_node_parameters.cpp
++++ b/test/rclcpp/node_interfaces/test_node_parameters.cpp
+@@ -31,6 +31,7 @@
+ 
+ #include "test_msgs/msg/empty.hpp"
+ 
++#include "../../locate_test_assets.hpp"
+ #include "../../mocking_utils/patch.hpp"
+ #include "../../utils/rclcpp_gtest_macros.hpp"
+ 
+@@ -52,7 +53,7 @@
+       dynamic_cast<rclcpp::node_interfaces::NodeParameters *>(
+       node->get_node_parameters_interface().get());
+     ASSERT_NE(nullptr, node_parameters);
+-    test_resources_path /= "test_node_parameters";
++    test_resources_path = get_test_asset_dir() /= "test_node_parameters";
+   }
+ 
+   void TearDown()
+@@ -64,7 +65,7 @@
+   std::shared_ptr<rclcpp::Node> node;
+   rclcpp::node_interfaces::NodeParameters * node_parameters;
+ 
+-  std::filesystem::path test_resources_path{TEST_RESOURCES_DIRECTORY};
++  std::filesystem::path test_resources_path;
+ };
+ 
+ TEST_F(TestNodeParameters, construct_destruct_rcl_errors) {

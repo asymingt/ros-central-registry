@@ -1,0 +1,105 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rclcpp_components//:defs.bzl", "rclcpp_components_register_node")
+load("@rosdistro//ament:defs.bzl", "ament_package")
+load("@rosdistro//cc:defs.bzl", "ros_local_defines")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library")
+
+package(default_visibility = ["//visibility:public"])
+
+### LIBRARIES
+
+HEADERS = glob([
+    "include/**/*.hpp",
+    "include/**/*.h",
+])
+
+DEPENDENCIES = {
+    "@rclcpp_components//:rclcpp_components": "@rclcpp_components//:rclcpp_components_library",
+    "@rclcpp//:rclcpp": "@rclcpp//:rclcpp_library",
+    "@rosdistro//cc:opencv": "@rosdistro//cc:opencv_library",
+}
+
+cc_library(
+    name = "image_tools_library",
+    srcs = [
+        "src/burger.cpp",
+        "src/burger.hpp",
+        "src/cam2image.cpp",
+        "src/cv_mat_sensor_msgs_image_type_adapter.cpp",
+        "src/policy_maps.hpp",
+        "src/showimage.cpp",
+    ],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines() + ["IMAGE_TOOLS_BUILDING_DLL"],
+    deps = DEPENDENCIES.values() + [
+        "@example_interfaces//:cc",
+        "@sensor_msgs//:cc",
+        "@std_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "image_tools",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = [":image_tools_library"],
+    deps = [":image_tools_library"],
+)
+
+### COMPONENTS
+
+rclcpp_components_register_node(
+    name = "node_cam2image",
+    component = ":image_tools",
+    executor = "SingleThreadedExecutor",
+    node_name = "cam2image",
+    plugin = "image_tools::Cam2Image",
+)
+
+rclcpp_components_register_node(
+    name = "node_showimage",
+    component = ":image_tools",
+    executor = "SingleThreadedExecutor",
+    node_name = "showimage",
+    plugin = "image_tools::ShowImage",
+)
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    headers = HEADERS,
+    libraries = [":image_tools"],
+    package_xml = "package.xml",
+    deps = [
+        "@ament_cmake//:ament_package",
+        "@ament_cmake_pytest//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@example_interfaces//:ament_package",
+        "@launch//:ament_package",
+        "@launch_ros//:ament_package",
+        "@launch_testing//:ament_package",
+        "@launch_testing_ament_cmake//:ament_package",
+        "@launch_testing_ros//:ament_package",
+        "@rclcpp//:ament_package",
+        "@rclcpp_components//:ament_package",
+        "@rmw_implementation_cmake//:ament_package",
+        "@rosdistro//:ament_package",
+        "@sensor_msgs//:ament_package",
+        "@std_msgs//:ament_package",
+    ],
+)

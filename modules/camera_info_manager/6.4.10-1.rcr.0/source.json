@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-SGojlBqEd1jbyY53MoaVyrb13zOigeiQYJ4Wob2e2fU=",
+    "url": "https://github.com/ros2-gbp/image_common-release/archive/refs/tags/release/lyrical/camera_info_manager/6.4.10-1.tar.gz",
+    "strip_prefix": "image_common-release-release-lyrical-camera_info_manager-6.4.10-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-HfeKaLGytADgxOXT28P3Intut+wXz8E7oMhagxS/PA0="
+    }
+}

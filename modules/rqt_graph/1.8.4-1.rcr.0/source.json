@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-pmpTqM7f7bY2eTVLRqWkoK17EL5n2zM4UTfv0wnNcEs=",
+    "url": "https://github.com/ros2-gbp/rqt_graph-release/archive/refs/tags/release/lyrical/rqt_graph/1.8.4-1.tar.gz",
+    "strip_prefix": "rqt_graph-release-release-lyrical-rqt_graph-1.8.4-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-VrvatPFlBFjmWrK4fSjYTyBto1tEqEviO0cjOjj/T4M="
+    }
+}

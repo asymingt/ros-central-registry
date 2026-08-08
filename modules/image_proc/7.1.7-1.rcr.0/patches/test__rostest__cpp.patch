@@ -1,0 +1,60 @@
+--- a/test/rostest.cpp
++++ b/test/rostest.cpp
+@@ -63,16 +63,26 @@
+     topic_color = camera_ns + "image_color";
+     topic_rect_color = camera_ns + "image_rect_color";
+ 
+-    const std::filesystem::path base{_SRC_RESOURCES_DIR_PATH};
++    std::filesystem::path base;
++    if (const char* srcdir = std::getenv("TEST_SRCDIR")) {
++      base = std::filesystem::path(srcdir) / "image_proc+/test/resources";
++    } else {
++      base = std::filesystem::path(_SRC_RESOURCES_DIR_PATH);
++    }
+     const std::filesystem::path raw_image_file = base / "logo.png";
+     const std::filesystem::path cam_info_file = base / "calibration_file.ini";
++
++    RCLCPP_INFO(node->get_logger(), "RAW IMAGE FILE: %s", raw_image_file.string().c_str());
++    RCLCPP_INFO(node->get_logger(), "CAM INFO FILE: %s", cam_info_file.string().c_str());
+ 
+     /// @todo Test variety of encodings for raw image (bayer, mono, color)
+     cv::Mat img = cv::imread(raw_image_file.string(), 0);
+     raw_image = cv_bridge::CvImage(std_msgs::msg::Header(), "mono8", img).toImageMsg();
+     std::string cam_name;
++    const std::filesystem::path local_cam_info_file = "calibration_file.ini";
++    std::filesystem::copy_file(cam_info_file, local_cam_info_file, std::filesystem::copy_options::overwrite_existing);
+ 
+-    if (!camera_calibration_parsers::readCalibration(cam_info_file.string(), cam_name, cam_info)) {
++    if (!camera_calibration_parsers::readCalibration(local_cam_info_file.string(), cam_name, cam_info)) {
+       throw "Failed to read camera info file.";
+     }
+ 
+@@ -89,6 +99,11 @@
+         }
+       }
+     }
++  }
++
++  void TearDown() override
++  {
++    node.reset();
+   }
+ 
+   rclcpp::Node::SharedPtr node;
+@@ -131,7 +146,6 @@
+     publishRaw();
+     executor.spin_some();
+   }
+-  rclcpp::shutdown();
+   RCLCPP_INFO(node->get_logger(), "Done");
+ }
+ 
+@@ -139,5 +153,7 @@
+ {
+   rclcpp::init(argc, argv);
+   testing::InitGoogleTest(&argc, argv);
+-  return RUN_ALL_TESTS();
++  int ret = RUN_ALL_TESTS();
++  rclcpp::shutdown();
++  return ret;
+ }

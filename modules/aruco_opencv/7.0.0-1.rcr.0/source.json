@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-ZKwRr/+1rLV06g4rGAYtSuLB2PIgfpSvW7GTmAadNJU=",
+    "url": "https://github.com/ros2-gbp/aruco_opencv-release/archive/refs/tags/release/lyrical/aruco_opencv/7.0.0-1.tar.gz",
+    "strip_prefix": "aruco_opencv-release-release-lyrical-aruco_opencv-7.0.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-XVdc2ZSLplhBcQxJQUHlJoljVc17YNjloTFqWOM6RaU="
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-e6RuEQNJitHmgGlOb4tly4aR/xMMRyTy31/opDGVkow=",
+    "url": "https://github.com/ros2-gbp/mola_test_datasets-release/archive/refs/tags/release/lyrical/mola_test_datasets/0.5.0-1.tar.gz",
+    "strip_prefix": "mola_test_datasets-release-release-lyrical-mola_test_datasets-0.5.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-2WqUKHado8FFf8IXGz0t26XxPP2PcaeyJbLORSCsoxg="
+    }
+}

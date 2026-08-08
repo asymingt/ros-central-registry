@@ -1,0 +1,110 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosdistro//ament:defs.bzl", "ament_index", "ament_package")
+load("@rosdistro//cc:defs.bzl", "collect_transitive_dynamic_deps", "ros_local_defines")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library", "cc_test")
+
+package(default_visibility = ["//visibility:public"])
+
+### LIBRARIES
+
+HEADERS = glob(
+    [
+        "include/**/*.h",
+        "include/**/*.hpp",
+    ],
+    allow_empty = True,
+)
+
+DEPENDENCIES = {
+    "@ament_index_cpp//:ament_index_cpp": "@ament_index_cpp//:ament_index_cpp_library",
+    "@camera_calibration_parsers//:camera_calibration_parsers": "@camera_calibration_parsers//:camera_calibration_parsers_library",
+    "@rclcpp//:rclcpp": "@rclcpp//:rclcpp_library",
+    "@rclcpp_lifecycle//:rclcpp_lifecycle": "@rclcpp_lifecycle//:rclcpp_lifecycle_library",
+    "@rcpputils//:rcpputils": "@rcpputils//:rcpputils_library",
+}
+
+cc_library(
+    name = "camera_info_manager_library",
+    srcs = [
+        "src/camera_info_manager.cpp",
+    ],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines() + ["CAMERA_INFO_MANAGER_BUILDING_DLL"],
+    deps = DEPENDENCIES.values() + [
+        "@sensor_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "camera_info_manager",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = [":camera_info_manager_library"],
+    deps = [":camera_info_manager_library"],
+)
+
+### TRANSITIVE DYNAMIC DEPS
+
+collect_transitive_dynamic_deps(
+    name = "transitive_dynamic_deps",
+    dynamic_deps = DEPENDENCIES.keys() + [
+        ":camera_info_manager",
+    ],
+    visibility = ["//visibility:private"],
+)
+
+### TESTS
+
+ament_index(
+    name = "ament_index",
+    data = ["tests/test_calibration.yaml"],
+    package_xml = "package.xml",
+)
+
+cc_test(
+    name = "unit_test",
+    srcs = ["tests/unit_test.cpp"],
+    data = [":ament_index"],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    deps = DEPENDENCIES.values() + [
+        ":camera_info_manager_library",
+        "@rosdistro//cc:bazel_test_helper",
+        "@rosdistro//cc:googletest",
+        "@sensor_msgs//:cc",
+    ],
+)
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    headers = HEADERS,
+    libraries = [":camera_info_manager"],
+    package_xml = "package.xml",
+    deps = [
+        "@ament_cmake_gtest//:ament_package",
+        "@ament_cmake_ros//:ament_package",
+        "@ament_index_cpp//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@camera_calibration_parsers//:ament_package",
+        "@rclcpp//:ament_package",
+        "@rclcpp_lifecycle//:ament_package",
+        "@rcpputils//:ament_package",
+        "@rosdistro//:ament_package",
+        "@sensor_msgs//:ament_package",
+    ],
+)

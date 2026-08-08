@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-Xttd89uIyOP4/ILSSC0t4VVedJ1u9EXIvhYKuJyUI+o=",
+    "url": "https://github.com/ros2-gbp/image_common-release/archive/refs/tags/release/lyrical/image_common/6.4.10-1.tar.gz",
+    "strip_prefix": "image_common-release-release-lyrical-image_common-6.4.10-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-lvj4BrvxY8oAbIzmEvbYuqEWc0tPwvz88xXb7gLPYC0="
+    }
+}

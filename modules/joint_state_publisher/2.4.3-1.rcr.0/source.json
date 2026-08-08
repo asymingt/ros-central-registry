@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-TgeVSURqPNVLu0HgZ5WAQeAZCXCfFZWTbqgHvUBsuiY=",
+    "url": "https://github.com/ros2-gbp/joint_state_publisher-release/archive/refs/tags/release/lyrical/joint_state_publisher/2.4.3-1.tar.gz",
+    "strip_prefix": "joint_state_publisher-release-release-lyrical-joint_state_publisher-2.4.3-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-kQSVe8HCtz0OHSV9TAlNxpQ7XvL9CU5aGWhsup2e6wk="
+    }
+}

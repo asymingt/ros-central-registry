@@ -1,0 +1,21 @@
+{
+    "integrity": "sha256-7jRlfk8F4Off0lPWPMXXyGqpwRPRFslbM2jpt0Tv7rU=",
+    "url": "https://github.com/ros2-gbp/rcutils-release/archive/refs/tags/release/lyrical/rcutils/7.1.2-1.tar.gz",
+    "strip_prefix": "rcutils-release-release-lyrical-rcutils-7.1.2-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-mK5JYbXPYYABm5Tg7wCxdh9emLHVfupaCcimLpW7nYY=",
+        "include/rcutils/runfiles.h": "sha256-MAa3qQUADk1JVGZ8n5N0bp/aRP+ko4so3tNJgFFPePg=",
+        "memory_tools_wrapper_script.sh": "sha256-ThsX7yWett4FtSg1V0tgbnFvgALQ6p7rnEbKZzzYGOQ=",
+        "src/runfiles.c": "sha256-ptISDACRYACpssUyCW9BPjKkVsmhbYznTB5mRlmkyYI=",
+        "test/locate_test_assets.h": "sha256-xm3tB/I+9VgV9CwPVDT2dP+r0BJpFuezPgkze0Z+J/I=",
+        "tests.bzl": "sha256-4mv3FOXvvLCGdVkzl5HHGBcrGf9l6BMOWJu2JCGGa5c="
+    },
+    "patches": {
+        "src__shared_library__c.patch": "sha256-U0E2KOV2zS99SHT/Ib+7QzKkzJZG5UHGWqa5zrLlGUc=",
+        "src__testing__fault_injection__c.patch": "sha256-jWrYnJxCK3wT6LyKxBPU0T1y+17YBFgLK5qTDBIgOGo=",
+        "test__test_filesystem__cpp.patch": "sha256-qTGQZBaynJ3iS1/5NvT7ez3PQcLzh8zYxdgmwYbPqDE=",
+        "test__test_logging_custom_env__cpp.patch": "sha256-y0Syk1EOZC5GooY/yZrKeZUMtEpy+oqHp4cpBJKDnq8=",
+        "test__test_process__cpp.patch": "sha256-QfN/USPLVK26hvNw5C1PbOSAkpcZT6l6R0HeiRjEe/Y="
+    },
+    "patch_strip": 1
+}

@@ -1,0 +1,16 @@
+{
+    "integrity": "sha256-4ATSsgd2yiSqWbn/tb7DT9YsDTNrU+50c/lGLt6qURY=",
+    "url": "https://github.com/ros2-gbp/kompass-release/archive/refs/tags/release/lyrical/kompass_interfaces/0.6.0-1.tar.gz",
+    "strip_prefix": "kompass-release-release-lyrical-kompass_interfaces-0.6.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-tLijbHbBpgxY1gkY8v0LlYonUyIqNqcUrzsdbxkcxhE=",
+        "action/BUILD.bazel": "sha256-wLjN4EgThhCObjstBdc4XyszEojsJLvUCnE9ut9sMSg=",
+        "msg/map/BUILD.bazel": "sha256-KiMICQ+VcwOTqXMPrm0bJSiu4q8pjpD3nTwVDqUCwlA=",
+        "msg/motion/BUILD.bazel": "sha256-amfA/lV6YLc/Y7bShz4WrXw9a/Q2MmvLXHMeqYLxcvk=",
+        "msg/prediction/BUILD.bazel": "sha256-GcNzTN9Ruz5vgnpnoLkIr6R0AMsXg3Lf442x6VNjT/c=",
+        "srv/control/BUILD.bazel": "sha256-VdPpo9OM5RzGlTzVKuZshR7Ng+HdXY8aflXJjfoyx8s=",
+        "srv/mapping/BUILD.bazel": "sha256-Yar+lR/OXcjRgUoYJUbUziItg/acUNfvEK2UNN3EL24=",
+        "srv/motion/BUILD.bazel": "sha256-IuyLOS0PORCCYx1hEdExX/jYzwqea9ugWsIHGQl9P3U=",
+        "srv/prediction/BUILD.bazel": "sha256-FryeH1hnRKrczljYFx8z/1V2LBxkKU8DuKv94lCPKKQ="
+    }
+}

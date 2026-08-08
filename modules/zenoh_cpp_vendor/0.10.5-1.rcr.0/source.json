@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-ByOEtAFPXS6DRG2QeTL+N2cOw6M0XE53P6mqpN/vGXE=",
+    "url": "https://github.com/ros2-gbp/rmw_zenoh-release/archive/refs/tags/release/lyrical/zenoh_cpp_vendor/0.10.5-1.tar.gz",
+    "strip_prefix": "rmw_zenoh-release-release-lyrical-zenoh_cpp_vendor-0.10.5-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-2mdwWJjvJ44EsC6uZzx+0MSQdJgfEF45hQ6vtENFtRM="
+    }
+}

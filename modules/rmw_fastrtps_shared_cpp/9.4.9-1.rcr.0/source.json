@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-XSnqSkBMLcNxgu+Vr0Cdymrh/XGpHPgw8cSoq/DYGAA=",
+    "url": "https://github.com/ros2-gbp/rmw_fastrtps-release/archive/refs/tags/release/lyrical/rmw_fastrtps_shared_cpp/9.4.9-1.tar.gz",
+    "strip_prefix": "rmw_fastrtps-release-release-lyrical-rmw_fastrtps_shared_cpp-9.4.9-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-fd53Cj3g/0mCzHK3mwtmdSgknDuo9A9wcUmgDt88jxo="
+    }
+}

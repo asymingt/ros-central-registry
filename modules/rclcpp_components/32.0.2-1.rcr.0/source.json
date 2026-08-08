@@ -1,0 +1,10 @@
+{
+    "integrity": "sha256-AgfsZQ9kcTdKEnwGX//FwobV8mFqZLkaaxlybhUQ4uE=",
+    "url": "https://github.com/ros2-gbp/rclcpp-release/archive/refs/tags/release/lyrical/rclcpp_components/32.0.2-1.tar.gz",
+    "strip_prefix": "rclcpp-release-release-lyrical-rclcpp_components-32.0.2-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-7BYWb0qlnWKWxQV/dO3MEotnTMSHzDay+sr+n6/FD3s=",
+        "defs.bzl": "sha256-nqdjMueEqXl1X+eX42wF9Q5LH8m0riVC5j0eI0Zj6ec=",
+        "rules.bzl": "sha256-PtEFOlk+V0QaCBFLOnT8pizQyr8rkCJVbeySlUIhVhQ="
+    }
+}

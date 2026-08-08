@@ -1,0 +1,223 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosdistro//ament:defs.bzl", "ament_package")
+load("@rosdistro//cc:defs.bzl", "ros_local_defines")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library", "cc_test")
+load("@rules_license//rules:license.bzl", "license")
+load(":tests.bzl", "rcutils_cc_tests")
+
+package(
+    default_applicable_licenses = [":license"],
+    default_visibility = ["//visibility:public"],
+)
+
+license(
+    name = "license",
+    license_kinds = [
+        "@rules_license//licenses/spdx:Apache-2.0",
+    ],
+)
+
+### LIBRARY
+
+HEADERS = glob(["include/**/*.h"])
+
+cc_library(
+    name = "rcutils_library",
+    srcs = glob(
+        [
+            "src/**/*.h",
+            "src/**/*.c",
+        ],
+        # glob()'s exclude can't take a select() (glob runs at loading time,
+        # before the target platform is known), so exclude both
+        # platform-specific files unconditionally here and add back the
+        # right one via select() below instead.
+        exclude = [
+            "src/time_unix.c",
+            "src/time_win32.c",
+        ],
+    ) + select({
+        "@platforms//os:windows": ["src/time_win32.c"],
+        "//conditions:default": ["src/time_unix.c"],
+    }),
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines() + [
+        "RCUTILS_ENABLE_FAULT_INJECTION",
+    ] + select({
+        # _GNU_SOURCE requests glibc extensions (e.g. 'program_invocation_name',
+        # 'memrchr'). It's meaningless on non-glibc platforms like Darwin, and
+        # on Darwin it also makes find.c take the memrchr() branch, which
+        # Darwin's libc doesn't provide.
+        "@platforms//os:linux": ["_GNU_SOURCE"],
+        "//conditions:default": [],
+    }),
+)
+
+cc_shared_library(
+    name = "rcutils",
+    exports_filter = [":rcutils_library"],
+    deps = [":rcutils_library"],
+)
+
+### TESTING
+
+genrule(
+    name = "file_with_space",
+    outs = ["test/file with space.txt"],
+    cmd = "echo '' > \"$(OUTS)\"",
+)
+
+genrule(
+    name = "memory_tools_wrapper",
+    srcs = ["memory_tools_wrapper_script.sh"],
+    outs = ["memory_tools_wrapper.sh"],
+    cmd = "cp $< $@ && chmod +x $@",
+    executable = True,
+)
+
+# Tests that exercise osrf_testing_tools_cpp's memory-tools interposition
+# checks. malloc/realloc/calloc/free interposition only reliably covers the
+# whole process when injected via the :memory_tools_interpose shared library
+# (a plain static link only interposes calls made directly from the test
+# binary, missing calls made from within librcutils itself); a test needs to
+# share that exact loaded instance -- not a separately linked static copy --
+# to see the interposed calls' counters (see :memory_tools_interpose). These
+# run through memory_tools_wrapper_script.sh, which additionally injects the
+# dylib via DYLD_INSERT_LIBRARIES on Darwin, where interposition also needs
+# to be forced early via the dynamic loader.
+_MEMORY_TOOLS_TESTS = [
+    "test_allocator",
+    "test_error_handling",
+    "test_error_handling_helpers",
+    "test_time",
+]
+
+_RCUTILS_TESTS = {
+    ("test_logging", "test_logging.cpp"): {},
+    ("test_logging_long_messages", "test_logging_long_messages.cpp"): {},
+    ("test_logging_macros", "test_logging_macros.cpp"): {},
+    ("test_allocator", "test_allocator.cpp"): {},
+    ("test_char_array", "test_char_array.cpp"): {},
+    ("test_error_handling", "test_error_handling.cpp"): {},
+    ("test_error_handling_helpers", "test_error_handling_helpers.cpp"): {},
+    ("test_split", "test_split.cpp"): {},
+    ("test_join", "test_join.cpp"): {},
+    ("test_find", "test_find.cpp"): {},
+    ("test_string_array", "test_string_array.cpp"): {},
+    ("test_env", "test_env.cpp"): {
+        "EMPTY_TEST": "",
+        "NORMAL_TEST": "foo",
+        "HOME": ".",
+    },
+    ("test_filesystem", "test_filesystem.cpp"): {
+        "HOME": ".",
+    },
+    ("test_strdup", "test_strdup.cpp"): {},
+    ("test_format_string", "test_format_string.cpp"): {},
+    ("test_string_map", "test_string_map.cpp"): {},
+    ("test_isalnum_no_locale", "test_isalnum_no_locale.cpp"): {},
+    ("test_repl_str", "test_repl_str.cpp"): {},
+    ("test_sha256", "test_sha256.cpp"): {},
+    ("test_time", "test_time.cpp"): {},
+    ("test_snprintf", "test_snprintf.cpp"): {},
+    ("test_strcasecmp", "test_strcasecmp.cpp"): {},
+    ("test_uint8_array", "test_uint8_array.cpp"): {},
+    ("test_array_list", "test_array_list.cpp"): {},
+    ("test_hash_map", "test_hash_map.cpp"): {},
+    ("test_cmdline_parser", "test_cmdline_parser.cpp"): {},
+    ("test_process", "test_process.cpp"): {},
+    ("test_logging_custom_env", "test_logging_custom_env.cpp"): {
+        "RCUTILS_CONSOLE_OUTPUT_FORMAT": "[{severity}] [{time},{time_as_nanoseconds}] [{name},{function_name},{file_name}]: {line_number}-{message}",
+        "RCUTILS_CONSOLE_STDOUT_LINE_BUFFERED": "1",
+        "RCUTILS_LOGGING_BUFFERED_STREAM": "1",
+        "RCUTILS_LOGGING_USE_STDOUT": "1",
+        "RCUTILS_COLORIZED_OUTPUT": "1",
+    },
+    ("test_logging_custom_env2", "test_logging_custom_env.cpp"): {
+        "RCUTILS_CONSOLE_OUTPUT_FORMAT": " ".join(
+            [
+                "[{severity}] [{time},{time_as_nanoseconds}] [{name},{function_name},{file_name}]: {line_number}-{message}"
+                for _ in range(100)
+            ],
+        ),
+        "RCUTILS_CONSOLE_STDOUT_LINE_BUFFERED": "0",
+        "RCUTILS_LOGGING_BUFFERED_STREAM": "0",
+        "RCUTILS_LOGGING_USE_STDOUT": "0",
+        "RCUTILS_COLORIZED_OUTPUT": "0",
+    },
+    ("test_logging_bad_env", "test_logging_bad_env.cpp"): {
+        "RCUTILS_LOGGING_USE_STDOUT": "42",
+    },
+    ("test_logging_bad_env2", "test_logging_bad_env.cpp"): {
+        "RCUTILS_COLORIZED_OUTPUT": "42",
+    },
+    ("test_logging_bad_env3", "test_logging_bad_env.cpp"): {
+        "RCUTILS_LOGGING_BUFFERED_STREAM": "42",
+    },
+    ("test_logging_enable_for", "test_logging_enable_for.cpp"): {},
+    ("test_logging_console_output_handler", "test_logging_console_output_handler.cpp"): {},
+    ("test_macros", "test_macros.cpp"): {},
+    ("test_logging_macros_c", "test_logging_macros.c"): {},
+    ("test_atomics_executable", "test_atomics.c"): {},
+}
+
+rcutils_cc_tests(
+    memory_tools_tests = _MEMORY_TOOLS_TESTS,
+    tests = _RCUTILS_TESTS,
+)
+
+[
+    cc_test(
+        name = test,
+        timeout = "moderate",
+        srcs = glob(["test/**/*.h"]) + ["test/benchmark/" + test + ".cpp"],
+        tags = ["manual"],
+        deps = [
+            ":rcutils",
+            "@google_benchmark//:benchmark",
+            "@google_benchmark//:benchmark_main",
+            "@osrf_testing_tools_cpp//:memory_tools",
+        ],
+    )
+    for test in [
+        "benchmark_error_handling",
+        "benchmark_logging",
+    ]
+]
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    headers = HEADERS,
+    libraries = [":rcutils"],
+    package_xml = "package.xml",
+    deps = [
+        "@ament_cmake//:ament_package",
+        "@ament_cmake_gmock//:ament_package",
+        "@ament_cmake_gtest//:ament_package",
+        "@ament_cmake_ros_core//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@launch//:ament_package",
+        "@launch_testing//:ament_package",
+        "@launch_testing_ament_cmake//:ament_package",
+        "@osrf_testing_tools_cpp//:ament_package",
+        "@performance_test_fixture//:ament_package",
+        "@rosdistro//:ament_package",
+    ],
+)

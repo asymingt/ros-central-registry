@@ -1,0 +1,204 @@
+# Copyright 2025 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosdistro//ament:defs.bzl", "ament_index", "ament_package")
+load("@rosdistro//cc:defs.bzl", "collect_transitive_dynamic_deps", "ros_local_defines")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library", "cc_test")
+load("@rules_license//rules:license.bzl", "license")
+
+package(
+    default_applicable_licenses = [":license"],
+    default_visibility = ["//visibility:public"],
+)
+
+license(
+    name = "license",
+    license_kinds = [
+        "@rules_license//licenses/spdx:Apache-2.0",
+    ],
+)
+
+# Arguments
+
+config_setting(
+    name = "rmw_dynamic",
+    flag_values = {"@rosdistro//:rmw": "dynamic"},
+)
+
+config_setting(
+    name = "rmw_fastrtps_cpp",
+    flag_values = {"@rosdistro//:rmw": "rmw_fastrtps_cpp"},
+)
+
+config_setting(
+    name = "rmw_fastrtps_dynamic_cpp",
+    flag_values = {"@rosdistro//:rmw": "rmw_fastrtps_dynamic_cpp"},
+)
+
+config_setting(
+    name = "rmw_cyclonedds_cpp",
+    flag_values = {"@rosdistro//:rmw": "rmw_cyclonedds_cpp"},
+)
+
+config_setting(
+    name = "rmw_zenoh_cpp",
+    flag_values = {"@rosdistro//:rmw": "rmw_zenoh_cpp"},
+)
+
+### DATA
+
+collect_transitive_dynamic_deps(
+    name = "plugin_runtime_bundle",
+    dynamic_deps = select({
+        ":rmw_dynamic": [
+            "@rmw_fastrtps_cpp",
+            "@rmw_fastrtps_dynamic_cpp",
+            "@rmw_cyclonedds_cpp",
+            "@rmw_zenoh_cpp",
+        ],
+        "//conditions:default": [],
+    }),
+)
+
+ament_index(
+    name = "ament_index",
+    libraries = [":plugin_runtime_bundle"],
+    deps = select({
+        ":rmw_dynamic": [
+            "@rmw_cyclonedds_cpp//:ament_package",
+            "@rmw_fastrtps_cpp//:ament_package",
+            "@rmw_fastrtps_dynamic_cpp//:ament_package",
+            "@rmw_zenoh_cpp//:ament_package",
+        ],
+        "//conditions:default": [],
+    }),
+)
+
+### LIBRARY
+
+HEADERS = glob([
+    "src/*.cpp",
+    "src/*.h",
+    "src/*.hpp",
+])
+
+DEPENDENCIES = {
+    "@ament_index_cpp//:ament_index_cpp": "@ament_index_cpp//:ament_index_cpp_library",
+    "@rcpputils//:rcpputils": "@rcpputils//:rcpputils_library",
+    "@rmw//:rmw": "@rmw//:rmw_library",
+    "@rcutils//:rcutils": "@rcutils//:rcutils_library",
+    "@tracetools//:tracetools": "@tracetools//:tracetools_library",
+}
+
+cc_library(
+    name = "rmw_implementation_library",
+    srcs = select({
+        ":rmw_dynamic": HEADERS,
+        "//conditions:default": [],
+    }),
+    data = select({
+        ":rmw_dynamic": [":ament_index"],
+        "//conditions:default": [],
+    }),
+    includes = ["src"],
+    local_defines = ros_local_defines(),
+    deps = DEPENDENCIES.values() + select({
+        ":rmw_dynamic": [],
+        ":rmw_fastrtps_cpp": ["@rmw_fastrtps_cpp//:rmw_fastrtps_cpp_library"],
+        ":rmw_fastrtps_dynamic_cpp": ["@rmw_fastrtps_dynamic_cpp//:rmw_fastrtps_dynamic_cpp_library"],
+        ":rmw_cyclonedds_cpp": ["@rmw_cyclonedds_cpp//:rmw_cyclonedds_cpp_library"],
+        ":rmw_zenoh_cpp": ["@rmw_zenoh_cpp//:rmw_zenoh_cpp_library"],
+    }),
+)
+
+cc_shared_library(
+    name = "rmw_implementation",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = [":rmw_implementation_library"],
+    deps = [":rmw_implementation_library"],
+)
+
+### TRANSITIVELY COLLECT ALL DYNAMIC DEPS TO ENSURE LINKING WORKS
+
+# This is a workaround for the fact that dynamic_deps does not work transitively.
+# So, if you have a (foo -> bar -> baz) dynamic_dep dep chain, the symbols from
+# foo will not be available to baz at compile-time. This resolves that by running
+# an aspect over the dynamic_deps attribute to collect everything in the chain.
+
+collect_transitive_dynamic_deps(
+    name = "transitive_dynamic_deps",
+    dynamic_deps = [":rmw_implementation"],
+    visibility = ["//visibility:private"],
+)
+
+### TESTING
+
+cc_test(
+    name = "test_functions",
+    srcs = ["test/test_functions.cpp"],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    deps = DEPENDENCIES.values() + [
+        ":rmw_implementation_library",
+        "@rosdistro//cc:googletest",
+    ],
+)
+
+[
+    cc_test(
+        name = "benchmark_symbols__" + rmw,
+        srcs = ["test/benchmark/benchmark_symbols.cpp"],
+        dynamic_deps = [":transitive_dynamic_deps"],
+        env = {"RMW_IMPLEMENTATION": rmw},
+        tags = ["manual"],
+        deps = DEPENDENCIES.values() + [
+            ":rmw_implementation_library",
+            "@google_benchmark//:benchmark_main",
+            "@performance_test_fixture",
+        ],
+    )
+    for rmw in [
+        "rmw_fastrtps_cpp",
+        "rmw_fastrtps_dynamic_cpp",
+        "rmw_cyclonedds_cpp",
+        "rmw_zenoh_cpp",
+    ]
+]
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    headers = HEADERS,
+    libraries = [":rmw_implementation"],
+    package_xml = "package.xml",
+    deps = [
+        ":ament_index",
+        "@ament_cmake//:ament_package",
+        "@ament_cmake_gtest//:ament_package",
+        "@ament_index_cpp//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@performance_test_fixture//:ament_package",
+        "@rcpputils//:ament_package",
+        "@rcutils//:ament_package",
+        "@rmw//:ament_package",
+        "@rmw_connextdds//:ament_package",
+        "@rmw_cyclonedds_cpp//:ament_package",
+        "@rmw_fastrtps_cpp//:ament_package",
+        "@rmw_fastrtps_dynamic_cpp//:ament_package",
+        "@rmw_implementation_cmake//:ament_package",
+        "@rmw_zenoh_cpp//:ament_package",
+        "@rosdistro//:ament_package",
+    ],
+)

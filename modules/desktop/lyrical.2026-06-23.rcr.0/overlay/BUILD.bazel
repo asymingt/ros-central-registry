@@ -1,0 +1,75 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosdistro//ament:defs.bzl", "ament_package")
+
+package(default_visibility = ["//visibility:public"])
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    package_xml = "package.xml",
+    deps = [
+        "@action_tutorials_cpp//:ament_package",
+        "@action_tutorials_py//:ament_package",
+        "@ament_cmake//:ament_package",
+        "@angles//:ament_package",
+        "@composition//:ament_package",
+        "@demo_nodes_cpp//:ament_package",
+        "@demo_nodes_cpp_native//:ament_package",
+        "@demo_nodes_py//:ament_package",
+        "@depthimage_to_laserscan//:ament_package",
+        "@dummy_map_server//:ament_package",
+        "@dummy_robot_bringup//:ament_package",
+        "@dummy_sensors//:ament_package",
+        "@examples_rclcpp_minimal_action_client//:ament_package",
+        "@examples_rclcpp_minimal_action_server//:ament_package",
+        "@examples_rclcpp_minimal_client//:ament_package",
+        "@examples_rclcpp_minimal_composition//:ament_package",
+        "@examples_rclcpp_minimal_publisher//:ament_package",
+        "@examples_rclcpp_minimal_service//:ament_package",
+        "@examples_rclcpp_minimal_subscriber//:ament_package",
+        "@examples_rclcpp_minimal_timer//:ament_package",
+        "@examples_rclcpp_multithreaded_executor//:ament_package",
+        "@examples_rclpy_executors//:ament_package",
+        "@examples_rclpy_minimal_action_client//:ament_package",
+        "@examples_rclpy_minimal_action_server//:ament_package",
+        "@examples_rclpy_minimal_client//:ament_package",
+        "@examples_rclpy_minimal_publisher//:ament_package",
+        "@examples_rclpy_minimal_service//:ament_package",
+        "@examples_rclpy_minimal_subscriber//:ament_package",
+        "@image_tools//:ament_package",
+        "@intra_process_demo//:ament_package",
+        "@joy//:ament_package",
+        "@lifecycle//:ament_package",
+        "@logging_demo//:ament_package",
+        "@pcl_conversions//:ament_package",
+        "@pendulum_control//:ament_package",
+        "@pendulum_msgs//:ament_package",
+        "@quality_of_service_demo_cpp//:ament_package",
+        "@quality_of_service_demo_py//:ament_package",
+        "@ros_base//:ament_package",
+        "@rosdistro//:ament_package",
+        "@rqt_common_plugins//:ament_package",
+        "@rviz2//:ament_package",
+        "@rviz_default_plugins//:ament_package",
+        "@teleop_twist_joy//:ament_package",
+        "@teleop_twist_keyboard//:ament_package",
+        "@tlsf//:ament_package",
+        "@tlsf_cpp//:ament_package",
+        "@topic_monitor//:ament_package",
+        "@turtlesim//:ament_package",
+    ],
+)

@@ -1,0 +1,9 @@
+{
+    "integrity": "sha256-ppDUat6PpaOqrg1NI2gE/fk/OCFDepMHANagCnFjqmA=",
+    "url": "https://github.com/ros2-gbp/resource_retriever_service-release/archive/refs/tags/release/lyrical/resource_retriever_interfaces/0.0.3-1.tar.gz",
+    "strip_prefix": "resource_retriever_service-release-release-lyrical-resource_retriever_interfaces-0.0.3-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-pTIZFlwoRtcgtVyXCY6P01u+Ydf6+Ksqu/b+J6gCRlA=",
+        "srv/BUILD.bazel": "sha256-H5v/S914ktcK/j280vi9+dNm2dT7PDGvyCPjHHsiQe0="
+    }
+}

@@ -1,0 +1,11 @@
+load("@rosidl_default_generators//:defs.bzl", "ros_action")
+
+package(default_visibility = ["//visibility:public"])
+
+ros_action(
+    name = "ShortVariedMultiNested",
+    src = "ShortVariedMultiNested.action",
+    deps = [
+        "//msg:ShortVariedNested",
+    ],
+)

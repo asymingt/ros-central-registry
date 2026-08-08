@@ -1,0 +1,11 @@
+--- a/include/message_filters/input_aligner.hpp
++++ b/include/message_filters/input_aligner.hpp
+@@ -416,7 +416,7 @@
+   template<std::size_t N>
+   std::size_t getFirstSampleIdx(const std::array<rclcpp::Time, N> & ts) const
+   {
+-    auto min_it = std::ranges::min_element(ts);
++    auto min_it = std::min_element(ts.begin(), ts.end());
+     return static_cast<std::size_t>(std::distance(ts.begin(), min_it));
+   }
+ 

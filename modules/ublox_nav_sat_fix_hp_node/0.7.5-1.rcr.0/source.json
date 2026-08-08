@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-uPbcOOIJ9wBaZMlS7guz7xYSEHZbfg2sv08GDry/3SA=",
+    "url": "https://github.com/ros2-gbp/ublox_dgnss-release/archive/refs/tags/release/lyrical/ublox_nav_sat_fix_hp_node/0.7.5-1.tar.gz",
+    "strip_prefix": "ublox_dgnss-release-release-lyrical-ublox_nav_sat_fix_hp_node-0.7.5-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-6YTTMrV80Eyn/VuUASIkYw47RvMr8yGKlhs9XTCGkug="
+    }
+}

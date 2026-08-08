@@ -1,0 +1,10 @@
+{
+    "integrity": "sha256-kpotePwVP8K64taW2oav6Egh8r/fYgZsMgZU6eDPwAc=",
+    "url": "https://github.com/ros2-gbp/rqt-release/archive/refs/tags/release/lyrical/rqt_py_common/1.10.6-1.tar.gz",
+    "strip_prefix": "rqt-release-release-lyrical-rqt_py_common-1.10.6-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-eQxgswGS+B2gFdP2mCdqjz0442JnqNIAU1PbGFXg6tQ=",
+        "test/msg/BUILD.bazel": "sha256-v26xghnAbJBjCdby7s+epH+m8PULaaJFZG7rcehI0K8=",
+        "test/srv/BUILD.bazel": "sha256-Qb+ZiguUIbk3CV06l+mqsTsAcoFSHpyYX3VwdWROg68="
+    }
+}

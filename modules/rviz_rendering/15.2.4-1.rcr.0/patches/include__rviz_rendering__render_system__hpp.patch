@@ -1,0 +1,20 @@
+--- a/include/rviz_rendering/render_system.hpp
++++ b/include/rviz_rendering/render_system.hpp
+@@ -37,14 +37,15 @@
+ #include <string>
+ 
+ #include <OgreRoot.h>
+-#include <Overlay/OgreOverlaySystem.h>  // NOLINT cpplint cannot handle include order here
+-#include <RenderSystems/GL/OgreGLPlugin.h>  // NOLINT cpplint cannot handle include order here
++#include <OgreOverlaySystem.h>  // NOLINT cpplint cannot handle include order here
++#include <OgreGLPlugin.h>  // NOLINT cpplint cannot handle include order here
+ 
+ #include <QDir>  // NOLINT cpplint cannot handle include order here
+ 
+ #if !defined(__APPLE__) && !defined(_WIN32)
+ 
+ #include <X11/Xutil.h>
++#include <gl_types_patch.h>
+ #include <GL/glx.h>
+ 
+ #endif
