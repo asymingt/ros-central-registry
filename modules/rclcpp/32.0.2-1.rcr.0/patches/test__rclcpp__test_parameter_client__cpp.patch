@@ -1,0 +1,47 @@
+--- a/test/rclcpp/test_parameter_client.cpp
++++ b/test/rclcpp/test_parameter_client.cpp
+@@ -25,6 +25,7 @@
+ 
+ #include "rclcpp/rclcpp.hpp"
+ 
++#include "../locate_test_assets.hpp"
+ #include "../utils/rclcpp_gtest_macros.hpp"
+ 
+ #include "rcl_interfaces/msg/parameter_event.hpp"
+@@ -941,7 +942,8 @@
+   auto asynchronous_client =
+     std::make_shared<rclcpp::AsyncParametersClient>(load_node, "/namespace/load_node");
+   // load parameters
+-  std::filesystem::path test_resources_path{TEST_RESOURCES_DIRECTORY};
++
++  std::filesystem::path test_resources_path = get_test_asset_dir();
+   const std::string parameters_filepath = (
+     test_resources_path / "test_node" / "load_parameters.yaml").string();
+   auto load_future = asynchronous_client->load_parameters(parameters_filepath);
+@@ -967,7 +969,7 @@
+   auto synchronous_client =
+     std::make_shared<rclcpp::SyncParametersClient>(load_node);
+   // load parameters
+-  std::filesystem::path test_resources_path{TEST_RESOURCES_DIRECTORY};
++  std::filesystem::path test_resources_path = get_test_asset_dir();
+   const std::string parameters_filepath = (
+     test_resources_path / "test_node" / "load_parameters.yaml").string();
+   auto load_future = synchronous_client->load_parameters(parameters_filepath);
+@@ -989,7 +991,7 @@
+   auto asynchronous_client =
+     std::make_shared<rclcpp::AsyncParametersClient>(load_node, "/namespace/load_node");
+   // load parameters
+-  std::filesystem::path test_resources_path{TEST_RESOURCES_DIRECTORY};
++  std::filesystem::path test_resources_path = get_test_asset_dir();
+   const std::string parameters_filepath = (
+     test_resources_path / "test_node" / "load_complicated_parameters.yaml").string();
+   auto load_future = asynchronous_client->load_parameters(parameters_filepath);
+@@ -1019,7 +1021,7 @@
+   auto asynchronous_client =
+     std::make_shared<rclcpp::AsyncParametersClient>(load_node, "/namespace/load_node");
+   // load parameters
+-  std::filesystem::path test_resources_path{TEST_RESOURCES_DIRECTORY};
++  std::filesystem::path test_resources_path = get_test_asset_dir();
+   const std::string parameters_filepath = (
+     test_resources_path / "test_node" / "no_valid_parameters.yaml").string();
+   EXPECT_THROW(

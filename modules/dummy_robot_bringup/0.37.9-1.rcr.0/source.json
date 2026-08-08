@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-JqoHWIiaebcxn+2xkTJSLPKjwDuBtYMpi7U5FmReeBQ=",
+    "url": "https://github.com/ros2-gbp/demos-release/archive/refs/tags/release/lyrical/dummy_robot_bringup/0.37.9-1.tar.gz",
+    "strip_prefix": "demos-release-release-lyrical-dummy_robot_bringup-0.37.9-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-et6Z8JYCwJ9HdUnR4PLESXC7150s5mLDT9/WRoYGn6M="
+    }
+}

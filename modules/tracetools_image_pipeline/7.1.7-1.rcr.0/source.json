@@ -1,0 +1,9 @@
+{
+    "integrity": "sha256-R9I6aGOm2QpS/H0wJ9aeaItxvv3apn1UGb7YNWzio4Y=",
+    "url": "https://github.com/ros2-gbp/image_pipeline-release/archive/refs/tags/release/lyrical/tracetools_image_pipeline/7.1.7-1.tar.gz",
+    "strip_prefix": "image_pipeline-release-release-lyrical-tracetools_image_pipeline-7.1.7-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-MDwmCLNYRgM9O5ThqFuHXsLjxKP+gM0zHXwbYkXyvj4=",
+        "include/tracetools_image_pipeline/config.h": "sha256-viNm9tadHIn43j5/LMo2IDMc7o4nbleoE+syurFqTB8="
+    }
+}

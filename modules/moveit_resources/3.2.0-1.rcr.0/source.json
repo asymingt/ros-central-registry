@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-+sLOaYvGigQovGcw7Q+NStOCCHh9cCn20jTBGbLJxEY=",
+    "url": "https://github.com/ros2-gbp/moveit_resources-release/archive/refs/tags/release/lyrical/moveit_resources/3.2.0-1.tar.gz",
+    "strip_prefix": "moveit_resources-release-release-lyrical-moveit_resources-3.2.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-nMm4wW9W+94VeQT9LVQp6eC+BqcHyKsnOHVfnqVH8Gc="
+    }
+}

@@ -1,0 +1,158 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rclcpp_components//:defs.bzl", "rclcpp_components_register_node")
+load("@rosdistro//ament:defs.bzl", "ament_index", "ament_package")
+load("@rosdistro//cc:defs.bzl", "ros_local_defines")
+load("@rosdistro//python:defs.bzl", "py_pytest")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library")
+
+package(default_visibility = ["//visibility:public"])
+
+### LIBRARIES
+
+HEADERS = glob(
+    [
+        "include/**/*.h",
+        "include/**/*.hpp",
+    ],
+    allow_empty = True,
+)
+
+DEPENDENCIES = {
+    "@cv_bridge//:cv_bridge": "@cv_bridge//:cv_bridge_library",
+    "@image_geometry//:image_geometry": "@image_geometry//:image_geometry_library",
+    "@image_proc//:image_proc": "@image_proc//:image_proc_library",
+    "@image_transport//:image_transport": "@image_transport//:image_transport_library",
+    "@message_filters//:message_filters": "@message_filters//:message_filters_library",
+    "@rclcpp//:rclcpp": "@rclcpp//:rclcpp_library",
+    "@rclcpp_components//:rclcpp_components": "@rclcpp_components//:rclcpp_components_library",
+    "@rosdistro//cc:opencv": "@rosdistro//cc:opencv_library",
+}
+
+cc_library(
+    name = "stereo_image_proc_library",
+    srcs = [
+        "src/stereo_image_proc/disparity_node.cpp",
+        "src/stereo_image_proc/point_cloud_node.cpp",
+        "src/stereo_image_proc/stereo_processor.cpp",
+    ],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines(),
+    deps = DEPENDENCIES.values() + [
+        "@sensor_msgs//:cc",
+        "@stereo_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "stereo_image_proc",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = [":stereo_image_proc_library"],
+    deps = [":stereo_image_proc_library"],
+)
+
+### COMPONENTS REGISTER
+
+rclcpp_components_register_node(
+    name = "disparity_node",
+    component = ":stereo_image_proc",
+    node_name = "disparity_node",
+    plugin = "stereo_image_proc::DisparityNode",
+)
+
+rclcpp_components_register_node(
+    name = "point_cloud_node",
+    component = ":stereo_image_proc",
+    node_name = "point_cloud_node",
+    plugin = "stereo_image_proc::PointCloudNode",
+)
+
+### AMENT INDEX
+
+ament_index(
+    name = "ament_index",
+    export_name = "stereo_image_proc",
+    libraries = [":stereo_image_proc"],
+    package_xml = "package.xml",
+    plugin_category = "rclcpp_components",
+)
+
+### TESTING
+
+[
+    py_pytest(
+        name = name,
+        srcs = ["test/{}.py".format(name)],
+        data = glob([
+            "test/fixtures/**",
+            "test/data/**",
+        ]) + [
+            ":ament_package",
+            ":disparity_node",
+            ":point_cloud_node",
+        ],
+        deps = [
+            "@launch",
+            "@launch_ros",
+            "@launch_testing",
+            "@rclpy",
+            "@rules_python//python/runfiles",
+            "@sensor_msgs//:py",
+            "@stereo_msgs//:py",
+        ],
+    )
+    for name in [
+        "test_disparity_node",
+        "test_point_cloud_node",
+    ]
+]
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    executables = [
+        ":disparity_node",
+        ":point_cloud_node",
+    ],
+    headers = HEADERS,
+    libraries = [":stereo_image_proc"],
+    package_xml = "package.xml",
+    deps = [
+        ":ament_index",
+        "@ament_cmake_auto//:ament_package",
+        "@ament_cmake_pytest//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@cv_bridge//:ament_package",
+        "@image_geometry//:ament_package",
+        "@image_proc//:ament_package",
+        "@image_transport//:ament_package",
+        "@launch//:ament_package",
+        "@launch_ros//:ament_package",
+        "@launch_testing//:ament_package",
+        "@launch_testing_ament_cmake//:ament_package",
+        "@message_filters//:ament_package",
+        "@python_cmake_module//:ament_package",
+        "@rclcpp//:ament_package",
+        "@rclcpp_components//:ament_package",
+        "@rclpy//:ament_package",
+        "@ros_testing//:ament_package",
+        "@rosdistro//:ament_package",
+        "@sensor_msgs//:ament_package",
+        "@stereo_msgs//:ament_package",
+    ],
+)

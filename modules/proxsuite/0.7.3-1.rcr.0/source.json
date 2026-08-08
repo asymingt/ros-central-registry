@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-Yt9SIKwtyijOIFYyBNSTbtLYe5tIjKqKnq04EZ2fNvA=",
+    "url": "https://github.com/ros2-gbp/proxsuite-release/archive/refs/tags/release/lyrical/proxsuite/0.7.3-1.tar.gz",
+    "strip_prefix": "proxsuite-release-release-lyrical-proxsuite-0.7.3-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-RkExDe+owqbn1r71yG2wst3ELHPVA9wP624hh6qrNIQ="
+    }
+}

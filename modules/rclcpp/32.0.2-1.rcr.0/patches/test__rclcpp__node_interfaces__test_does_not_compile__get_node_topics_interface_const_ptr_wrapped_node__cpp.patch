@@ -1,0 +1,11 @@
+--- a/test/rclcpp/node_interfaces/test_does_not_compile/get_node_topics_interface_const_ptr_wrapped_node.cpp
++++ b/test/rclcpp/node_interfaces/test_does_not_compile/get_node_topics_interface_const_ptr_wrapped_node.cpp
+@@ -17,7 +17,7 @@
+ #include "rclcpp/rclcpp.hpp"
+ #include "rclcpp/node_interfaces/get_node_topics_interface.hpp"
+ 
+-#include "../node_wrapper.hpp"
++#include "test/rclcpp/node_interfaces/node_wrapper.hpp"
+ 
+ int main(void)
+ {

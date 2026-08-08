@@ -1,0 +1,85 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@aspect_rules_py//py:defs.bzl", "py_library")
+load("@pip_ros//:requirements.bzl", "requirement")
+load("@rosdistro//ament:defs.bzl", "ament_index", "ament_package")
+load("@rosdistro//python:defs.bzl", "py_pytest")
+
+package(default_visibility = ["//visibility:public"])
+
+### DATA
+
+ament_index(
+    name = "ament_index",
+    package_xml = "package.xml",
+)
+
+### PYTHON MODULE
+
+py_library(
+    name = "camera_calibration",
+    srcs = glob(["src/**/*.py"]),
+    data = [":ament_index"],
+    imports = ["src"],
+    deps = [
+        "@image_geometry//:image_geometry_py",
+        "@message_filters//:message_filters_py",
+        "@rclpy",
+        "@sensor_msgs//:py",
+        "@std_srvs//:py",
+        requirement("numpy"),
+        requirement("opencv-python"),
+        requirement("semver"),
+    ],
+)
+
+### TESTS
+
+[
+    py_pytest(
+        name = test,
+        srcs = ["test/{0}.py".format(test)],
+        deps = [
+            ":camera_calibration",
+            requirement("requests"),
+            requirement("opencv-python"),
+            requirement("numpy"),
+        ],
+    )
+    for test in [
+        "test_directed",
+        "test_multiple_boards",
+    ]
+]
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    package_xml = "package.xml",
+    deps = [
+        ":ament_index",
+        "@ament_copyright//:ament_package",
+        "@ament_flake8//:ament_package",
+        "@ament_pep257//:ament_package",
+        "@cv_bridge//:ament_package",
+        "@image_geometry//:ament_package",
+        "@message_filters//:ament_package",
+        "@rclpy//:ament_package",
+        "@rosdistro//:ament_package",
+        "@sensor_msgs//:ament_package",
+        "@std_srvs//:ament_package",
+    ],
+)

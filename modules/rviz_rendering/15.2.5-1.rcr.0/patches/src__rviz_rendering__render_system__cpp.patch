@@ -1,0 +1,71 @@
+--- a/src/rviz_rendering/render_system.cpp
++++ b/src/rviz_rendering/render_system.cpp
+@@ -190,6 +190,7 @@
+ {
+   this->dummy_window_id_ = 0;
+ #ifdef __linux__
++  XInitThreads();
+   this->dummyDisplay = XOpenDisplay(0);
+   if (!this->dummyDisplay) {
+     std::cerr << "Unable to open display: " << XDisplayName(0) << std::endl;
+@@ -227,11 +228,15 @@
+ {
+   std::filesystem::path plugin_prefix = get_ogre_plugin_directory();
+ #if defined _WIN32 && !NDEBUG
+-  ogre_root_->loadPlugin((plugin_prefix / "RenderSystem_GL_d").string());
++  ogre_root_->loadPlugin("../ogre+/libRenderSystem_GL_d.so");
+ #else
+-  ogre_root_->loadPlugin((plugin_prefix / "RenderSystem_GL").string());
+-#endif
+-  ogre_root_->loadPlugin((plugin_prefix / "Codec_STBI").string());
++  ogre_root_->loadPlugin("../ogre+/libRenderSystem_GL.so");
++#endif
++  try {
++    ogre_root_->loadPlugin("../ogre+/libCodec_STBI.so");
++  } catch (...) {
++    RVIZ_RENDERING_LOG_WARNING("Could not load Codec_STBI plugin, assuming it is built-in or missing");
++  }
+ }
+ 
+ void
+@@ -323,20 +328,34 @@
+ RenderSystem::setResourceDirectory()
+ {
+   auto result = ament_index_cpp::get_resource("packages", "rviz_rendering");
+-  set_resource_directory((result.resourcePath.value() / "share" / "rviz_rendering").string());
++  if (result.resourcePath.has_value()) {
++    set_resource_directory((result.resourcePath.value() / "share" / "rviz_rendering").string());
++  } else {
++    RVIZ_RENDERING_LOG_WARNING("Could not find resource directory for rviz_rendering in ament index");
++    set_resource_directory("share/rviz_rendering");
++  }
+ }
+ 
+ void
+ RenderSystem::setPluginDirectory()
+ {
+   auto result = ament_index_cpp::get_resource("packages", "rviz_ogre_vendor");
++  if (result.resourcePath.has_value()) {
+ #ifdef _WIN32
+-  set_ogre_plugin_directory(
+-    (result.resourcePath.value() / "opt" / "rviz_ogre_vendor" / "bin").string());
++    set_ogre_plugin_directory(
++      (result.resourcePath.value() / "opt" / "rviz_ogre_vendor" / "bin").string());
+ #else
+-  set_ogre_plugin_directory(
+-    (result.resourcePath.value() / "opt" / "rviz_ogre_vendor" / "lib" / "OGRE").string());
+-#endif
++    set_ogre_plugin_directory(
++      (result.resourcePath.value() / "opt" / "rviz_ogre_vendor" / "lib" / "OGRE").string());
++#endif
++  } else {
++    RVIZ_RENDERING_LOG_WARNING("Could not find resource directory for rviz_ogre_vendor in ament index");
++#ifdef _WIN32
++    set_ogre_plugin_directory("bin");
++#else
++    set_ogre_plugin_directory("ogre+");
++#endif
++  }
+ }
+ 
+ void

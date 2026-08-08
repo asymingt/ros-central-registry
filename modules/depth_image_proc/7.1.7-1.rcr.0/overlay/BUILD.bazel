@@ -1,0 +1,116 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosdistro//ament:defs.bzl", "ament_package")
+load("@rosdistro//cc:defs.bzl", "collect_transitive_dynamic_deps", "ros_local_defines")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library")
+
+package(default_visibility = ["//visibility:public"])
+
+### LIBRARIES
+
+HEADERS = glob(
+    [
+        "include/**/*.h",
+        "include/**/*.hpp",
+    ],
+    allow_empty = True,
+)
+
+DEPENDENCIES = {
+    "@class_loader//:class_loader": "@class_loader//:class_loader_library",
+    "@cv_bridge//:cv_bridge": "@cv_bridge//:cv_bridge_library",
+    "@image_geometry//:image_geometry": "@image_geometry//:image_geometry_library",
+    "@image_transport//:image_transport": "@image_transport//:image_transport_library",
+    "@image_proc//:image_proc": "@image_proc//:image_proc_library",
+    "@message_filters//:message_filters": "@message_filters//:message_filters_library",
+    "@rclcpp//:rclcpp": "@rclcpp//:rclcpp_library",
+    "@rclcpp_components//:rclcpp_components": "@rclcpp_components//:rclcpp_components_library",
+    "@rosdistro//cc:opencv": "@rosdistro//cc:opencv_library",
+    "@tf2//:tf2": "@tf2//:tf2_library",
+    "@tf2_eigen//:tf2_eigen": "@tf2_eigen//:tf2_eigen_library",
+    "@tf2_ros//:tf2_ros": "@tf2_ros//:tf2_ros_library",
+}
+
+cc_library(
+    name = "depth_image_proc_library",
+    srcs = [
+        "src/conversions.cpp",
+        "src/convert_metric.cpp",
+        "src/crop_foremost.cpp",
+        "src/disparity.cpp",
+        "src/point_cloud_xyz.cpp",
+        "src/point_cloud_xyz_radial.cpp",
+        "src/point_cloud_xyzi.cpp",
+        "src/point_cloud_xyzi_radial.cpp",
+        "src/point_cloud_xyzrgb.cpp",
+        "src/point_cloud_xyzrgb_radial.cpp",
+        "src/register.cpp",
+    ],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines(),
+    deps = DEPENDENCIES.values() + [
+        "@rosdistro//cc:eigen",
+        "@sensor_msgs//:cc",
+        "@stereo_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "depth_image_proc",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = [":depth_image_proc_library"],
+    deps = [":depth_image_proc_library"],
+)
+
+### TRANSITIVE DYNAMIC DEPS
+
+collect_transitive_dynamic_deps(
+    name = "transitive_dynamic_deps",
+    dynamic_deps = [
+        ":depth_image_proc",
+    ],
+    visibility = ["//visibility:private"],
+)
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    headers = HEADERS,
+    libraries = [
+        ":depth_image_proc",
+    ],
+    package_xml = "package.xml",
+    deps = [
+        "@ament_cmake_auto//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@class_loader//:ament_package",
+        "@cv_bridge//:ament_package",
+        "@image_geometry//:ament_package",
+        "@image_proc//:ament_package",
+        "@image_transport//:ament_package",
+        "@message_filters//:ament_package",
+        "@rclcpp//:ament_package",
+        "@rclcpp_components//:ament_package",
+        "@rosdistro//:ament_package",
+        "@sensor_msgs//:ament_package",
+        "@stereo_msgs//:ament_package",
+        "@tf2//:ament_package",
+        "@tf2_eigen//:ament_package",
+        "@tf2_ros//:ament_package",
+    ],
+)

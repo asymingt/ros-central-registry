@@ -1,0 +1,13 @@
+{
+    "integrity": "sha256-QDxJHyD2CMl3IqydSdjS7ESFI4xrKKCN6LhCIX1TYE0=",
+    "url": "https://github.com/ros2-gbp/rmw_zenoh-release/archive/refs/tags/release/lyrical/rmw_zenoh_cpp/0.10.5-1.tar.gz",
+    "strip_prefix": "rmw_zenoh-release-release-lyrical-rmw_zenoh_cpp-0.10.5-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-Rpsw7X0B0g5zwyYjyxvbIhAGEaRWDKfwVrlT3XS9tDM=",
+        "src/detail/rmw_context_impl_s.cpp.orig": "sha256-rfvZT7I4eLl40CLEUlTdd/1KMn2QgFK3cUKcUQ9cMSY="
+    },
+    "patches": {
+        "src__detail__rmw_context_impl_s__cpp.patch": "sha256-Uxrdn7kZbx5PUbRa1sTg6r2w9R/s493fhFHpS0v+R1I="
+    },
+    "patch_strip": 1
+}

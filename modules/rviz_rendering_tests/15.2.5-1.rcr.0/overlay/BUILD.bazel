@@ -1,0 +1,95 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosdistro//ament:defs.bzl", "ament_package", "register_ament_files", "register_ament_resource")
+load("@rosdistro//cc:defs.bzl", "collect_transitive_dynamic_deps", "ros_local_defines")
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+package(default_visibility = ["//visibility:public"])
+
+collect_transitive_dynamic_deps(
+    name = "transitive_dynamic_deps",
+    dynamic_deps = [
+        "@rviz_rendering//:rviz_rendering",
+    ],
+)
+
+register_ament_resource(
+    name = "rviz_ogre_media_exports_resource",
+    package_name = "rviz_rendering_tests",
+    category = "rviz_ogre_media_exports",
+    content = "rviz_rendering_tests/ogre_media_resources/scripts\nrviz_rendering_tests/ogre_media_resources/meshes\n",
+)
+
+register_ament_files(
+    name = "test_meshes",
+    package_name = "rviz_rendering_tests",
+    files = glob(["ogre_media_resources/test_meshes/**"]),
+    strip_prefix = "ogre_media_resources",
+)
+
+cc_test(
+    name = "mesh_loader_test",
+    srcs = [
+        "test/mesh_loader_test.cpp",
+        "test/ogre_testing_environment.cpp",
+        "test/ogre_testing_environment.hpp",
+    ],
+    data = [
+        ":ament_package",
+        ":test_meshes",
+        "@rviz_rendering//:ament_index",
+    ],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    tags = ["no-sandbox"],
+    deps = [
+        "@rosdistro//cc:googletest",
+        "@rviz_rendering//:rviz_rendering_library",
+    ],
+)
+
+cc_test(
+    name = "test_rviz_ogre_media_exports",
+    srcs = ["test/test_rviz_ogre_media_exports.cpp"],
+    data = [
+        ":ament_package",
+        ":rviz_ogre_media_exports_resource",
+    ],
+    deps = [
+        "@ament_index_cpp//:ament_index_cpp_library",
+        "@rosdistro//cc:googletest",
+    ],
+)
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    data = glob(
+        ["ogre_media_resources/**"],
+        exclude = ["ogre_media_resources/test_meshes/**"],
+    ),
+    package_xml = "package.xml",
+    deps = [
+        "@ament_cmake//:ament_package",
+        "@ament_cmake_gmock//:ament_package",
+        "@ament_cmake_gtest//:ament_package",
+        "@ament_index_cpp//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@resource_retriever//:ament_package",
+        "@rosdistro//:ament_package",
+        "@rviz_rendering//:ament_package",
+    ],
+)

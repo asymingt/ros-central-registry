@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-7tDYQWhOct/ASqdnYguHSPx0uuzjdh/UQGEOqftQoi0=",
+    "url": "https://github.com/ros2-gbp/variants-release/archive/refs/tags/release/lyrical/ros_base/0.13.0-3.tar.gz",
+    "strip_prefix": "variants-release-release-lyrical-ros_base-0.13.0-3",
+    "overlay": {
+        "BUILD.bazel": "sha256-e0gq7CSUfv6BShW9VAAtzPYilDiTR31+qMq8ItcCNqk="
+    }
+}

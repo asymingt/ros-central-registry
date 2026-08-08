@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-YSYHUn/Px5vgJ9G2zC+zEj7/1dSPHxxKpnvoBOb+Nxg=",
+    "url": "https://github.com/ros2-gbp/rviz-release/archive/refs/tags/release/lyrical/rviz_rendering_tests/15.2.5-1.tar.gz",
+    "strip_prefix": "rviz-release-release-lyrical-rviz_rendering_tests-15.2.5-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-ZemRC/bBs2Z/257QqDTs2is0SazJBgPbCNwXJU2R8/E="
+    }
+}

@@ -1,0 +1,90 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosdistro//ament:defs.bzl", "ament_package")
+load("@rosdistro//cc:defs.bzl", "collect_transitive_dynamic_deps", "ros_local_defines")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library", "cc_test")
+
+package(default_visibility = ["//visibility:public"])
+
+### LIBRARY
+
+HEADERS = glob(["include/**/*.h"])
+
+DEPENDENCIES = {
+    "@message_filters//:message_filters": "@message_filters//:message_filters_library",
+    "@rclcpp//:rclcpp": "@rclcpp//:rclcpp_library",
+}
+
+cc_library(
+    name = "pcl_conversions_library",
+    hdrs = HEADERS,
+    cxxopts = ["-std=c++17"],
+    includes = ["include"],
+    local_defines = ros_local_defines(),
+    deps = DEPENDENCIES.values() + [
+        "@pcl_msgs//:cc",
+        "@rosdistro//cc:eigen",
+        "@rosdistro//cc:pcl_common",
+        "@rosdistro//cc:pcl_io",
+        "@sensor_msgs//:cc",
+        "@std_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "pcl_conversions",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = [":pcl_conversions_library"],
+    deps = [":pcl_conversions_library"],
+)
+
+### TEST
+
+collect_transitive_dynamic_deps(
+    name = "transitive_dynamic_deps",
+    dynamic_deps = [":pcl_conversions"],
+    visibility = ["//visibility:private"],
+)
+
+cc_test(
+    name = "test_pcl_conversions",
+    srcs = ["test/test_pcl_conversions.cpp"],
+    cxxopts = ["-std=c++20"],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    local_defines = ros_local_defines(),
+    deps = DEPENDENCIES.values() + [
+        ":pcl_conversions_library",
+        "@rosdistro//cc:googletest",
+    ],
+)
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    headers = HEADERS,
+    libraries = [":pcl_conversions"],
+    package_xml = "package.xml",
+    deps = [
+        "@ament_cmake//:ament_package",
+        "@ament_cmake_gtest//:ament_package",
+        "@message_filters//:ament_package",
+        "@pcl_msgs//:ament_package",
+        "@rclcpp//:ament_package",
+        "@rosdistro//:ament_package",
+        "@sensor_msgs//:ament_package",
+        "@std_msgs//:ament_package",
+    ],
+)

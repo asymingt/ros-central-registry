@@ -1,0 +1,108 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@aspect_rules_py//py:defs.bzl", "py_binary", "py_library")
+load("@pip_ros//:requirements.bzl", "requirement")
+load("@rosdistro//ament:defs.bzl", "ament_index", "ament_package")
+load("@rosdistro//python:defs.bzl", "py_pytest")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files(["package.xml"])
+
+### DATA
+
+ament_index(
+    name = "ament_index",
+    data = glob(["resource/**"]) + ["plugin.xml"],
+    package_xml = "package.xml",
+)
+
+### LIBRARIES
+
+py_library(
+    name = "rqt_topic",
+    srcs = glob(["rqt_topic/**/*.py"]),
+    data = [":ament_index"],
+    imports = ["."],
+    deps = [
+        "@python_qt_binding",
+        "@rclpy",
+        "@ros2topic",
+        "@rqt_gui",
+        "@rqt_gui_py",
+        "@rqt_py_common",
+        requirement("pydantic"),
+    ],
+)
+
+### EXECUTABLES
+
+py_binary(
+    name = "gui",
+    srcs = ["rqt_topic/main.py"],
+    args = ["--force-discover"],
+    main = "rqt_topic/main.py",
+    deps = [":rqt_topic"],
+)
+
+### TESTS
+
+[
+    py_pytest(
+        name = test,
+        srcs = ["test/models/{0}.py".format(test)],
+        deps = [":rqt_topic"],
+    )
+    for test in [
+        "test_message_detail",
+        "test_message_list",
+        "test_message",
+        "test_topic_list",
+        "test_topic",
+    ]
+]
+
+[
+    py_pytest(
+        name = "test_{0}".format(linter),
+        srcs = ["test/test_{0}.py".format(linter)],
+        data = glob(["**/*"]),
+        deps = ["@ament_{0}".format(linter)],
+    )
+    for linter in [
+        "copyright",
+        "flake8",
+        "xmllint",
+    ]
+]
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    package_xml = "package.xml",
+    deps = [
+        "@ament_copyright//:ament_package",
+        "@ament_flake8//:ament_package",
+        "@ament_xmllint//:ament_package",
+        "@python_qt_binding//:ament_package",
+        "@rclpy//:ament_package",
+        "@ros2topic//:ament_package",
+        "@rosdistro//:ament_package",
+        "@rqt_gui//:ament_package",
+        "@rqt_gui_py//:ament_package",
+        "@rqt_py_common//:ament_package",
+    ],
+)

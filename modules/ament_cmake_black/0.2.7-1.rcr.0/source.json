@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-NgG9H+sH2TeuBCXrOqVZGLEzgciyID562fy/MB854ys=",
+    "url": "https://github.com/ros2-gbp/ament_black-release/archive/refs/tags/release/lyrical/ament_cmake_black/0.2.7-1.tar.gz",
+    "strip_prefix": "ament_black-release-release-lyrical-ament_cmake_black-0.2.7-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-zpU/sxz/3ItKDjyde3Tqx8j1Ahhzp4Zv3x4/9itG6Vo="
+    }
+}

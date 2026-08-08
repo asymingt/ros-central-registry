@@ -1,0 +1,9 @@
+{
+    "integrity": "sha256-43UyjOECXyGCRY2Mmfucp5/KK6r73qQbDRixZsK5qVQ=",
+    "url": "https://github.com/ros2-gbp/ffmpeg_image_transport_msgs-release/archive/refs/tags/release/lyrical/ffmpeg_image_transport_msgs/1.3.0-1.tar.gz",
+    "strip_prefix": "ffmpeg_image_transport_msgs-release-release-lyrical-ffmpeg_image_transport_msgs-1.3.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-9UhTL4pfMMoH/GPSTeZNHjlviOr52dzTLGVPeP4ExiA=",
+        "msg/BUILD.bazel": "sha256-aybg/jmf2X9+6PxmMB1JkOOmu6e7AU+ifqu0qd0lL0Y="
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-5kA6j2H14MO50sfNdjrCgSejpPIXedYI9uj+dBa5dRw=",
+    "url": "https://github.com/ros2-gbp/launch-release/archive/refs/tags/release/lyrical/launch_testing_ament_cmake/3.9.8-1.tar.gz",
+    "strip_prefix": "launch-release-release-lyrical-launch_testing_ament_cmake-3.9.8-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-et41Yqynaw+5XTKV+bZ5eic3KRyBYVq9fnFM9FlEcdA="
+    }
+}

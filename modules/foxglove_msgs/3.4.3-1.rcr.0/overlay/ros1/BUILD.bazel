@@ -1,0 +1,29 @@
+load("@rosidl_default_generators//:defs.bzl", "ros_message")
+
+package(default_visibility = ["//visibility:public"])
+
+ros_message(
+    name = "JointState",
+    src = "JointState.msg",
+)
+
+ros_message(
+    name = "Velocity3",
+    src = "Velocity3.msg",
+)
+
+ros_message(
+    name = "JointStates",
+    src = "JointStates.msg",
+    deps = [
+        "@foxglove_msgs//msg:JointState",
+    ],
+)
+
+ros_message(
+    name = "CompressedPointCloud",
+    src = "CompressedPointCloud.msg",
+    deps = [
+        "@geometry_msgs//msg:Pose",
+    ],
+)

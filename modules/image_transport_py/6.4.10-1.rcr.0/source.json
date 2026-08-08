@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-IK8qqKuGX2hygv/d8B9LaHCizfL1AEQyFH4kFV3fpCk=",
+    "url": "https://github.com/ros2-gbp/image_common-release/archive/refs/tags/release/lyrical/image_transport_py/6.4.10-1.tar.gz",
+    "strip_prefix": "image_common-release-release-lyrical-image_transport_py-6.4.10-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-OXfYYifJ1JXUIMeUvWGvWxyBaoxjcBpn1+GsuVLjdeE="
+    }
+}

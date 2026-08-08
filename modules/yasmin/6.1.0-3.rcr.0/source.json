@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-o4jHl6tG9DkCs56dQYvvJpdeDVFB5NM38bIMCYI0EV4=",
+    "url": "https://github.com/ros2-gbp/yasmin-release/archive/refs/tags/release/lyrical/yasmin/6.1.0-3.tar.gz",
+    "strip_prefix": "yasmin-release-release-lyrical-yasmin-6.1.0-3",
+    "overlay": {
+        "BUILD.bazel": "sha256-kFrlzvCdDt37eYYcBpufyRx3/NrhK/8mTtWBTUUagTg="
+    }
+}

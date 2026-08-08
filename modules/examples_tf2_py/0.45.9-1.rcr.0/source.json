@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-5CTmymdh0+m4T+upbLDM7ZXYIxysKFRLVzLn3MBuytQ=",
+    "url": "https://github.com/ros2-gbp/geometry2-release/archive/refs/tags/release/lyrical/examples_tf2_py/0.45.9-1.tar.gz",
+    "strip_prefix": "geometry2-release-release-lyrical-examples_tf2_py-0.45.9-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-zS5oz9DUxNXJu15a0H9Eb1vUm5I6gaYnvIYFezMQ19M="
+    }
+}

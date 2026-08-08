@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-mhV4UbWUH21/Jm0Kw4XPbg3CoM4GxVzZcBboll6URAc=",
+    "url": "https://github.com/ros2-gbp/nav2_minimal_turtlebot_simulation-release/archive/refs/tags/release/lyrical/nav2_minimal_tb4_description/1.3.0-1.tar.gz",
+    "strip_prefix": "nav2_minimal_turtlebot_simulation-release-release-lyrical-nav2_minimal_tb4_description-1.3.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-6E5zf7Uu9ttZxThyl3Q4UJUIABYeG8pik5MxslfK/Rw="
+    }
+}

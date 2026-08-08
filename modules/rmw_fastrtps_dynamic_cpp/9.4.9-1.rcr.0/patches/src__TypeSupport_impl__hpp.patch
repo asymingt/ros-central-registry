@@ -1,0 +1,251 @@
+--- a/src/TypeSupport_impl.hpp	2026-05-12 22:16:07.000000000 +0000
++++ b/src/TypeSupport_impl.hpp	2026-07-06 15:52:49.297647011 +0000
+@@ -814,7 +814,9 @@
+     int32_t dsize = 0;
+     deser >> dsize;
+     check_sequence_size(dsize, deser);
+-    GenericCSequence<T>::init(&data, dsize);
++    if (!GenericCSequence<T>::init(&data, dsize)) {
++      throw std::runtime_error("unable to initialize sequence");
++    }
+     deser.deserialize_array(reinterpret_cast<T *>(data.data), dsize);
+   }
+ }
+@@ -900,127 +902,132 @@
+   assert(members);
+   assert(ros_message);
+ 
+-  for (uint32_t i = 0; i < members->member_count_; ++i) {
+-    const auto * member = members->members_ + i;
+-    void * field = static_cast<char *>(ros_message) + member->offset_;
+-    switch (member->type_id_) {
+-      case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_BOOL:
+-        deserialize_field<bool>(member, field, deser);
+-        break;
+-      case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_BYTE:
+-      case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_UINT8:
+-        if (member->is_rosidl_buffer_ && member->is_array_ &&
+-          !(member->array_size_ && !member->is_upper_bound_))
+-        {
+-          if constexpr (std::is_same_v<MembersType,
+-            rosidl_typesupport_introspection_cpp::MessageMembers>)
++  try {
++    for (uint32_t i = 0; i < members->member_count_; ++i) {
++      const auto * member = members->members_ + i;
++      void * field = static_cast<char *>(ros_message) + member->offset_;
++      switch (member->type_id_) {
++        case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_BOOL:
++          deserialize_field<bool>(member, field, deser);
++          break;
++        case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_BYTE:
++        case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_UINT8:
++          if (member->is_rosidl_buffer_ && member->is_array_ &&
++            !(member->array_size_ && !member->is_upper_bound_))
+           {
+-            auto & buffer = *reinterpret_cast<rosidl::Buffer<uint8_t> *>(field);
+-            int32_t dsize = 0;
+-            deser >> dsize;
+-            check_sequence_size(dsize, deser);
+-            buffer.resize(dsize);
+-            if (dsize > 0) {
+-              deser.deserialize_array(buffer.data(), dsize);
+-            }
+-          } else {
+-            auto * seq = reinterpret_cast<rosidl_runtime_c__uint8__Sequence *>(field);
+-            int32_t dsize = 0;
+-            deser >> dsize;
+-            check_sequence_size(dsize, deser);
+-            if (seq->is_rosidl_buffer && seq->data) {
+-              auto * buf = reinterpret_cast<rosidl::Buffer<uint8_t> *>(seq->data);
+-              buf->resize(dsize);
++            if constexpr (std::is_same_v<MembersType,
++              rosidl_typesupport_introspection_cpp::MessageMembers>)
++            {
++              auto & buffer = *reinterpret_cast<rosidl::Buffer<uint8_t> *>(field);
++              int32_t dsize = 0;
++              deser >> dsize;
++              check_sequence_size(dsize, deser);
++              buffer.resize(dsize);
+               if (dsize > 0) {
+-                deser.deserialize_array(buf->data(), dsize);
++                deser.deserialize_array(buffer.data(), dsize);
+               }
+             } else {
+-              if (!rosidl_runtime_c__uint8__Sequence__init(seq, dsize)) {
+-                throw std::runtime_error("unable to initialize uint8 sequence");
+-              }
+-              if (dsize > 0) {
+-                deser.deserialize_array(seq->data, dsize);
++              auto * seq = reinterpret_cast<rosidl_runtime_c__uint8__Sequence *>(field);
++              int32_t dsize = 0;
++              deser >> dsize;
++              check_sequence_size(dsize, deser);
++              if (seq->is_rosidl_buffer && seq->data) {
++                auto * buf = reinterpret_cast<rosidl::Buffer<uint8_t> *>(seq->data);
++                buf->resize(dsize);
++                if (dsize > 0) {
++                  deser.deserialize_array(buf->data(), dsize);
++                }
++              } else {
++                if (!rosidl_runtime_c__uint8__Sequence__init(seq, dsize)) {
++                  throw std::runtime_error("unable to initialize uint8 sequence");
++                }
++                if (dsize > 0) {
++                  deser.deserialize_array(seq->data, dsize);
++                }
+               }
+             }
+-          }
+-        } else {
+-          deserialize_field<uint8_t>(member, field, deser);
+-        }
+-        break;
+-      case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_CHAR:
+-      case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_INT8:
+-        deserialize_field<char>(member, field, deser);
+-        break;
+-      case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_FLOAT32:
+-        deserialize_field<float>(member, field, deser);
+-        break;
+-      case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_FLOAT64:
+-        deserialize_field<double>(member, field, deser);
+-        break;
+-      case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_INT16:
+-        deserialize_field<int16_t>(member, field, deser);
+-        break;
+-      case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_UINT16:
+-        deserialize_field<uint16_t>(member, field, deser);
+-        break;
+-      case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_INT32:
+-        deserialize_field<int32_t>(member, field, deser);
+-        break;
+-      case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_UINT32:
+-        deserialize_field<uint32_t>(member, field, deser);
+-        break;
+-      case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_INT64:
+-        deserialize_field<int64_t>(member, field, deser);
+-        break;
+-      case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_UINT64:
+-        deserialize_field<uint64_t>(member, field, deser);
+-        break;
+-      case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_STRING:
+-        deserialize_field<std::string>(member, field, deser);
+-        break;
+-      case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_WSTRING:
+-        deserialize_field<std::wstring>(member, field, deser);
+-        break;
+-      case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_MESSAGE:
+-        {
+-          auto sub_members = static_cast<const MembersType *>(member->members_->data);
+-          if (!member->is_array_) {
+-            if (!deserializeROSmessage(deser, sub_members, field)) {
+-              return false;
+-            }
+           } else {
+-            size_t array_size = 0;
+-
+-            if (member->array_size_ && !member->is_upper_bound_) {
+-              array_size = member->array_size_;
++            deserialize_field<uint8_t>(member, field, deser);
++          }
++          break;
++        case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_CHAR:
++        case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_INT8:
++          deserialize_field<char>(member, field, deser);
++          break;
++        case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_FLOAT32:
++          deserialize_field<float>(member, field, deser);
++          break;
++        case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_FLOAT64:
++          deserialize_field<double>(member, field, deser);
++          break;
++        case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_INT16:
++          deserialize_field<int16_t>(member, field, deser);
++          break;
++        case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_UINT16:
++          deserialize_field<uint16_t>(member, field, deser);
++          break;
++        case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_INT32:
++          deserialize_field<int32_t>(member, field, deser);
++          break;
++        case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_UINT32:
++          deserialize_field<uint32_t>(member, field, deser);
++          break;
++        case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_INT64:
++          deserialize_field<int64_t>(member, field, deser);
++          break;
++        case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_UINT64:
++          deserialize_field<uint64_t>(member, field, deser);
++          break;
++        case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_STRING:
++          deserialize_field<std::string>(member, field, deser);
++          break;
++        case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_WSTRING:
++          deserialize_field<std::wstring>(member, field, deser);
++          break;
++        case ::rosidl_typesupport_introspection_cpp::ROS_TYPE_MESSAGE:
++          {
++            auto sub_members = static_cast<const MembersType *>(member->members_->data);
++            if (!member->is_array_) {
++              if (!deserializeROSmessage(deser, sub_members, field)) {
++                return false;
++              }
+             } else {
+-              uint32_t num_elems = 0;
+-              deser >> num_elems;
+-              array_size = static_cast<size_t>(num_elems);
+-              check_sequence_size(array_size, deser);
++              size_t array_size = 0;
+ 
+-              if (!member->resize_function) {
+-                RMW_SET_ERROR_MSG("unexpected error: resize function is null");
+-                return false;
++              if (member->array_size_ && !member->is_upper_bound_) {
++                array_size = member->array_size_;
++              } else {
++                uint32_t num_elems = 0;
++                deser >> num_elems;
++                array_size = static_cast<size_t>(num_elems);
++                check_sequence_size(array_size, deser);
++
++                if (!member->resize_function) {
++                  RMW_SET_ERROR_MSG("unexpected error: resize function is null");
++                  return false;
++                }
++                member->resize_function(field, array_size);
+               }
+-              member->resize_function(field, array_size);
+-            }
+ 
+-            if (array_size != 0 && !member->get_function) {
+-              RMW_SET_ERROR_MSG("unexpected error: get_function function is null");
+-              return false;
+-            }
+-            for (size_t index = 0; index < array_size; ++index) {
+-              if (!deserializeROSmessage(deser, sub_members, member->get_function(field, index))) {
++              if (array_size != 0 && !member->get_function) {
++                RMW_SET_ERROR_MSG("unexpected error: get_function function is null");
+                 return false;
+               }
++              for (size_t index = 0; index < array_size; ++index) {
++                if (!deserializeROSmessage(deser, sub_members, member->get_function(field, index))) {
++                  return false;
++                }
++              }
+             }
+           }
+-        }
+-        break;
+-      default:
+-        throw std::runtime_error("unknown type");
++          break;
++        default:
++          throw std::runtime_error("unknown type");
++      }
+     }
++  } catch (const std::exception & e) {
++    RMW_SET_ERROR_MSG_WITH_FORMAT_STRING("deserialization failed: %s", e.what());
++    return false;
+   }
+ 
+   return true;

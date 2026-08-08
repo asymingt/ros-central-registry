@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-TjURzEYeVcEDvTUX1gg3Fe6NmtpVrEHF7PkoNchzKBY=",
+    "url": "https://github.com/ros2-gbp/ros_ign-release/archive/refs/tags/release/lyrical/ros_gz_sim_demos/3.0.9-1.tar.gz",
+    "strip_prefix": "ros_ign-release-release-lyrical-ros_gz_sim_demos-3.0.9-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-tErIId19zx+gdug3SZ/yOvZUiVoP0ufntc/tnJQREHI="
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-wSe7SDdflsmZknUdXhFJqTioq/XSY7wyLbMZ5aOTmHI=",
+    "url": "https://github.com/ros2-gbp/rmf_visualization-release/archive/refs/tags/release/lyrical/rmf_visualization_obstacles/2.6.0-1.tar.gz",
+    "strip_prefix": "rmf_visualization-release-release-lyrical-rmf_visualization_obstacles-2.6.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-BkJAdFqZ3Z/iOKtZIU99H/aad/lDUJbCy+cP85C1F1I="
+    }
+}

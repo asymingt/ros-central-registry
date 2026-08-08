@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-4h591/4B2ABbDR3sjACLc95liofy6ID5hpDrNt4rK5g=",
+    "url": "https://github.com/ros2-gbp/demos-release/archive/refs/tags/release/lyrical/quality_of_service_demo_py/0.37.9-1.tar.gz",
+    "strip_prefix": "demos-release-release-lyrical-quality_of_service_demo_py-0.37.9-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-7EwUmPhU6Bw25sbTenM9O2BWsc6/hxfh4Q/wkVS0R1E="
+    }
+}

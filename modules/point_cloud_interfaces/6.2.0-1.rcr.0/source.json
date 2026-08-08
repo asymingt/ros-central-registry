@@ -1,0 +1,9 @@
+{
+    "integrity": "sha256-9GKgPNZfKTDHCz2c5eimOS+PchpQfQ5Q+hmw7tmaus4=",
+    "url": "https://github.com/ros2-gbp/point_cloud_transport_plugins-release/archive/refs/tags/release/lyrical/point_cloud_interfaces/6.2.0-1.tar.gz",
+    "strip_prefix": "point_cloud_transport_plugins-release-release-lyrical-point_cloud_interfaces-6.2.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-be49GUxkCLRuddFyHDVJl5HOV7ICQI+1ID6ZzRiClno=",
+        "msg/BUILD.bazel": "sha256-Ne9GjV5e4CO5ugz2euMgp4mHo0FIE7BD03XePsPOD70="
+    }
+}

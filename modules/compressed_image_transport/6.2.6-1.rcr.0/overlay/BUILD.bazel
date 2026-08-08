@@ -1,0 +1,90 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosdistro//ament:defs.bzl", "ament_index", "ament_package")
+load("@rosdistro//cc:defs.bzl", "collect_transitive_dynamic_deps", "ros_local_defines")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library")
+
+package(default_visibility = ["//visibility:public"])
+
+### LIBRARIES
+
+HEADERS = glob(["include/**/*.hpp"])
+
+DEPENDENCIES = {
+    "@cv_bridge//:cv_bridge": "@cv_bridge//:cv_bridge_library",
+    "@image_transport//:image_transport": "@image_transport//:image_transport_library",
+    "@rosdistro//cc:opencv": "@rosdistro//cc:opencv_library",
+}
+
+cc_library(
+    name = "compressed_image_transport_library",
+    srcs = [
+        "src/compressed_publisher.cpp",
+        "src/compressed_subscriber.cpp",
+        "src/manifest.cpp",
+    ],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines(),
+    deps = DEPENDENCIES.values(),
+)
+
+cc_shared_library(
+    name = "compressed_image_transport",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = [":compressed_image_transport_library"],
+    deps = [":compressed_image_transport_library"],
+)
+
+### TRANSITIVE DYNAMIC DEPS
+
+collect_transitive_dynamic_deps(
+    name = "transitive_dynamic_deps",
+    dynamic_deps = [
+        ":compressed_image_transport",
+    ],
+    visibility = ["//visibility:private"],
+)
+
+### AMENT INDEX
+
+ament_index(
+    name = "ament_index",
+    export_name = "compressed_image_transport",
+    libraries = [":compressed_image_transport"],
+    package_xml = "package.xml",
+    plugin_category = "image_transport",
+    plugins = ["compressed_plugins.xml"],
+)
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    headers = HEADERS,
+    libraries = [
+        ":compressed_image_transport",
+    ],
+    package_xml = "package.xml",
+    deps = [
+        ":ament_index",
+        "@ament_cmake//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@cv_bridge//:ament_package",
+        "@image_transport//:ament_package",
+        "@rosdistro//:ament_package",
+    ],
+)

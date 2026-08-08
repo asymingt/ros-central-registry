@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-nbE7N5AupNlwtRO8iYCHg1FCLfi/W+Wl0cH2y8eM8CM=",
+    "url": "https://github.com/ros2-gbp/launch-release/archive/refs/tags/release/lyrical/launch/3.9.8-1.tar.gz",
+    "strip_prefix": "launch-release-release-lyrical-launch-3.9.8-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-1k0IEdeLrXT+c8ipeftnqQdNxac0p1nwVNU22A+kofE="
+    }
+}

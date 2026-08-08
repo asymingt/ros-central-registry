@@ -1,0 +1,5 @@
+{
+    "integrity": "sha256-9E0qT3yP1LUNhOYdH7IOGR+gyBHWz0wUJ+Xv0saRFvA=",
+    "url": "https://github.com/ros2-gbp/ros2_controllers-release/archive/refs/tags/release/lyrical/ackermann_steering_controller/6.8.0-1.tar.gz",
+    "strip_prefix": "ros2_controllers-release-release-lyrical-ackermann_steering_controller-6.8.0-1"
+}

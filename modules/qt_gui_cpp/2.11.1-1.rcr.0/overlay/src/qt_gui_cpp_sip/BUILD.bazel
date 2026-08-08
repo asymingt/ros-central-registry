@@ -1,0 +1,105 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@aspect_rules_py//py:defs.bzl", "py_binary")
+load("@cmake_configure_file//:cmake_configure_file.bzl", "cmake_configure_file")
+load("@pip_ros//:requirements.bzl", "requirement")
+load("@rosdistro//cc:defs.bzl", "ros_local_defines")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library")
+load("@rules_python//python/entry_points:py_console_script_binary.bzl", "py_console_script_binary")
+
+package(default_visibility = ["//visibility:public"])
+
+cmake_configure_file(
+    name = "generate_pyproject_toml",
+    src = "pyproject.toml.in",
+    out = "pyproject.toml",
+    defines = [
+        "PROJECT_NAME=qt_gui_cpp_sip",
+        "QMAKE_EXECUTABLE=/usr/bin/qmake6",
+        "SIP_ABS_LIBRARIES=",
+        "SIP_BUILD_DIR=build",
+        "SIP_EXTRA_DEFINES=",
+        "SIP_FILE=qt_gui_cpp_6.sip",
+        "SIP_FILES_DIR=.",
+        "SIP_INCLUDE_DIRS=",
+        "SIP_PROJECT_INCLUDE_DIRS=external/rules_python++pip+pip_ros_312_pyqt6/site-packages/PyQt6/bindings",
+    ],
+)
+
+py_console_script_binary(
+    name = "sip-build",
+    pkg = requirement("sip"),
+    script = "sip-build",
+    deps = [
+        requirement("PyQt6"),
+        requirement("PyQt-builder"),
+    ],
+)
+
+genrule(
+    name = "generate_bindings",
+    srcs = glob(["*.sip"]) + [
+        ":generate_pyproject_toml",
+        requirement("PyQt6"),
+    ],
+    outs = [
+        "build/sip.h",
+        "build/libqt_gui_cpp_sip/siplibqt_gui_cpp_sippart0.cpp",
+        "build/libqt_gui_cpp_sip/sipAPIlibqt_gui_cpp_sip.h",
+    ],
+    cmd = "ROOT=$$PWD && BINDINGS=$$(find . -name QtCoremod.sip | head -n 1) && BINDINGS_DIR=$$(dirname $$(dirname $$BINDINGS)) && cp $(location :generate_pyproject_toml) pyproject.toml && sed -i \"s|external/rules_python++pip+pip_ros_312_pyqt6/site-packages/PyQt6/bindings|$$BINDINGS_DIR|g\" pyproject.toml && cp external/qt_gui_cpp+/src/qt_gui_cpp_sip/*.sip . && $$ROOT/$(execpath :sip-build) --no-compile --concatenate 1 && mkdir -p $(@D)/build/libqt_gui_cpp_sip && cp -r build/* $(@D)/build/",
+    tools = [":sip-build"],
+)
+
+DEPENDENCIES = {
+    "@rosdistro//cc:tinyxml2": "@rosdistro//cc:tinyxml2_library",
+    "@pluginlib//:pluginlib": "@pluginlib//:pluginlib_library",
+}
+
+cc_library(
+    name = "qt_gui_cpp_sip_library",
+    srcs = [
+        "build/libqt_gui_cpp_sip/sipAPIlibqt_gui_cpp_sip.h",
+        "build/libqt_gui_cpp_sip/siplibqt_gui_cpp_sippart0.cpp",
+        "build/sip.h",
+    ],
+    includes = [
+        "build",
+        "build/libqt_gui_cpp_sip",
+    ],
+    local_defines = ros_local_defines(),
+    deps = DEPENDENCIES.values() + [
+        "//:qt_gui_cpp",
+        "@rules_python//python/cc:current_py_cc_headers",
+        "@rules_qt//:qt",
+        "@rules_qt//:qt_gui",
+        "@rules_qt//:qt_widgets",
+    ],
+)
+
+cc_shared_library(
+    name = "qt_gui_cpp_sip",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = [":qt_gui_cpp_sip_library"],
+    shared_lib_name = "libqt_gui_cpp_sip.so",
+    user_link_flags = select({
+        "@platforms//os:osx": [
+            "-undefined",
+            "dynamic_lookup",
+        ],
+        "//conditions:default": [],
+    }),
+    deps = [":qt_gui_cpp_sip_library"],
+)

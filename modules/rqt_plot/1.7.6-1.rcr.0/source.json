@@ -1,0 +1,12 @@
+{
+    "integrity": "sha256-ZfBRzSk51ypZ7sfluucwaeg0SQ0JcCrlzmuW72h3nHo=",
+    "url": "https://github.com/ros2-gbp/rqt_plot-release/archive/refs/tags/release/lyrical/rqt_plot/1.7.6-1.tar.gz",
+    "strip_prefix": "rqt_plot-release-release-lyrical-rqt_plot-1.7.6-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-mjfU7wb1gW0hegfNnVouhGduUDmyUADPVdo7Yjz+kyI="
+    },
+    "patches": {
+        "src__rqt_plot__main__py.patch": "sha256-y8h4O86IRNRndnm8H8ZsEIUP6JRtsf/jB2tyCttCASM="
+    },
+    "patch_strip": 1
+}

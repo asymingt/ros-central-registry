@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-dMXPJFiNNm+oMZKWyw5NoxnTCy0F5jJTRXBU94QA5V4=",
+    "url": "https://github.com/ros2-gbp/geometry2-release/archive/refs/tags/release/lyrical/tf2_geometry_msgs/0.45.9-1.tar.gz",
+    "strip_prefix": "geometry2-release-release-lyrical-tf2_geometry_msgs-0.45.9-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-pSJOPhAyxs8kJCW8gMPf1jev4aII6bARrVLTx3IPnvE="
+    }
+}

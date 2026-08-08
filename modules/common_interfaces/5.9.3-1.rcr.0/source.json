@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-y1ftvOX3V4Yb2whbRYP7PbIH8X6vwzXE+nY+3cHC+hc=",
+    "url": "https://github.com/ros2-gbp/common_interfaces-release/archive/refs/tags/release/lyrical/common_interfaces/5.9.3-1.tar.gz",
+    "strip_prefix": "common_interfaces-release-release-lyrical-common_interfaces-5.9.3-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-1+siomejPCwLhwr0av3xlRAPnFjZHvKzY/4LbDyjl5k="
+    }
+}

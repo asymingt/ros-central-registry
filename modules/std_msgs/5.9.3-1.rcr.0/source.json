@@ -1,0 +1,9 @@
+{
+    "integrity": "sha256-DPWeAdPdynz6Pj36oiCCCF6GoqkfyrdL3AxEdJMR7w0=",
+    "url": "https://github.com/ros2-gbp/common_interfaces-release/archive/refs/tags/release/lyrical/std_msgs/5.9.3-1.tar.gz",
+    "strip_prefix": "common_interfaces-release-release-lyrical-std_msgs-5.9.3-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-tvr7zgu5Ab4KbEwCbgsXoRt7Auee3dwCVrWU7ezsWrU=",
+        "msg/BUILD.bazel": "sha256-tLWN12ZlcIFnTXz2rPW4ZjWzBgMzSxX/MXDvdK0lxOo="
+    }
+}

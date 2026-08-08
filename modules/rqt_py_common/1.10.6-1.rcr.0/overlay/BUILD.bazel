@@ -1,0 +1,95 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@aspect_rules_py//py:defs.bzl", "py_library")
+load("@rosdistro//ament:defs.bzl", "ament_index", "ament_package")
+load("@rosdistro//python:defs.bzl", "py_pytest")
+load("@rosidl_default_generators//:defs.bzl", "py_ros_library")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files(["package.xml"])
+
+### DATA
+
+ament_index(
+    name = "ament_index",
+    data = glob(["resource/**"]),
+    package_xml = "package.xml",
+    deps = [
+        "@qt_gui//:ament_index",
+    ],
+)
+
+### LIBRARIES
+
+py_library(
+    name = "rqt_py_common",
+    srcs = glob(["src/rqt_py_common/**/*.py"]),
+    data = [":ament_index"],
+    imports = ["src"],
+    deps = [
+        "@python_qt_binding",
+        "@qt_gui",
+        "@rclpy",
+    ],
+)
+
+### TESTS
+
+py_ros_library(
+    name = "test_msgs",
+    deps = [
+        "//test/msg:ArrayVal",
+        "//test/msg:Val",
+        "//test/srv:AddTwoInts",
+    ],
+)
+
+[
+    py_pytest(
+        name = test,
+        srcs = ["test/{}.py".format(test)],
+        deps = [
+            ":rqt_py_common",
+            ":test_msgs",
+        ],
+    )
+    for test in [
+        "test_rqt_common_unit",
+        "test_rqt_message_helpers",
+        "test_rqt_ros_graph",
+        "test_rqt_topic_helpers",
+    ]
+]
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    package_xml = "package.xml",
+    deps = [
+        "@ament_cmake//:ament_package",
+        "@ament_cmake_pytest//:ament_package",
+        "@ament_cmake_python//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@python_qt_binding//:ament_package",
+        "@qt_gui//:ament_package",
+        "@rclpy//:ament_package",
+        "@rosdistro//:ament_package",
+        "@rosidl_default_generators//:ament_package",
+        "@rosidl_default_runtime//:ament_package",
+    ],
+)

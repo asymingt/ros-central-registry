@@ -1,0 +1,5 @@
+{
+    "integrity": "sha256-jZAiCNfwd8HOfdMrNjgOZ+YuZHjRLuelkkZiHXs79tU=",
+    "url": "https://github.com/ros2-gbp/onnxruntime_vendor-release/archive/refs/tags/release/lyrical/onnxruntime_vendor/0.1.0-2.tar.gz",
+    "strip_prefix": "onnxruntime_vendor-release-release-lyrical-onnxruntime_vendor-0.1.0-2"
+}

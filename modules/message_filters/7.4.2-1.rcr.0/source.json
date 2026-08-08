@@ -1,0 +1,12 @@
+{
+    "integrity": "sha256-r0IqBzZpKFj2p02EXQUtCITuWl8GmtlwQKWcC8fp+m4=",
+    "url": "https://github.com/ros2-gbp/ros2_message_filters-release/archive/refs/tags/release/lyrical/message_filters/7.4.2-1.tar.gz",
+    "strip_prefix": "ros2_message_filters-release-release-lyrical-message_filters-7.4.2-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-Fmqt/4NiEjia8UNu8bUp4tyIeLympMU0mzf+A9suVUQ="
+    },
+    "patches": {
+        "include__message_filters__input_aligner__hpp.patch": "sha256-FlZJ/RLsUJQxK3d6vg0jmT6EMdJak6qaurcAJdO+AY4="
+    },
+    "patch_strip": 1
+}

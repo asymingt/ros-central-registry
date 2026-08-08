@@ -1,0 +1,151 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@aspect_rules_py//py:defs.bzl", "py_library")
+load("@rosdistro//ament:defs.bzl", "ament_package")
+load("@rosdistro//cc:defs.bzl", "collect_transitive_dynamic_deps", "ros_local_defines")
+load("@rosdistro//python:defs.bzl", "py_pytest")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library", "cc_test")
+
+package(default_visibility = ["//visibility:public"])
+
+### LIBRARIES
+
+HEADERS = glob(["include/**/*.hpp"])
+
+DEPENDENCIES = {
+    "@rclcpp//:rclcpp": "@rclcpp//:rclcpp_library",
+    "@rcutils//:rcutils": "@rcutils//:rcutils_library",
+}
+
+cc_library(
+    name = "message_filters_library",
+    srcs = ["src/connection.cpp"],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines() + [
+        "MESSAGE_FILTERS_BUILDING_DLL",
+    ],
+    deps = DEPENDENCIES.values() + [
+        "@std_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "message_filters",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = [":message_filters_library"],
+    deps = [":message_filters_library"],
+)
+
+### MODULES
+
+py_library(
+    name = "message_filters_py",
+    srcs = glob(["src/message_filters/**/*.py"]),
+    imports = ["src"],
+    deps = [
+        "@builtin_interfaces//:py",
+        "@rclpy",
+    ],
+)
+
+### TESTS
+
+TEST_DEPENDENCIES = DEPENDENCIES | {
+    "@rclcpp_lifecycle//:rclcpp_lifecycle": "@rclcpp_lifecycle//:rclcpp_lifecycle_library",
+    ":message_filters": ":message_filters_library",
+}
+
+collect_transitive_dynamic_deps(
+    name = "transitive_dynamic_deps",
+    dynamic_deps = TEST_DEPENDENCIES.keys(),
+    visibility = ["//visibility:private"],
+)
+
+[
+    cc_test(
+        name = test,
+        srcs = ["test/{0}".format(src)],
+        dynamic_deps = [":transitive_dynamic_deps"],
+        flaky = test in ["test_latest_time_policy"],
+        deps = TEST_DEPENDENCIES.values() + [
+            "@rosdistro//cc:googletest",
+            "@sensor_msgs//:cc",
+        ],
+    )
+    for test, src in {
+        "msg_cache_unittest": "msg_cache_unittest.cpp",
+        "test_approximate_epsilon_time_policy": "test_approximate_epsilon_time_policy.cpp",
+        "test_approximate_time_policy": "test_approximate_time_policy.cpp",
+        "test_chain": "test_chain.cpp",
+        "test_exact_time_policy": "test_exact_time_policy.cpp",
+        # "test_fuzz" : "test_fuzz.cpp",
+        "test_input_aligner": "test_input_aligner.cpp",
+        "test_latest_time_policy": "test_latest_time_policy.cpp",
+        "test_message_filters_delta_filter_cc": "test_message_filters_delta_filter.cpp",
+        "test_message_traits": "test_message_traits.cpp",
+        "test_simple": "test_simple.cpp",
+        "test_subscriber": "test_subscriber.cpp",
+        "test_synchronizer": "test_synchronizer.cpp",
+        "time_sequencer_unittest": "time_sequencer_unittest.cpp",
+        "time_synchronizer_unittest": "time_synchronizer_unittest.cpp",
+    }.items()
+]
+
+[
+    py_pytest(
+        name = test,
+        srcs = ["test/{0}".format(src)],
+        deps = [
+            ":message_filters_py",
+            "@builtin_interfaces//:py",
+            "@rclpy",
+            "@std_msgs//:py",
+        ],
+    )
+    for test, src in {
+        "test_approxsync": "test_approxsync.py",
+        "test_message_filters_cache": "test_message_filters_cache.py",
+        "test_message_filters_chain": "test_message_filters_chain.py",
+        "test_message_filters_delta_filter_py": "test_message_filters_delta_filter.py",
+        "test_time_sequencer": "test_time_sequencer.py",
+        "test_time_synchronizer": "test_time_synchronizer.py",
+    }.items()
+]
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    headers = HEADERS,
+    libraries = [":message_filters"],
+    package_xml = "package.xml",
+    deps = [
+        "@ament_cmake_gtest//:ament_package",
+        "@ament_cmake_pytest//:ament_package",
+        "@ament_cmake_python//:ament_package",
+        "@ament_cmake_ros//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@builtin_interfaces//:ament_package",
+        "@rclcpp//:ament_package",
+        "@rclcpp_lifecycle//:ament_package",
+        "@rclpy//:ament_package",
+        "@rcutils//:ament_package",
+        "@rosdistro//:ament_package",
+        "@sensor_msgs//:ament_package",
+        "@std_msgs//:ament_package",
+    ],
+)

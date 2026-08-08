@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-jNgwkdXfT+GGTqdr0+skOszzaWq2nCJeE3nV5l5tNHo=",
+    "url": "https://github.com/ros2-gbp/rig_reconfigure-release/archive/refs/tags/release/lyrical/rig_reconfigure/1.6.1-1.tar.gz",
+    "strip_prefix": "rig_reconfigure-release-release-lyrical-rig_reconfigure-1.6.1-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-sl1KgoCXAy4QzPE3+/C0KWtLS5mVBSMqs0V4IzHho6U="
+    }
+}

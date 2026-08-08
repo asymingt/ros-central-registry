@@ -1,0 +1,118 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosdistro//ament:defs.bzl", "ament_package")
+load("@rosdistro//cc:defs.bzl", "collect_transitive_dynamic_deps", "ros_local_defines")
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_shared_library", "cc_test")
+
+package(default_visibility = ["//visibility:public"])
+
+### LIBRARIES
+
+HEADERS = glob(["include/**/*.hpp"])
+
+DEPENDENCIES = {
+    "@rclcpp//:rclcpp": "@rclcpp//:rclcpp_library",
+    "@rosdistro//cc:yaml-cpp": "@rosdistro//cc:yaml-cpp_library",
+}
+
+cc_library(
+    name = "camera_calibration_parsers_library",
+    srcs = [
+        "src/parse.cpp",
+        "src/parse_ini.cpp",
+        "src/parse_yml.cpp",
+    ],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines() + ["CAMERA_CALIBRATION_PARSERS_BUILDING_DLL"],
+    deps = DEPENDENCIES.values() + [
+        "@sensor_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "camera_calibration_parsers",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = [":camera_calibration_parsers_library"],
+    deps = [":camera_calibration_parsers_library"],
+)
+
+collect_transitive_dynamic_deps(
+    name = "transitive_dynamic_deps",
+    dynamic_deps = [":camera_calibration_parsers"],
+    visibility = ["//visibility:private"],
+)
+
+### EXECUTABLE
+
+cc_binary(
+    name = "convert",
+    srcs = ["src/convert.cpp"],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    local_defines = ros_local_defines(),
+    deps = DEPENDENCIES.values() + [
+        ":camera_calibration_parsers_library",
+    ],
+)
+
+### TESTS
+
+cc_test(
+    name = "camera_calibration_parsers-parse_ini",
+    srcs = [
+        "test/make_calibs.hpp",
+        "test/test_parse_ini.cpp",
+    ],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    deps = DEPENDENCIES.values() + [
+        ":camera_calibration_parsers_library",
+        "@rosdistro//cc:googletest",
+        "@sensor_msgs//:cc",
+    ],
+)
+
+cc_test(
+    name = "camera_calibration_parsers-parse_yml",
+    srcs = [
+        "test/make_calibs.hpp",
+        "test/test_parse_yml.cpp",
+    ],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    deps = DEPENDENCIES.values() + [
+        ":camera_calibration_parsers_library",
+        "@rosdistro//cc:googletest",
+        "@sensor_msgs//:cc",
+    ],
+)
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    executables = [":convert"],
+    headers = HEADERS,
+    libraries = [":camera_calibration_parsers"],
+    package_xml = "package.xml",
+    deps = [
+        "@ament_cmake_gtest//:ament_package",
+        "@ament_cmake_ros//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@rclcpp//:ament_package",
+        "@rosdistro//:ament_package",
+        "@sensor_msgs//:ament_package",
+        "@yaml_cpp_vendor//:ament_package",
+    ],
+)

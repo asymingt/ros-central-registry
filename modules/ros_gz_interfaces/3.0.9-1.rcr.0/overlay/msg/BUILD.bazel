@@ -1,0 +1,217 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosidl_default_generators//:defs.bzl", "ros_message")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files(glob(["*.msg"]))
+
+ros_message(
+    name = "Altimeter",
+    src = "Altimeter.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "Contact",
+    src = "Contact.msg",
+    deps = [
+        ":Entity",
+        ":JointWrench",
+        "@geometry_msgs//msg:Vector3",
+    ],
+)
+
+ros_message(
+    name = "Contacts",
+    src = "Contacts.msg",
+    deps = [
+        ":Contact",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "Dataframe",
+    src = "Dataframe.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "Entity",
+    src = "Entity.msg",
+)
+
+ros_message(
+    name = "EntityFactory",
+    src = "EntityFactory.msg",
+    deps = [
+        "@geometry_msgs//msg:Pose",
+    ],
+)
+
+ros_message(
+    name = "EntityWrench",
+    src = "EntityWrench.msg",
+    deps = [
+        ":Entity",
+        "@geometry_msgs//msg:Wrench",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "Float32Array",
+    src = "Float32Array.msg",
+)
+
+ros_message(
+    name = "GuiCamera",
+    src = "GuiCamera.msg",
+    deps = [
+        ":TrackVisual",
+        "@geometry_msgs//msg:Pose",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "JointWrench",
+    src = "JointWrench.msg",
+    deps = [
+        "@geometry_msgs//msg:Wrench",
+        "@std_msgs//msg:Header",
+        "@std_msgs//msg:String",
+        "@std_msgs//msg:UInt32",
+    ],
+)
+
+ros_message(
+    name = "Light",
+    src = "Light.msg",
+    deps = [
+        "@geometry_msgs//msg:Pose",
+        "@geometry_msgs//msg:Vector3",
+        "@std_msgs//msg:ColorRGBA",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "LogicalCameraImage",
+    src = "LogicalCameraImage.msg",
+    deps = [
+        ":LogicalCameraImageModel",
+        "@geometry_msgs//msg:Pose",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "LogicalCameraImageModel",
+    src = "LogicalCameraImageModel.msg",
+    deps = [
+        "@geometry_msgs//msg:Pose",
+    ],
+)
+
+ros_message(
+    name = "MaterialColor",
+    src = "MaterialColor.msg",
+    deps = [
+        ":Entity",
+        "@std_msgs//msg:ColorRGBA",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "ParamVec",
+    src = "ParamVec.msg",
+    deps = [
+        "@rcl_interfaces//msg:Parameter",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "SensorNoise",
+    src = "SensorNoise.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "StringVec",
+    src = "StringVec.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "TrackVisual",
+    src = "TrackVisual.msg",
+    deps = [
+        "@geometry_msgs//msg:Vector3",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "VideoRecord",
+    src = "VideoRecord.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "WorldControl",
+    src = "WorldControl.msg",
+    deps = [
+        ":WorldReset",
+        "@builtin_interfaces//msg:Time",
+    ],
+)
+
+ros_message(
+    name = "WorldReset",
+    src = "WorldReset.msg",
+)
+
+ros_message(
+    name = "WorldStatistics",
+    src = "WorldStatistics.msg",
+    deps = [
+        "//msg:LogPlaybackStatistics",
+        "@builtin_interfaces//msg:Time",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "LogPlaybackStatistics",
+    src = "LogPlaybackStatistics.msg",
+    deps = [
+        "@builtin_interfaces//msg:Time",
+        "@std_msgs//msg:Header",
+    ],
+)

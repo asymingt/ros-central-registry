@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-IEbmvc3Q/YbJr7qUsu9S6t1ch3shkWt14cUreOA/nDI=",
+    "url": "https://github.com/ros2-gbp/gz_sim_vendor-release/archive/refs/tags/release/lyrical/gz_sim_vendor/0.4.5-1.tar.gz",
+    "strip_prefix": "gz_sim_vendor-release-release-lyrical-gz_sim_vendor-0.4.5-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-Jl5sr+1j7E3WR4fyJeKrIHFh1xLIBbjnMl/nE3/E/AE="
+    }
+}

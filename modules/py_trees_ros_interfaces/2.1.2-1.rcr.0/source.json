@@ -1,0 +1,11 @@
+{
+    "integrity": "sha256-mg2iH16sj+a0CjEzTjVugbfQDFPV0rIeU/Tf7d1Vx4A=",
+    "url": "https://github.com/ros2-gbp/py_trees_ros_interfaces-release/archive/refs/tags/release/lyrical/py_trees_ros_interfaces/2.1.2-1.tar.gz",
+    "strip_prefix": "py_trees_ros_interfaces-release-release-lyrical-py_trees_ros_interfaces-2.1.2-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-nVipQNuJEFOcQpDvtTCQMaJo8fblJ5fLkdiQMBH+iUs=",
+        "action/BUILD.bazel": "sha256-f549E8PkLbt+o9VuoMunqKWKzzJCc+R329cScdNTaes=",
+        "msg/BUILD.bazel": "sha256-fNyxujcguTUc2zX5LygxI3xhYYUF3hDMhi2Vtt6kdF4=",
+        "srv/BUILD.bazel": "sha256-9UfCoNjsgFscg6GcTaI145FV2uZczK9lA13T5xrEOkg="
+    }
+}

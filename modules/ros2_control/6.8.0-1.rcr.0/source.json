@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-4LUwJPMHQ2/KjGRJshen2ojZyKEGQR04eXj3J0WSKiQ=",
+    "url": "https://github.com/ros2-gbp/ros2_control-release/archive/refs/tags/release/lyrical/ros2_control/6.8.0-1.tar.gz",
+    "strip_prefix": "ros2_control-release-release-lyrical-ros2_control-6.8.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-s6FuWPVnkJ6Q+xFopkk9ch8DgVRSMxrkkqwo3vEoV74="
+    }
+}

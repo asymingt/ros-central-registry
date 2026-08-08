@@ -1,0 +1,313 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosidl_default_generators//:defs.bzl", "ros_message")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files(glob(["*.msg"]))
+
+ros_message(
+    name = "AdmittanceControllerState",
+    src = "AdmittanceControllerState.msg",
+    deps = [
+        "@geometry_msgs//msg:Quaternion",
+        "@geometry_msgs//msg:TransformStamped",
+        "@geometry_msgs//msg:TwistStamped",
+        "@geometry_msgs//msg:WrenchStamped",
+        "@sensor_msgs//msg:JointState",
+        "@std_msgs//msg:Float64MultiArray",
+        "@std_msgs//msg:Int8MultiArray",
+        "@std_msgs//msg:String",
+    ],
+)
+
+ros_message(
+    name = "BatteryStateArray",
+    src = "BatteryStateArray.msg",
+    deps = [
+        "@sensor_msgs//msg:BatteryState",
+    ],
+)
+
+ros_message(
+    name = "CANopenState",
+    src = "CANopenState.msg",
+)
+
+ros_message(
+    name = "DynamicInterfaceGroupValues",
+    src = "DynamicInterfaceGroupValues.msg",
+    deps = [
+        ":InterfaceValue",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "DynamicInterfaceValues",
+    src = "DynamicInterfaceValues.msg",
+    deps = [
+        ":InterfaceValue",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "DynamicJointState",
+    src = "DynamicJointState.msg",
+    deps = [
+        ":InterfaceValue",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "EtherCATState",
+    src = "EtherCATState.msg",
+)
+
+ros_message(
+    name = "Float64Values",
+    src = "Float64Values.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "GenericHardwareState",
+    src = "GenericHardwareState.msg",
+    deps = [
+        "@diagnostic_msgs//msg:KeyValue",
+    ],
+)
+
+ros_message(
+    name = "GripperCommand",
+    src = "GripperCommand.msg",
+)
+
+ros_message(
+    name = "HardwareDeviceDiagnostics",
+    src = "HardwareDeviceDiagnostics.msg",
+    deps = [
+        "@diagnostic_msgs//msg:KeyValue",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "HardwareDeviceStatus",
+    src = "HardwareDeviceStatus.msg",
+    deps = [
+        ":CANopenState",
+        ":EtherCATState",
+        ":GenericHardwareState",
+        ":VDA5050State",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "HardwareDiagnostics",
+    src = "HardwareDiagnostics.msg",
+    deps = [
+        ":HardwareDeviceDiagnostics",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "HardwareStatus",
+    src = "HardwareStatus.msg",
+    deps = [
+        ":HardwareDeviceStatus",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "InterfaceValue",
+    src = "InterfaceValue.msg",
+)
+
+ros_message(
+    name = "JointComponentTolerance",
+    src = "JointComponentTolerance.msg",
+)
+
+ros_message(
+    name = "JointControllerState",
+    src = "JointControllerState.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "JointJog",
+    src = "JointJog.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "JointTolerance",
+    src = "JointTolerance.msg",
+)
+
+ros_message(
+    name = "JointTrajectoryControllerState",
+    src = "JointTrajectoryControllerState.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+        "@trajectory_msgs//msg:JointTrajectoryPoint",
+        "@trajectory_msgs//msg:MultiDOFJointTrajectoryPoint",
+    ],
+)
+
+ros_message(
+    name = "JointWrenchTrajectory",
+    src = "JointWrenchTrajectory.msg",
+    deps = [
+        ":JointWrenchTrajectoryPoint",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "JointWrenchTrajectoryPoint",
+    src = "JointWrenchTrajectoryPoint.msg",
+    deps = [
+        ":WrenchFramed",
+        "@trajectory_msgs//msg:JointTrajectoryPoint",
+    ],
+)
+
+ros_message(
+    name = "Keys",
+    src = "Keys.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "MecanumDriveControllerState",
+    src = "MecanumDriveControllerState.msg",
+    deps = [
+        "@geometry_msgs//msg:Twist",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "MotionArgument",
+    src = "MotionArgument.msg",
+)
+
+ros_message(
+    name = "MotionPrimitive",
+    src = "MotionPrimitive.msg",
+    deps = [
+        ":MotionArgument",
+        "@geometry_msgs//msg:PoseStamped",
+    ],
+)
+
+ros_message(
+    name = "MotionPrimitiveSequence",
+    src = "MotionPrimitiveSequence.msg",
+    deps = [
+        ":MotionPrimitive",
+    ],
+)
+
+ros_message(
+    name = "MultiDOFCommand",
+    src = "MultiDOFCommand.msg",
+)
+
+ros_message(
+    name = "MultiDOFStateStamped",
+    src = "MultiDOFStateStamped.msg",
+    deps = [
+        ":SingleDOFState",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "PidState",
+    src = "PidState.msg",
+    deps = [
+        "@builtin_interfaces//msg:Duration",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "SingleDOFState",
+    src = "SingleDOFState.msg",
+)
+
+ros_message(
+    name = "SingleDOFStateStamped",
+    src = "SingleDOFStateStamped.msg",
+    deps = [
+        ":SingleDOFState",
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "SpeedScalingFactor",
+    src = "SpeedScalingFactor.msg",
+)
+
+ros_message(
+    name = "SteeringControllerCommand",
+    src = "SteeringControllerCommand.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "SteeringControllerStatus",
+    src = "SteeringControllerStatus.msg",
+    deps = [
+        "@std_msgs//msg:Header",
+    ],
+)
+
+ros_message(
+    name = "VDA5050SafetyState",
+    src = "VDA5050SafetyState.msg",
+)
+
+ros_message(
+    name = "VDA5050State",
+    src = "VDA5050State.msg",
+)
+
+ros_message(
+    name = "WrenchFramed",
+    src = "WrenchFramed.msg",
+    deps = [
+        "@geometry_msgs//msg:Wrench",
+    ],
+)

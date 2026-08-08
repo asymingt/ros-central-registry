@@ -1,0 +1,5 @@
+{
+    "integrity": "sha256-IXJocLbOHFrm6ES5xI3pNl2YV7xSH4GRh1hMXBtQ7dg=",
+    "url": "https://github.com/ros2-gbp/ament_cmake-release/archive/refs/tags/release/lyrical/ament_cmake_google_benchmark/2.8.8-1.tar.gz",
+    "strip_prefix": "ament_cmake-release-release-lyrical-ament_cmake_google_benchmark-2.8.8-1"
+}

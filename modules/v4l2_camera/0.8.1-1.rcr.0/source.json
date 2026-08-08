@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-dHdwivh703iol02242jWCNb9+bXcx1rR1JBLPHSHxbg=",
+    "url": "https://github.com/ros2-gbp/ros2_v4l2_camera-release/archive/refs/tags/release/lyrical/v4l2_camera/0.8.1-1.tar.gz",
+    "strip_prefix": "ros2_v4l2_camera-release-release-lyrical-v4l2_camera-0.8.1-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-RFCL+30HOBmy59N35wbUpjl4VN8LlG7MoXR5lsPJa9E="
+    }
+}

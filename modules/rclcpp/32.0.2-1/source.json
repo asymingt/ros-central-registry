@@ -1,0 +1,5 @@
+{
+    "integrity": "sha256-xqrAsjzVnkOwS1e1WPNjv7iI9e8x+qsqvSL+evhAYK4=",
+    "url": "https://github.com/ros2-gbp/rclcpp-release/archive/refs/tags/release/lyrical/rclcpp/32.0.2-1.tar.gz",
+    "strip_prefix": "rclcpp-release-release-lyrical-rclcpp-32.0.2-1"
+}

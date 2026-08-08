@@ -1,0 +1,90 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosdistro//ament:defs.bzl", "ament_index", "ament_package")
+load("@rosdistro//cc:defs.bzl", "collect_transitive_dynamic_deps", "ros_local_defines")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library")
+
+package(default_visibility = ["//visibility:public"])
+
+### LIBRARIES
+
+HEADERS = glob(["include/**/*.hpp"])
+
+DEPENDENCIES = {
+    "@image_transport//:image_transport": "@image_transport//:image_transport_library",
+    "@rosdistro//cc:zlib": "@rosdistro//cc:zlib_library",
+}
+
+cc_library(
+    name = "zstd_image_transport_library",
+    srcs = [
+        "src/manifest.cpp",
+        "src/zlib_cpp.cpp",
+        "src/zlib_cpp.hpp",
+        "src/zstd_publisher.cpp",
+        "src/zstd_subscriber.cpp",
+    ],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines(),
+    deps = DEPENDENCIES.values(),
+)
+
+cc_shared_library(
+    name = "zstd_image_transport",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = [":zstd_image_transport_library"],
+    deps = [":zstd_image_transport_library"],
+)
+
+### TRANSITIVE DYNAMIC DEPS
+
+collect_transitive_dynamic_deps(
+    name = "transitive_dynamic_deps",
+    dynamic_deps = [
+        ":zstd_image_transport",
+    ],
+    visibility = ["//visibility:private"],
+)
+
+### AMENT INDEX
+
+ament_index(
+    name = "ament_index",
+    export_name = "zstd_image_transport",
+    libraries = [":zstd_image_transport"],
+    package_xml = "package.xml",
+    plugin_category = "image_transport",
+    plugins = ["zstd_plugins.xml"],
+)
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    headers = HEADERS,
+    libraries = [
+        ":zstd_image_transport",
+    ],
+    package_xml = "package.xml",
+    deps = [
+        ":ament_index",
+        "@ament_cmake//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@image_transport//:ament_package",
+        "@rosdistro//:ament_package",
+    ],
+)

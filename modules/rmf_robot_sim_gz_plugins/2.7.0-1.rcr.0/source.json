@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-xxyBDBJaNVOGIm/Ryv1mZf9NVOTlyxAMUADPfpUg69E=",
+    "url": "https://github.com/ros2-gbp/rmf_simulation-release/archive/refs/tags/release/lyrical/rmf_robot_sim_gz_plugins/2.7.0-1.tar.gz",
+    "strip_prefix": "rmf_simulation-release-release-lyrical-rmf_robot_sim_gz_plugins-2.7.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-uYTbbw89WMCXANqlx3LxxEHQ3koUchlmGDdJHyJzO+g="
+    }
+}

@@ -1,0 +1,10 @@
+--- a/test/rclcpp/wait_set_policies/test_storage_policy_common.cpp
++++ b/test/rclcpp/wait_set_policies/test_storage_policy_common.cpp
+@@ -127,6 +127,7 @@
+     wait_set.wait(),
+     rclcpp::exceptions::RCLError);
+ }
++
+ TEST_F(TestStoragePolicyCommon, rcl_wait_set_add_guard_condition_error) {
+   rclcpp::WaitSet wait_set;
+   auto guard_condition = std::make_shared<rclcpp::GuardCondition>();

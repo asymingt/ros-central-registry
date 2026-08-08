@@ -1,0 +1,179 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosdistro//ament:defs.bzl", "ament_index", "ament_package")
+load("@rosdistro//cc:defs.bzl", "ros_local_defines")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library", "cc_test")
+
+package(default_visibility = ["//visibility:public"])
+
+ament_index(
+    name = "ament_index",
+)
+
+### LIBRARIES
+
+DEPENDENCIES = {
+    "@image_transport//:image_transport": "@image_transport//:image_transport_library",
+    "@interactive_markers//:interactive_markers": "@interactive_markers//:interactive_markers_library",
+    "@laser_geometry//:laser_geometry": "@laser_geometry//:laser_geometry_library",
+    "@point_cloud_transport//:point_cloud_transport": "@point_cloud_transport//:point_cloud_transport_library",
+    "@rclcpp//:rclcpp": "@rclcpp//:rclcpp_library",
+    "@resource_retriever_service_plugin//:resource_retriever_service_plugin": "@resource_retriever_service_plugin//:resource_retriever_service_plugin_library",
+    "@resource_retriever//:resource_retriever": "@resource_retriever//:resource_retriever_library",
+    "@rosdistro//cc:OgreMain": "@rosdistro//cc:OgreMain_library",
+    "@rosdistro//cc:OgreOverlay": "@rosdistro//cc:OgreOverlay_library",
+    "@rviz_common//:rviz_common": "@rviz_common//:rviz_common_library",
+    "@rviz_rendering//:rviz_rendering": "@rviz_rendering//:rviz_rendering_library",
+    "@tf2_geometry_msgs//:tf2_geometry_msgs": "@tf2_geometry_msgs//:tf2_geometry_msgs_library",
+    "@tf2_ros//:tf2_ros": "@tf2_ros//:tf2_ros_library",
+    "@tf2//:tf2": "@tf2//:tf2_library",
+    "@urdf//:urdf": "@urdf//:urdf_library",
+}
+
+cc_library(
+    name = "rviz_default_plugins_library",
+    srcs = glob(
+        [
+            "src/**/*.cpp",
+            "src/**/*.hpp",
+            "src/**/*.h",
+        ],
+        allow_empty = True,
+    ),
+    hdrs = glob(
+        [
+            "include/**/*.hpp",
+            "include/**/*.h",
+        ],
+        allow_empty = True,
+    ),
+    includes = ["include"],
+    local_defines = ros_local_defines() + ["RVIZ_DEFAULT_PLUGINS_BUILDING_LIBRARY"],
+    deps = DEPENDENCIES.values() + [
+        "@geometry_msgs//:cc",
+        "@map_msgs//:cc",
+        "@nav_msgs//:cc",
+        "@rosdistro//cc:gz_math",
+        "@rules_qt//:qt_widgets",
+        "@visualization_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "rviz_default_plugins",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = [":rviz_default_plugins_library"],
+    deps = [":rviz_default_plugins_library"],
+)
+
+# ### TESTS
+
+# cc_library(
+#     name = "ogre_testing_environment",
+#     srcs = ["test/rviz_default_plugins/ogre_testing_environment.cpp"],
+#     hdrs = ["test/rviz_default_plugins/ogre_testing_environment.hpp"],
+#     deps = [
+#         "@rosdistro//cc:OgreMain",
+#         "@rviz_rendering",
+#     ],
+# )
+
+# cc_library(
+#     name = "rviz_default_plugins_test_fixture",
+#     srcs = [
+#         "test/rviz_default_plugins/displays/display_test_fixture.cpp",
+#         "test/rviz_default_plugins/scene_graph_introspection.cpp",
+#     ],
+#     hdrs = [
+#         "test/rviz_default_plugins/displays/display_test_fixture.hpp",
+#         "test/rviz_default_plugins/scene_graph_introspection.hpp",
+#     ],
+#     deps = [
+#         ":ogre_testing_environment",
+#         ":rviz_default_plugins_library",
+#         "@rosdistro//cc:googletest",
+#     ],
+# )
+
+# cc_test(
+#     name = "fps_view_controller_test",
+#     srcs = [
+#         "test/rviz_default_plugins/view_controllers/fps/fps_view_controller_test.cpp",
+#     ],
+#     deps = [
+#         ":rviz_default_plugins_test_fixture",
+#         "@rosdistro//cc:googletest",
+#     ],
+# )
+
+# cc_test(
+#     name = "frame_view_controller_test",
+#     srcs = [
+#         "test/rviz_default_plugins/view_controllers/frame/frame_view_controller_test.cpp",
+#     ],
+#     deps = [
+#         ":rviz_default_plugins_test_fixture",
+#         "@rosdistro//cc:googletest",
+#     ],
+# )
+
+# cc_test(
+#     name = "frame_info_test",
+#     srcs = [
+#         "test/rviz_default_plugins/displays/tf/frame_info_test.cpp",
+#     ],
+#     deps = [
+#         ":rviz_default_plugins_test_fixture",
+#         "@rosdistro//cc:googletest",
+#     ],
+# )
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    package_xml = "package.xml",
+    deps = [
+        ":ament_index",
+        "@ament_cmake_gmock//:ament_package",
+        "@ament_cmake_gtest//:ament_package",
+        "@ament_cmake_lint_cmake//:ament_package",
+        "@ament_cmake_ros//:ament_package",
+        "@ament_index_cpp//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@geometry_msgs//:ament_package",
+        "@image_transport//:ament_package",
+        "@interactive_markers//:ament_package",
+        "@laser_geometry//:ament_package",
+        "@map_msgs//:ament_package",
+        "@nav_msgs//:ament_package",
+        "@pluginlib//:ament_package",
+        "@point_cloud_transport//:ament_package",
+        "@rclcpp//:ament_package",
+        "@resource_retriever//:ament_package",
+        "@resource_retriever_service_plugin//:ament_package",
+        "@rosdistro//:ament_package",
+        "@rviz_common//:ament_package",
+        "@rviz_rendering//:ament_package",
+        "@rviz_rendering_tests//:ament_package",
+        "@rviz_visual_testing_framework//:ament_package",
+        "@tf2//:ament_package",
+        "@tf2_geometry_msgs//:ament_package",
+        "@tf2_ros//:ament_package",
+        "@urdf//:ament_package",
+        "@visualization_msgs//:ament_package",
+    ],
+)

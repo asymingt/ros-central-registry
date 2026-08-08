@@ -1,0 +1,48 @@
+--- a/test/test_rectify.cpp
++++ b/test/test_rectify.cpp
+@@ -136,9 +136,10 @@
+       "-r", "/camera/image:=/camera/image_raw"});
+     node_rectify = std::make_shared<image_proc::RectifyNode>(options);
+ 
++    rectify_executor.add_node(node_rectify);
+     spin_rectify_thread = std::thread(
+       [this]() {
+-        rclcpp::spin(node_rectify);
++        rectify_executor.spin();
+       });
+ 
+     // Create raw camera subscriber and publisher
+@@ -146,8 +147,15 @@
+     cam_pub_ = it.advertiseCamera(topic_raw_, 1);
+   }
+ 
++  virtual void TearDown()
++  {
++    node_rectify.reset();
++    node.reset();
++  }
++
+   rclcpp::Node::SharedPtr node;
+   rclcpp::Node::SharedPtr node_rectify;
++  rclcpp::executors::SingleThreadedExecutor rectify_executor;
+   std::thread spin_rectify_thread;
+   std::string topic_raw_;
+   std::string topic_mono_;
+@@ -281,7 +289,7 @@
+   // restore the original cam_info for other tests added in the future
+   cam_info_ = cam_info_orig;
+ 
+-  rclcpp::shutdown();
++  rectify_executor.cancel();
+   spin_rectify_thread.join();
+ }
+ 
+@@ -289,5 +297,7 @@
+ {
+   rclcpp::init(argc, argv);
+   testing::InitGoogleTest(&argc, argv);
+-  return RUN_ALL_TESTS();
++  int ret = RUN_ALL_TESTS();
++  rclcpp::shutdown();
++  return ret;
+ }

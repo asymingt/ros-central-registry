@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-Wa9GES7eS3XXx+gFyaW8Sn0aFgir4zEsYzKs+5kqZzU=",
+    "url": "https://github.com/ros2-gbp/libcamera-release/archive/refs/tags/release/lyrical/libcamera/0.7.2-1.tar.gz",
+    "strip_prefix": "libcamera-release-release-lyrical-libcamera-0.7.2-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-RkExDe+owqbn1r71yG2wst3ELHPVA9wP624hh6qrNIQ="
+    }
+}

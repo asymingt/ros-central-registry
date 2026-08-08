@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-oLLyLLCwoalb0WuAkaEf81JMv2se5tOY8e8k6Ed23io=",
+    "url": "https://github.com/ros2-gbp/sdformat_urdf-release/archive/refs/tags/release/lyrical/sdformat_test_files/2.1.1-1.tar.gz",
+    "strip_prefix": "sdformat_urdf-release-release-lyrical-sdformat_test_files-2.1.1-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-RkExDe+owqbn1r71yG2wst3ELHPVA9wP624hh6qrNIQ="
+    }
+}

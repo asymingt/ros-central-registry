@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-1wp34MLM0hKP3Jrr63iwQm2NneoRvuuohT9X4TeHgco=",
+    "url": "https://github.com/ros2-gbp/mola-release/archive/refs/tags/release/lyrical/mola_input_lidar_bin_dataset/3.0.0-1.tar.gz",
+    "strip_prefix": "mola-release-release-lyrical-mola_input_lidar_bin_dataset-3.0.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-oUqEY8GpL7QbVfEKcwgK8G8ez2p95A2xbgoEf0hBpXc="
+    }
+}

@@ -1,0 +1,12 @@
+--- a/test/resource_retriever_service_test.cpp
++++ b/test/resource_retriever_service_test.cpp
+@@ -201,5 +201,7 @@
+ {
+   testing::InitGoogleTest(&argc, argv);
+   rclcpp::init(argc, argv);
+-  return RUN_ALL_TESTS();
+-}
++  const int result = RUN_ALL_TESTS();
++  rclcpp::shutdown();
++  return result;
++}

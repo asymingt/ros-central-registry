@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-ZxvOzMoG659YyHC/QuXwQz7220IlzlbAXLasCNjg6Eo=",
+    "url": "https://github.com/ros2-gbp/cascade_lifecycle-release/archive/refs/tags/release/lyrical/rclpy_cascade_lifecycle/2.0.6-1.tar.gz",
+    "strip_prefix": "cascade_lifecycle-release-release-lyrical-rclpy_cascade_lifecycle-2.0.6-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-Qm+ssluvg+cFT4PxnaiA0TgA5Rdc73GgqxXB4KpESjI="
+    }
+}

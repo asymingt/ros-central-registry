@@ -1,0 +1,29 @@
+{
+    "integrity": "sha256-xqrAsjzVnkOwS1e1WPNjv7iI9e8x+qsqvSL+evhAYK4=",
+    "url": "https://github.com/ros2-gbp/rclcpp-release/archive/refs/tags/release/lyrical/rclcpp/32.0.2-1.tar.gz",
+    "strip_prefix": "rclcpp-release-release-lyrical-rclcpp-32.0.2-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-orOQaEndnIfgZ108lypwRHgGzdqbnW0HOIxD8wl/wKY=",
+        "test/locate_test_assets.hpp": "sha256-J2XuAG6kFos7tUIL8y0aM+AfHucJvGkGAjklcj7Nlv0=",
+        "test/msg/BUILD.bazel": "sha256-4HxsATeKEa5dM+N7iBU7ibRjBOiDfaU7PK6FO+GwBJQ="
+    },
+    "patches": {
+        "include__rclcpp__typesupport_helpers__hpp.patch": "sha256-+UOA+7kH8pujE/VEnLnfc6oFPjMrKB1auBy/6USpIro=",
+        "src__rclcpp__typesupport_helpers__cpp.patch": "sha256-07Se2XCiESGfc4i6pU28LjY6kYcqoOoF7w7WL3e1iZI=",
+        "test__rclcpp__node_interfaces__test_does_not_compile__get_node_topics_interface_const_ptr_wrapped_node__cpp.patch": "sha256-8h2iD2AUGunk5WeBrutHxYJwz8JpF+Xb7vn5oWFZgT8=",
+        "test__rclcpp__node_interfaces__test_does_not_compile__get_node_topics_interface_const_ref_wrapped_node__cpp.patch": "sha256-Wl3eVT9jyCB8G7YpY8UQCcBb3denHWeix1onZvQ1wxQ=",
+        "test__rclcpp__node_interfaces__test_node_graph__cpp.patch": "sha256-pTnVT/8gkask8i/HD0FdwrR4WwKShw0GIf1I8GdPLEY=",
+        "test__rclcpp__node_interfaces__test_node_parameters__cpp.patch": "sha256-KWlHpy6X+Igy5v9JrN/P2GLfZwZ5UiaVRF9FoPKXIYg=",
+        "test__rclcpp__test_client_common__cpp.patch": "sha256-YN1nawXvaQqhNg86azrur9v798d8yscff3VtVoSwlWI=",
+        "test__rclcpp__test_generic_client__cpp.patch": "sha256-oK+iqmq9yzIWSsPMsUHMIcEkhtQTV5mU6GgGTVfllhE=",
+        "test__rclcpp__test_generic_pubsub__cpp.patch": "sha256-J0NCe6etM7wnS82B3t/Wo+D3N1IwZhc9p/tlJhe4DsI=",
+        "test__rclcpp__test_generic_service__cpp.patch": "sha256-SVZInf6hG21GB9J+0vbh+0ejQ23QP2jeNvT0lPS+Lo8=",
+        "test__rclcpp__test_intra_process_manager__cpp.patch": "sha256-KDd4qB54W/00gl+/W9VEM/hSOnbixqnwQEkPuXZlX8g=",
+        "test__rclcpp__test_node__cpp.patch": "sha256-7fpQEoHiCajIhGUu5VB2yw5xtcCq6priNbqQG0w1elQ=",
+        "test__rclcpp__test_parameter_client__cpp.patch": "sha256-UDN5B7ktUQ+IWSo8fz/kz5PBn05LLC5RfC/eFrU+GMw=",
+        "test__rclcpp__test_parameter_service__cpp.patch": "sha256-u3vdsO922d4yYLGefXN08buHom2+a407k5izluOvYds=",
+        "test__rclcpp__test_typesupport_helpers__cpp.patch": "sha256-MW4NnbHoX3IVWDTa9HJuxADM36oNlKAPeBX+OwIyIc4=",
+        "test__rclcpp__wait_set_policies__test_storage_policy_common__cpp.patch": "sha256-jwGBkaAIhFeENLMrq4OFUbcit9f6xmBwPKUPernK1w0="
+    },
+    "patch_strip": 1
+}

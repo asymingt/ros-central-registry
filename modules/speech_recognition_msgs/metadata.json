@@ -1,0 +1,17 @@
+{
+    "homepage": "https://github.com/tork-a/jsk_common_msgs-release",
+    "maintainers": [
+        {
+            "email": "simmers@google.com",
+            "github": "asymingt",
+            "github_user_id": 37671,
+            "name": "Andrew Symington"
+        }
+    ],
+    "versions": [
+        "0.0.0",
+        "5.0.1-2",
+        "5.0.1-2.rcr.0"
+    ],
+    "yanked_versions": {}
+}

@@ -1,0 +1,16 @@
+--- a/src/rqt_plot/main.py
++++ b/src/rqt_plot/main.py
+@@ -28,6 +28,13 @@
+ 
+ import sys
+ 
++# Monkey-patch matplotlib to avoid scanning system fonts and crashing on NotoColorEmoji.ttf
++try:
++    from matplotlib import font_manager
++    font_manager.findSystemFonts = lambda *args, **kwargs: []
++except ImportError:
++    pass
++
+ from rqt_gui.main import Main
+ from rqt_plot.plot import Plot
+ 

@@ -1,0 +1,10 @@
+{
+    "integrity": "sha256-Tc7TO1qsGEh4nGytGek+VZsEOZjlTfYsPUkVn5l7YjU=",
+    "url": "https://github.com/ros2-gbp/data_tamer_tools-release/archive/refs/tags/release/lyrical/data_tamer_tools/0.10.0-1.tar.gz",
+    "strip_prefix": "data_tamer_tools-release-release-lyrical-data_tamer_tools-0.10.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-VljbDY/UkO97DbnGNk4BDw0mmHHvJOBJeNhvaow8I0w=",
+        "msg/BUILD.bazel": "sha256-4SVFGe70XmrYTIzluFlVW5KRmttJcnXnBpm/34xXRn0=",
+        "srv/BUILD.bazel": "sha256-V2ejzNDzxq/dMO8O2qZW6+HXRTl8GBwITTBEk+wT+A8="
+    }
+}

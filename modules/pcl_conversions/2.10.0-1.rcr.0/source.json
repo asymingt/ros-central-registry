@@ -1,0 +1,12 @@
+{
+    "integrity": "sha256-Q002LAj14u1bW+GyjZqSx0z9hzmi0jfg7JyieLlICrE=",
+    "url": "https://github.com/ros2-gbp/perception_pcl-release/archive/refs/tags/release/lyrical/pcl_conversions/2.10.0-1.tar.gz",
+    "strip_prefix": "perception_pcl-release-release-lyrical-pcl_conversions-2.10.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-nnjlaim8W39AyOUvrtaI5gICHpSfRQuygXZOH+KU48c="
+    },
+    "patches": {
+        "include__pcl_conversions__pcl_conversions__h.patch": "sha256-uqm5L+Tub1g1TRsWr28azy8u3yxj5s8R9MeMcZhhTgI="
+    },
+    "patch_strip": 1
+}

@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-5fWfprRwNDwtWupYSB5cTZuO/4oStAZxMlpm8cP9OQc=",
+    "url": "https://github.com/ros2-gbp/ros2cli-release/archive/refs/tags/release/lyrical/ros2doctor/0.40.8-1.tar.gz",
+    "strip_prefix": "ros2cli-release-release-lyrical-ros2doctor-0.40.8-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-sek9lbWP8SzIMK70pxYo4GbFeuwtbjSuuPVTMUv4WUo="
+    }
+}

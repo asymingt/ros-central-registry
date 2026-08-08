@@ -1,0 +1,117 @@
+# Copyright 2025 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rosdistro//ament:defs.bzl", "ament_package")
+load("@rosdistro//cc:defs.bzl", "collect_transitive_dynamic_deps", "ros_local_defines")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_shared_library")
+load("@rules_license//rules:license.bzl", "license")
+
+package(
+    default_applicable_licenses = [":license"],
+    default_visibility = ["//visibility:public"],
+)
+
+license(
+    name = "license",
+    license_kinds = [
+        "@rules_license//licenses/spdx:Apache-2.0",
+    ],
+)
+
+### LIBRARIES
+
+HEADERS = glob([
+    "include/**/*.hpp",
+    "include/**/*.h",
+])
+
+DEPENDENCIES = {
+    "@rcpputils//:rcpputils": "@rcpputils//:rcpputils_library",
+    "@rcutils//:rcutils": "@rcutils//:rcutils_library",
+    "@rmw//:rmw": "@rmw//:rmw_library",
+    "@rmw_dds_common//:rmw_dds_common": "@rmw_dds_common//:rmw_dds_common_library",
+    "@rmw_fastrtps_shared_cpp//:rmw_fastrtps_shared_cpp": "@rmw_fastrtps_shared_cpp//:rmw_fastrtps_shared_cpp_library",
+    "@rosidl_buffer_backend_registry//:rosidl_buffer_backend_registry": "@rosidl_buffer_backend_registry//:rosidl_buffer_backend_registry_library",
+    "@rosidl_dynamic_typesupport//:rosidl_dynamic_typesupport": "@rosidl_dynamic_typesupport//:rosidl_dynamic_typesupport_library",
+    "@rosidl_dynamic_typesupport_fastrtps//:rosidl_dynamic_typesupport_fastrtps": "@rosidl_dynamic_typesupport_fastrtps//:rosidl_dynamic_typesupport_fastrtps_library",
+    "@rosidl_runtime_c//:rosidl_runtime_c": "@rosidl_runtime_c//:rosidl_runtime_c_library",
+    "@rosidl_typesupport_fastrtps_c//:rosidl_typesupport_fastrtps_c": "@rosidl_typesupport_fastrtps_c//:rosidl_typesupport_fastrtps_c_library",
+    "@rosidl_typesupport_fastrtps_cpp//:rosidl_typesupport_fastrtps_cpp": "@rosidl_typesupport_fastrtps_cpp//:rosidl_typesupport_fastrtps_cpp_library",
+    "@tracetools//:tracetools": "@tracetools//:tracetools_library",
+    "@rosdistro//cc:fastcdr": "@rosdistro//cc:fastcdr_library",
+    "@rosdistro//cc:fastdds": "@rosdistro//cc:fastdds_library",
+}
+
+cc_library(
+    name = "rmw_fastrtps_cpp_library",
+    srcs = glob([
+        "src/**/*.hpp",
+        "src/**/*.cpp",
+    ]),
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines(),
+    deps = DEPENDENCIES.values(),
+)
+
+cc_shared_library(
+    name = "rmw_fastrtps_cpp",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = ["rmw_fastrtps_cpp_library"],
+    deps = [":rmw_fastrtps_cpp_library"],
+)
+
+### TRANSITIVELY COLLECT ALL DYNAMIC DEPS TO ENSURE LINKING WORKS
+
+# This is a workaround for the fact that dynamic_deps does not work transitively.
+# So, if you have a (foo -> bar -> baz) dynamic_dep dep chain, the symbols from
+# foo will not be available to baz at compile-time. This resolves that by running
+# an aspect over the dynamic_deps attribute to collect everything in the chain.
+
+collect_transitive_dynamic_deps(
+    name = "transitive_dynamic_deps",
+    dynamic_deps = [":rmw_fastrtps_cpp"],
+    visibility = ["//visibility:private"],
+)
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    headers = HEADERS,
+    libraries = [":rmw_fastrtps_cpp"],
+    package_xml = "package.xml",
+    deps = [
+        "@ament_cmake_gtest//:ament_package",
+        "@ament_cmake_ros_core//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@osrf_testing_tools_cpp//:ament_package",
+        "@rcpputils//:ament_package",
+        "@rcutils//:ament_package",
+        "@rmw//:ament_package",
+        "@rmw_dds_common//:ament_package",
+        "@rmw_fastrtps_shared_cpp//:ament_package",
+        "@rosdistro//:ament_package",
+        "@rosidl_buffer_backend_registry//:ament_package",
+        "@rosidl_dynamic_typesupport//:ament_package",
+        "@rosidl_dynamic_typesupport_fastrtps//:ament_package",
+        "@rosidl_runtime_c//:ament_package",
+        "@rosidl_runtime_cpp//:ament_package",
+        "@rosidl_typesupport_fastrtps_c//:ament_package",
+        "@rosidl_typesupport_fastrtps_cpp//:ament_package",
+        "@test_msgs//:ament_package",
+        "@tracetools//:ament_package",
+    ],
+)

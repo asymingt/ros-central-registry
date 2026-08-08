@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-BI4cfYEYGs5fUbAOf8lwl2Fp5OTWjSwc2wgoRkUSlEc=",
+    "url": "https://github.com/ros2-gbp/demos-release/archive/refs/tags/release/lyrical/demo_nodes_py/0.37.9-1.tar.gz",
+    "strip_prefix": "demos-release-release-lyrical-demo_nodes_py-0.37.9-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-e0PSxbZCR5Bha6quTzuX4L5haJubcRDk5mThVR1itug="
+    }
+}

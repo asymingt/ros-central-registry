@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-BRuYRSbydFRFZo0cy7glSbGUOaHU039zENtI4z2MJsQ=",
+    "url": "https://github.com/ros2-gbp/ament_black-release/archive/refs/tags/release/lyrical/ament_black/0.2.7-1.tar.gz",
+    "strip_prefix": "ament_black-release-release-lyrical-ament_black-0.2.7-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-/4KII+dTNRu3aN9XCklzZ8TMw8YMke8Ek/ixlupmKzc="
+    }
+}

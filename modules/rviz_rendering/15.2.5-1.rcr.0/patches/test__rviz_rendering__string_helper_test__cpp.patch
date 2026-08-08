@@ -1,0 +1,11 @@
+--- a/test/rviz_rendering/string_helper_test.cpp
++++ b/test/rviz_rendering/string_helper_test.cpp
+@@ -34,7 +34,7 @@
+ #include "gtest/gtest.h"
+ #include "gmock/gmock.h"
+ 
+-#include "../../src/rviz_rendering/string_helper.cpp"  // NOLINT (build/include)
++#include "src/rviz_rendering/string_helper.hpp"  // NOLINT (build/include)
+ 
+ using namespace ::testing;  // NOLINT
+ 

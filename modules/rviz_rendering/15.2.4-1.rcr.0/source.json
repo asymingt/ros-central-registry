@@ -1,0 +1,16 @@
+{
+    "integrity": "sha256-nHrtGjDtNvqTrVkO0JITVrpYjBnAbzM6wVIVWoI/eoo=",
+    "url": "https://github.com/ros2-gbp/rviz-release/archive/refs/tags/release/lyrical/rviz_rendering/15.2.4-1.tar.gz",
+    "strip_prefix": "rviz-release-release-lyrical-rviz_rendering-15.2.4-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-KJSntpN3Z4cHe17f5qU8tOctq1UNlnqK1DpMUvAELMM="
+    },
+    "patches": {
+        "include__rviz_rendering__render_system__hpp.patch": "sha256-OtxiePheCIiY6h6BYVytpWu60uRA6krp+Akyvg1AsUQ=",
+        "src__rviz_rendering__objects__movable_text__cpp.patch": "sha256-i3DWiiB+uImKhf+jcCLDaAwEEaTx7RDiVYxC2be6Zs8=",
+        "src__rviz_rendering__render_system__cpp.patch": "sha256-+tLJpPyDHIyDjSwDVxF5jD5cPwNcGNR9zpu3FUiW8gQ=",
+        "test__rviz_rendering__objects__movable_text_test__cpp.patch": "sha256-m4LwomtN4khnWjpt0PLcPyRpAl+G/TY/TNvqak6Gx6o=",
+        "test__rviz_rendering__string_helper_test__cpp.patch": "sha256-1WFtDRTF0T57SIS/agrIf0VYFjs873Sd4mbCwW6f1CI="
+    },
+    "patch_strip": 1
+}

@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-IBMJtCyNdlYu4rjvjD/BvRMSpayLEhrWc2ib0dgEYVQ=",
+    "url": "https://github.com/ros2-gbp/point_cloud_transport_plugins-release/archive/refs/tags/release/lyrical/draco_point_cloud_transport/6.2.0-1.tar.gz",
+    "strip_prefix": "point_cloud_transport_plugins-release-release-lyrical-draco_point_cloud_transport-6.2.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-MX9mMsKue+KXDtyB98L+hSZMKcRKpPlApb3xMq6mtVA="
+    }
+}

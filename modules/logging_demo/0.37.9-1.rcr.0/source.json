@@ -1,0 +1,9 @@
+{
+    "integrity": "sha256-H7gKa3/ORUkWtyi5p6DvWbL/+89OHqoczTwrLGroyjY=",
+    "url": "https://github.com/ros2-gbp/demos-release/archive/refs/tags/release/lyrical/logging_demo/0.37.9-1.tar.gz",
+    "strip_prefix": "demos-release-release-lyrical-logging_demo-0.37.9-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-AsyvC0ro07Sgq8sYtsyOhYM8m8gE3R9AsN36dP8H5BY=",
+        "srv/BUILD.bazel": "sha256-j+jcubSbrWoMljqA/qtm6pEEN/o+fkHx79m4c7zYNY8="
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-LcpOjztPUyxiTJWUY4TlAMIBPr62VmjAdEf6h91+99o=",
+    "url": "https://github.com/ros2-gbp/mola_imu_preintegration-release/archive/refs/tags/release/lyrical/mola_imu_preintegration/1.17.1-1.tar.gz",
+    "strip_prefix": "mola_imu_preintegration-release-release-lyrical-mola_imu_preintegration-1.17.1-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-Otkzzoqzv20zlE6tl8vNsDGUNDmQFM/vW+eSTyatKrI="
+    }
+}

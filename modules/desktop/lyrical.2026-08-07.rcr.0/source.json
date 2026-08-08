@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-24tYRDi384BeJYqlHZAbUx4uWyvqgaEjAo/9ngZE8CI=",
+    "url": "https://github.com/ros2-gbp/variants-release/archive/refs/tags/release/lyrical/desktop/0.13.0-3.tar.gz",
+    "strip_prefix": "variants-release-release-lyrical-desktop-0.13.0-3",
+    "overlay": {
+        "BUILD.bazel": "sha256-o4fTbVEb5cpIBemUp6QNycETOgFM3QTOsBLPluSe8Lk="
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-dCDv/K7c9Ni6XFAB0mJsJ0GmTkObRUmGfDXWHP0otYM=",
+    "url": "https://github.com/ros2-gbp/rtabmap-release/archive/refs/tags/release/lyrical/rtabmap/0.23.7-1.tar.gz",
+    "strip_prefix": "rtabmap-release-release-lyrical-rtabmap-0.23.7-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-VgLMZ+4C9Na8lte4MqL1/SqX5/s2EavP8aRuuycz/5c="
+    }
+}

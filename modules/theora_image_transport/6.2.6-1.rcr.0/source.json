@@ -1,0 +1,9 @@
+{
+    "integrity": "sha256-0i8N8U8/6UYSvj7Kghc8/1Syt1JOzFf1kGTtzQst69w=",
+    "url": "https://github.com/ros2-gbp/image_transport_plugins-release/archive/refs/tags/release/lyrical/theora_image_transport/6.2.6-1.tar.gz",
+    "strip_prefix": "image_transport_plugins-release-release-lyrical-theora_image_transport-6.2.6-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-iDdFPgiyJzhZEmMwf4pwLaZ4i0JCG90vZIgTh6UR8r4=",
+        "msg/BUILD.bazel": "sha256-m6ENG3Q1E0N0//DFWH0R5Iao88pT+qbKhNIaLOI0nK4="
+    }
+}

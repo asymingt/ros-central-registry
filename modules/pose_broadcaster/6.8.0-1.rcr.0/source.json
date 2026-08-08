@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-uej9K51o+d7vvEB4qjXAgIWB9vCJ6qpIs1ZNwNch26E=",
+    "url": "https://github.com/ros2-gbp/ros2_controllers-release/archive/refs/tags/release/lyrical/pose_broadcaster/6.8.0-1.tar.gz",
+    "strip_prefix": "ros2_controllers-release-release-lyrical-pose_broadcaster-6.8.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-sX5TQYwVPZ+8YZqjaS/04IYAy4pIY5+Nh7hDKNfBw9I="
+    }
+}

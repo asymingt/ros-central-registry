@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-OVJE6qxd7WjURo1MNix2EFAHFi9tTJkL4gl5e1aaS4E=",
+    "url": "https://github.com/ros2-gbp/rqt_bag-release/archive/refs/tags/release/lyrical/rqt_bag/2.2.4-1.tar.gz",
+    "strip_prefix": "rqt_bag-release-release-lyrical-rqt_bag-2.2.4-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-iOKiMFBTdu90TsKQDdzAc6Hf6ahI6R0pTyiC2bLS5nM="
+    }
+}

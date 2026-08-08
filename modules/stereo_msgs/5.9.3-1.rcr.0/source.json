@@ -1,0 +1,9 @@
+{
+    "integrity": "sha256-u5+3mTXtvFe+G3931afuNihPiRELvs126OUOMZp6o4A=",
+    "url": "https://github.com/ros2-gbp/common_interfaces-release/archive/refs/tags/release/lyrical/stereo_msgs/5.9.3-1.tar.gz",
+    "strip_prefix": "common_interfaces-release-release-lyrical-stereo_msgs-5.9.3-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-Cx2avQM4nBtYhut/WweKno8/ZTNYqCR7XhTrKl+POtc=",
+        "msg/BUILD.bazel": "sha256-klLom66YMFqGxQvhoZtEww6MGjGMA+RD7QkUlaQU0i4="
+    }
+}

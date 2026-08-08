@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-UzmTCnxB7jK72erN5PNpkrJnL8AoF6zylvpiStbD1kY=",
+    "url": "https://github.com/ros2-gbp/image_pipeline-release/archive/refs/tags/release/lyrical/stereo_image_proc/7.1.7-1.tar.gz",
+    "strip_prefix": "image_pipeline-release-release-lyrical-stereo_image_proc-7.1.7-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-hXXWjrGrq/DTqq9/QuO2Q+y+U53oZoBud+Cb4eBrHHU="
+    }
+}

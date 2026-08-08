@@ -1,0 +1,143 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rclcpp_components//:defs.bzl", "rclcpp_components_register_node")
+load("@rosdistro//ament:defs.bzl", "ament_package")
+load("@rosdistro//cc:defs.bzl", "ros_local_defines")
+load("@rosidl_default_generators//:defs.bzl", "default_generators")
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_shared_library")
+
+package(default_visibility = ["//visibility:public"])
+
+default_generators(
+    package_xml = "package.xml",
+    deps = [
+        "//srv:ConfigLogger",
+    ],
+)
+
+cc_library(
+    name = "logger_config_component_library",
+    srcs = ["src/logger_config_component.cpp"],
+    hdrs = glob(
+        [
+            "include/**/*.hpp",
+            "include/**/*.h",
+        ],
+        allow_empty = True,
+    ),
+    includes = ["include"],
+    local_defines = ros_local_defines() + ["LOGGING_DEMO_BUILDING_DLL"],
+    deps = [
+        ":cc",
+        "@rclcpp//:rclcpp_library",
+        "@rclcpp_components//:rclcpp_components_library",
+    ],
+)
+
+cc_shared_library(
+    name = "logger_config_component",
+    dynamic_deps = [
+        "@rclcpp",
+        "@rclcpp_components",
+    ],
+    exports_filter = [":logger_config_component_library"],
+    deps = [":logger_config_component_library"],
+)
+
+rclcpp_components_register_node(
+    name = "node_logger_config",
+    component = ":logger_config_component",
+    executor = "SingleThreadedExecutor",
+    node_name = "logger_config_node",
+    plugin = "logging_demo::LoggerConfig",
+)
+
+cc_library(
+    name = "logger_usage_component_library",
+    srcs = ["src/logger_usage_component.cpp"],
+    hdrs = glob(
+        [
+            "include/**/*.hpp",
+            "include/**/*.h",
+        ],
+        allow_empty = True,
+    ),
+    includes = ["include"],
+    local_defines = ros_local_defines() + ["LOGGING_DEMO_BUILDING_DLL"],
+    deps = [
+        "@example_interfaces//:cc",
+        "@rclcpp//:rclcpp_library",
+        "@rclcpp_components//:rclcpp_components_library",
+    ],
+)
+
+cc_shared_library(
+    name = "logger_usage_component",
+    dynamic_deps = [
+        "@rclcpp",
+        "@rclcpp_components",
+    ],
+    exports_filter = [":logger_usage_component_library"],
+    deps = [":logger_usage_component_library"],
+)
+
+rclcpp_components_register_node(
+    name = "node_logger_usage",
+    component = ":logger_usage_component",
+    executor = "SingleThreadedExecutor",
+    node_name = "logger_usage_node",
+    plugin = "logging_demo::LoggerUsage",
+)
+
+cc_binary(
+    name = "logging_demo_main",
+    srcs = ["src/logging_demo_main.cpp"],
+    local_defines = ros_local_defines(),
+    deps = [
+        ":logger_config_component_library",
+        ":logger_usage_component_library",
+        "@rclcpp//:rclcpp_library",
+    ],
+)
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    executables = [":logging_demo_main"],
+    libraries = [
+        ":logger_config_component",
+        ":logger_usage_component",
+    ],
+    package_xml = "package.xml",
+    deps = [
+        "@ament_cmake//:ament_package",
+        "@ament_cmake_pytest//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@example_interfaces//:ament_package",
+        "@launch//:ament_package",
+        "@launch_testing//:ament_package",
+        "@launch_testing_ament_cmake//:ament_package",
+        "@launch_testing_ros//:ament_package",
+        "@rclcpp//:ament_package",
+        "@rclcpp_components//:ament_package",
+        "@rcutils//:ament_package",
+        "@rmw_implementation_cmake//:ament_package",
+        "@rosdistro//:ament_package",
+        "@rosidl_default_generators//:ament_package",
+        "@rosidl_default_runtime//:ament_package",
+    ],
+)

@@ -1,0 +1,17 @@
+{
+    "homepage": "https://github.com/li9i/hitch-estimation-apriltag-array-release",
+    "maintainers": [
+        {
+            "email": "simmers@google.com",
+            "github": "asymingt",
+            "github_user_id": 37671,
+            "name": "Andrew Symington"
+        }
+    ],
+    "versions": [
+        "0.0.0",
+        "0.0.3-1",
+        "0.0.3-1.rcr.0"
+    ],
+    "yanked_versions": {}
+}

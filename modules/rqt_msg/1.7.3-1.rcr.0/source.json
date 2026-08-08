@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-0N0g2rzZIg+H3f1cb0u2nDnsizJcIkX/qEMtyflMveg=",
+    "url": "https://github.com/ros2-gbp/rqt_msg-release/archive/refs/tags/release/lyrical/rqt_msg/1.7.3-1.tar.gz",
+    "strip_prefix": "rqt_msg-release-release-lyrical-rqt_msg-1.7.3-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-IsouJrq7EzIQNEZ94bFR46iuOOh5cvrOEcD52AELZgY="
+    }
+}

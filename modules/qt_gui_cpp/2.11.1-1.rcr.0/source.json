@@ -1,0 +1,15 @@
+{
+    "integrity": "sha256-ozFXuytdPvPG0s32xYCB/DMR3v55hQy+0YeHGnLF9nY=",
+    "url": "https://github.com/ros2-gbp/qt_gui_core-release/archive/refs/tags/release/lyrical/qt_gui_cpp/2.11.1-1.tar.gz",
+    "strip_prefix": "qt_gui_core-release-release-lyrical-qt_gui_cpp-2.11.1-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-+A/A+Nw263jB3VtTdRXxjM3w4cxR6A+K954IvJWZT84=",
+        "src/qt_gui_cpp_shiboken/shiboken6_wrapper.py": "sha256-wQEGorje8XenwGMXM9A9C+bUgFs5Ym/L/JQWsep6LS0=",
+        "src/qt_gui_cpp_sip/BUILD.bazel": "sha256-6D+tkCtLd+CmLDk/YwK1wyGU5go2xPIaIyyF1sgFcL8="
+    },
+    "patches": {
+        "test__test_imports_shiboken__py.patch": "sha256-KXdsAQoUXc2ToWiwh/aMYqOKDtSxG/L3ztVU8IHAQQE=",
+        "test__test_imports_sip__py.patch": "sha256-TyPZxXj/8k6xGlYaoeNIVB80TJi1xQLFgOf3OcX+z48="
+    },
+    "patch_strip": 1
+}

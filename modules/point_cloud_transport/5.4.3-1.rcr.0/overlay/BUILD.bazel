@@ -1,0 +1,210 @@
+# Copyright 2026 Open Source Robotics Foundation, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@rclcpp_components//:defs.bzl", "rclcpp_components_register_node")
+load("@rosdistro//ament:defs.bzl", "ament_index", "ament_package")
+load("@rosdistro//cc:defs.bzl", "collect_transitive_dynamic_deps", "ros_local_defines")
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_shared_library", "cc_test")
+
+package(default_visibility = ["//visibility:public"])
+
+### LIBRARY
+
+HEADERS = glob(["include/**/*.hpp"])
+
+DEPENDENCIES = {
+    "@message_filters//:message_filters": "@message_filters//:message_filters_library",
+    "@pluginlib//:pluginlib": "@pluginlib//:pluginlib_library",
+    "@rclcpp//:rclcpp": "@rclcpp//:rclcpp_library",
+    "@rcpputils//:rcpputils": "@rcpputils//:rcpputils_library",
+    "@rmw//:rmw": "@rmw//:rmw_library",
+}
+
+cc_library(
+    name = "point_cloud_transport_library",
+    srcs = [
+        "src/point_cloud_codec.cpp",
+        "src/point_cloud_common.cpp",
+        "src/point_cloud_transport.cpp",
+        "src/publisher.cpp",
+        "src/publisher_plugin.cpp",
+        "src/raw_subscriber.cpp",
+        "src/single_subscriber_publisher.cpp",
+        "src/subscriber.cpp",
+        "src/subscriber_filter.cpp",
+        "src/subscriber_plugin.cpp",
+    ],
+    hdrs = HEADERS,
+    includes = ["include"],
+    local_defines = ros_local_defines(),
+    deps = DEPENDENCIES.values() + [
+        "@sensor_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "point_cloud_transport",
+    dynamic_deps = DEPENDENCIES.keys(),
+    exports_filter = [":point_cloud_transport_library"],
+    deps = [":point_cloud_transport_library"],
+)
+
+collect_transitive_dynamic_deps(
+    name = "transitive_dynamic_deps",
+    dynamic_deps = [":point_cloud_transport"],
+    visibility = ["//visibility:private"],
+)
+
+### EXECUTABLE
+
+cc_binary(
+    name = "list_transports",
+    srcs = ["src/list_transports.cpp"],
+    dynamic_deps = [":transitive_dynamic_deps"],
+    deps = DEPENDENCIES.values() + [
+        ":point_cloud_transport_library",
+    ],
+)
+
+### PLUGINS
+
+PLUGIN_DEPENDENCIES = DEPENDENCIES | {
+    ":point_cloud_transport": ":point_cloud_transport_library",
+}
+
+cc_library(
+    name = "point_cloud_transport_plugins_library",
+    srcs = ["src/manifest.cpp"],
+    deps = PLUGIN_DEPENDENCIES.values() + [
+        "@sensor_msgs//:cc",
+    ],
+)
+
+cc_shared_library(
+    name = "point_cloud_transport_plugins",
+    dynamic_deps = PLUGIN_DEPENDENCIES.keys(),
+    exports_filter = [":point_cloud_transport_plugins_library"],
+    deps = [":point_cloud_transport_plugins_library"],
+)
+
+### COMPONENTS
+
+COMPONENT_DEPENDENCIES = DEPENDENCIES | {
+    "@rclcpp_components//:rclcpp_components": "@rclcpp_components//:rclcpp_components_library",
+    ":point_cloud_transport": ":point_cloud_transport_library",
+}
+
+cc_library(
+    name = "pc_republish_node_library",
+    srcs = ["src/republish.cpp"],
+    local_defines = ros_local_defines(),
+    deps = COMPONENT_DEPENDENCIES.values(),
+    alwayslink = True,
+)
+
+cc_shared_library(
+    name = "pc_republish_node",
+    dynamic_deps = COMPONENT_DEPENDENCIES.keys(),
+    exports_filter = [":pc_republish_node_library"],
+    deps = [":pc_republish_node_library"],
+)
+
+rclcpp_components_register_node(
+    name = "node_republish",
+    component = ":pc_republish_node",
+    executor = "SingleThreadedExecutor",
+    node_name = "republisher",
+    plugin = "point_cloud_transport::Republisher",
+)
+
+### AMENT INDEX
+
+ament_index(
+    name = "ament_index_package",
+    package_xml = "package.xml",
+)
+
+ament_index(
+    name = "ament_index_plugin",
+    export_name = "point_cloud_transport",
+    libraries = [":point_cloud_transport_plugins"],
+    package_xml = "package.xml",
+    plugins = ["default_plugins.xml"],
+)
+
+### TESTS
+
+[
+    cc_test(
+        name = name,
+        srcs = [
+            "test/{0}.cpp".format(name),
+            "test/utils.hpp",
+        ],
+        data = [
+            "default_plugins.xml",
+            "test/test_plugin_manifest.xml",
+            ":ament_index_package",
+            ":ament_index_plugin",
+        ],
+        dynamic_deps = [":transitive_dynamic_deps"],
+        local_defines = [
+            'DEFAULT_PLUGINS_XML=\\"../point_cloud_transport+/default_plugins.xml\\"',
+            'TEST_PLUGIN_MANIFEST_XML=\\"../point_cloud_transport+/test/test_plugin_manifest.xml\\"',
+        ],
+        deps = DEPENDENCIES.values() + [
+            ":point_cloud_transport_library",
+            "@rosdistro//cc:googletest",
+            "@sensor_msgs//:cc",
+        ],
+    )
+    for name in [
+        "test_message_filter",
+        "test_message_passing",
+        "test_point_cloud_codec",
+        "test_point_cloud_common",
+        "test_publisher",
+        "test_qos_override",
+        "test_remapping",
+        "test_single_subscriber_publisher",
+        "test_subscriber",
+    ]
+]
+
+### PACKAGING
+
+ament_package(
+    name = "ament_package",
+    executables = [":list_transports"],
+    headers = HEADERS,
+    libraries = [
+        ":point_cloud_transport",
+        ":point_cloud_transport_plugins",
+        ":pc_republish_node",
+    ],
+    package_xml = "package.xml",
+    deps = [
+        "@ament_cmake_ros//:ament_package",
+        "@ament_lint_auto//:ament_package",
+        "@ament_lint_common//:ament_package",
+        "@message_filters//:ament_package",
+        "@pluginlib//:ament_package",
+        "@rclcpp//:ament_package",
+        "@rclcpp_components//:ament_package",
+        "@rcpputils//:ament_package",
+        "@rmw//:ament_package",
+        "@rosdistro//:ament_package",
+        "@sensor_msgs//:ament_package",
+    ],
+)

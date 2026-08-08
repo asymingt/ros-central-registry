@@ -1,0 +1,13 @@
+--- a/src/rviz_rendering/objects/movable_text.cpp
++++ b/src/rviz_rendering/objects/movable_text.cpp
+@@ -56,8 +56,8 @@
+ #include <OgreRoot.h>
+ #include <OgreSceneNode.h>
+ #include <OgreVector.h>
+-#include <Overlay/OgreFont.h>  // NOLINT: cpplint cannot handle include order here
+-#include <Overlay/OgreFontManager.h>  // NOLINT: cpplint cannot handle include order here
++#include <OgreFont.h>  // NOLINT: cpplint cannot handle include order here
++#include <OgreFontManager.h>  // NOLINT: cpplint cannot handle include order here
+ 
+ #define POS_TEX_BINDING    0
+ #define COLOUR_BINDING     1

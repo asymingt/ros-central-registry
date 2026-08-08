@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-sBqaILdnJnPSr5SdFL+GszGW6v+hVhPo2kqzP2A3xUs=",
+    "url": "https://github.com/ros2-gbp/demos-release/archive/refs/tags/release/lyrical/lifecycle_py/0.37.9-1.tar.gz",
+    "strip_prefix": "demos-release-release-lyrical-lifecycle_py-0.37.9-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-ou5PaE1gua9FoJBLGKRwjI7vY/oVJ9oaFhHTedozZXw="
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "integrity": "sha256-yTUlD5TDE4gFyZ0/i1CdAAtDYXvcjo2vI3z3ZVRww3s=",
+    "url": "https://github.com/ros2-gbp/ros2_controllers-release/archive/refs/tags/release/lyrical/gpio_controllers/6.8.0-1.tar.gz",
+    "strip_prefix": "ros2_controllers-release-release-lyrical-gpio_controllers-6.8.0-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-9U4EIl0yd0klUC1+BOo/+0L3sB6DO0vQCeINalv3cJM="
+    }
+}

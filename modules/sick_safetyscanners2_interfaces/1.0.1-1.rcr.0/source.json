@@ -1,0 +1,10 @@
+{
+    "integrity": "sha256-sV355Px/xHZ/gyTrQ/uZOlWwXpQmk2LYoOwkfJyBacM=",
+    "url": "https://github.com/ros2-gbp/sick_safetyscanners2_interfaces-release/archive/refs/tags/release/lyrical/sick_safetyscanners2_interfaces/1.0.1-1.tar.gz",
+    "strip_prefix": "sick_safetyscanners2_interfaces-release-release-lyrical-sick_safetyscanners2_interfaces-1.0.1-1",
+    "overlay": {
+        "BUILD.bazel": "sha256-qi4FZk2FU78kIpndYom0uTt4WoAEnA+iM7EzAXBjFNc=",
+        "msg/BUILD.bazel": "sha256-OgIeM6NWiS9+Za0FsVEnJSDPjWMZs2WSHc8YEQTZmjA=",
+        "srv/BUILD.bazel": "sha256-JdYESR56yF52kSvX/iPHokcSqUXFl/W5pR6TkFXDln0="
+    }
+}
